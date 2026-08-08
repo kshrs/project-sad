@@ -1,0 +1,52 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Production Builds
+dist
+dist-ssr
+build
+*.out
+
+# Environment & Secret variables
+.env
+.env.local
+.env.*.local
+*.env
+
+# Logs & Debugging
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor & IDE configs (VS Code, JetBrains, Vim/Neovim, Eclipse)
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+.idea/
+*.swp
+*.swo
+*~
+.netrwhist
+Session.vim
+.claude/
+.gemini/
+.copilot/
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Docker & Local Data
+mongo_data/
+*.local
