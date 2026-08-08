@@ -15,5 +15,5 @@ COPY . .
 EXPOSE 5100
 
 # Start the server
-CMD ["npm", "run", "dev", "--", "--host"]
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5100"]
 

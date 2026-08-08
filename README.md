@@ -49,19 +49,11 @@ We use **Docker Compose with Volume Mounting** so that code changes made in your
 
 ### 1. Clone the Repository & Navigate to Workspace
 ```bash
-git clone <repository_url> project_sad
+git clone https://github.com/kshrs/project-sad.git 
 cd project_sad
 ```
 
-### 2. Configure Environment Variables (Optional)
-Copy or create `.env` files if needed:
-```bash
-# In backend/.env
-PORT=5000
-MONGO_URI=mongodb://mongodb:27017/sad_db
-```
-
-### 3. Launch Development Stack with Live Reload
+### 2. Launch Development Stack with Live Reload
 Run the following command in the root `project_sad` directory:
 
 ```bash
@@ -69,7 +61,7 @@ docker compose up --build
 ```
 
 ### Accessing the Services:
-- **Frontend Dashboard (Vite HMR)**: [http://localhost:5100](http://localhost:5100) (or `http://localhost:5173` depending on port config)
+- **Frontend Dashboard (Vite HMR)**: [http://localhost:5100](http://localhost:5100)
 - **Backend API**: [http://localhost:5000](http://localhost:5000)
 - **MongoDB Database**: `mongodb://localhost:27017/sad_db`
 
@@ -118,5 +110,5 @@ If you prefer running services directly on your host operating system:
 
 ---
 
-## 📄 License
+## License
 Internal Institutional Project.
