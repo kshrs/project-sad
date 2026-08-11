@@ -50,3 +50,6 @@ Thumbs.db
 # Docker & Local Data
 mongo_data/
 *.local
+
+# Other
+research/
