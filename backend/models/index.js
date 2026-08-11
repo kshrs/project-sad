@@ -1,58 +1,20 @@
-const mongoose = require('mongoose');
+const fs = require('fs');
+const path = require('path');
 
 const models = {};
 
-models.AlumniEntrepreneurDetails = require('./AlumniEntrepreneurDetails');
-models.AlumniMeet = require('./AlumniMeet');
-models.AlumniVisit = require('./AlumniVisit');
-models.AwardsReceived = require('./AwardsReceived');
-models.BookChapterPublication = require('./BookChapterPublication');
-models.BookPublication = require('./BookPublication');
-models.CareerGuidance = require('./CareerGuidance');
-models.CollaborativeActivity = require('./CollaborativeActivity');
-models.FacultyCompetition = require('./FacultyCompetition');
-models.FacultyParticipateOthers = require('./FacultyParticipateOthers');
-models.FacultyResearch = require('./FacultyResearch');
-models.FacultyResourcePerson = require('./FacultyResourcePerson');
-models.FacultyStudentRatio = require('./FacultyStudentRatio');
-models.GuestLecturesOrganised = require('./GuestLecturesOrganised');
-models.HigherStudies = require('./HigherStudies');
-models.IndustrialTour = require('./IndustrialTour');
-models.IndustrialVisit = require('./IndustrialVisit');
-models.IndustryLinkage = require('./IndustryLinkage');
-models.Internships = require('./Internships');
-models.JournalNonScopus = require('./JournalNonScopus');
-models.JournalPublicationScopus = require('./JournalPublicationScopus');
-models.MouActivities = require('./MouActivities');
-models.MouSigned = require('./MouSigned');
-models.Newsletter = require('./Newsletter');
-models.OneCreditCourseOrganised = require('./OneCreditCourseOrganised');
-models.PaperPresented = require('./PaperPresented');
-models.PapersReviewed = require('./PapersReviewed');
-models.Patent = require('./Patent');
-models.PhdCompleted = require('./PhdCompleted');
-models.PhdStudents = require('./PhdStudents');
-models.PrgmAttendAbove5Days = require('./PrgmAttendAbove5Days');
-models.ProfessionalSociety = require('./ProfessionalSociety');
-models.ProgramsOrganisedStudents = require('./ProgramsOrganisedStudents');
-models.ProgramsOrganizedFaculty = require('./ProgramsOrganizedFaculty');
-models.PurchaseCapitalEquipment = require('./PurchaseCapitalEquipment');
-models.PurchaseConsumables = require('./PurchaseConsumables');
-models.ResearchFunds = require('./ResearchFunds');
-models.RevenueCorporateTraining = require('./RevenueCorporateTraining');
-models.RevenueConsultancy = require('./RevenueConsultancy');
-models.Scholarship = require('./Scholarship');
-models.SeedMoney = require('./SeedMoney');
-models.StudentCareerExams = require('./StudentCareerExams');
-models.StudentCompetitionParticiDetails = require('./StudentCompetitionParticiDetails');
-models.StudentCompetitionParticipation = require('./StudentCompetitionParticipation');
-models.StudentIndustryProjects = require('./StudentIndustryProjects');
-models.StudentInhouseProjects = require('./StudentInhouseProjects');
-models.StudentOnlineCourseComp = require('./StudentOnlineCourseComp');
-models.StudentPaperPresent = require('./StudentPaperPresent');
-models.StudentPublication = require('./StudentPublication');
-models.StudentsParticipationProg = require('./StudentsParticipationProg');
-models.ValueAddedCourseOrganised = require('./ValueAddedCourseOrganised');
-models.Website = require('./Website');
+// Core Container Models
+models.AcademicYear = require('./AcademicYear');
+models.MonthlyReport = require('./MonthlyReport');
+
+// Load all 52 sheet schemas from the ./schema subfolder
+const schemaDir = path.join(__dirname, 'schema');
+
+fs.readdirSync(schemaDir).forEach((file) => {
+  if (file.endsWith('.js')) {
+    const modelName = path.basename(file, '.js');
+    models[modelName] = require(`./schema/${file}`);
+  }
+});
 
 module.exports = models;

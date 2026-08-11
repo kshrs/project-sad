@@ -14,10 +14,8 @@ const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/sad_db';
 const corsOptions = {
   origin: process.env.CLIENT_URL || [
     'http://localhost:3000',
-    'http://localhost:5173',
     'http://localhost:5100',
     'http://127.0.0.1:3000',
-    'http://127.0.0.1:5173',
     'http://127.0.0.1:5100'
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
