@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const StudentCompetitionParticipSchema = new mongoose.Schema(
+const StudentCompetitionParticipationSchema = new mongoose.Schema(
   {
     s_no: { type: Number }, // Original: S_No
     criteria_no_name: { type: String }, // Original: Criteria_No_Name
@@ -23,4 +23,4 @@ const StudentCompetitionParticipSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('StudentCompetitionParticip', StudentCompetitionParticipSchema);
+module.exports = mongoose.model('StudentCompetitionParticipation', StudentCompetitionParticipationSchema);

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const AlumniEntrepreneurdetailsSchema = new mongoose.Schema(
+const AlumniEntrepreneurDetailsSchema = new mongoose.Schema(
   {
     s_no: { type: Number }, // Original: S_No
     criteria_no_name: { type: String }, // Original: Criteria_No_Name
@@ -18,4 +18,4 @@ const AlumniEntrepreneurdetailsSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('AlumniEntrepreneurdetails', AlumniEntrepreneurdetailsSchema);
+module.exports = mongoose.model('AlumniEntrepreneurDetails', AlumniEntrepreneurDetailsSchema);

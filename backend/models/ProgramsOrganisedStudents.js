@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ProgramsorganizedFacultySchema = new mongoose.Schema(
+const ProgramsOrganisedStudentsSchema = new mongoose.Schema(
   {
     s_no: { type: Number }, // Original: S_No
     criteria_no_name: { type: String }, // Original: Criteria_No_Name
@@ -14,7 +14,7 @@ const ProgramsorganizedFacultySchema = new mongoose.Schema(
     days: { type: Number }, // Original: Days
     faculty_coordinator: { type: String }, // Original: Faculty_Coordinator
     employee_code: { type: String }, // Original: Employee_Code
-    no_of_participants: { type: Number }, // Original: No_of_Participants
+    no_of_participants: { type: Number }, // Original: No._of_Participants
     resource_person_details: { type: String }, // Original: Resource_Person_Details
     is_resource_person_alumni: { type: Boolean }, // Original: Is_Resource_Person_Alumni
     external_agency: { type: Boolean }, // Original: External_Agency
@@ -24,4 +24,4 @@ const ProgramsorganizedFacultySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('ProgramsorganizedFaculty', ProgramsorganizedFacultySchema);
+module.exports = mongoose.model('ProgramsOrganisedStudents', ProgramsOrganisedStudentsSchema);

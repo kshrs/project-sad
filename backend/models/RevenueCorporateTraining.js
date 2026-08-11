@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const RevenueCorporatetrainingSchema = new mongoose.Schema(
+const RevenueCorporateTrainingSchema = new mongoose.Schema(
   {
     s_no: { type: Number }, // Original: S_No
     criteria_no_name: { type: String }, // Original: Criteria_no_Name
@@ -19,4 +19,4 @@ const RevenueCorporatetrainingSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('RevenueCorporatetraining', RevenueCorporatetrainingSchema);
+module.exports = mongoose.model('RevenueCorporateTraining', RevenueCorporateTrainingSchema);

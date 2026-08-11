@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const PurchaseCapitalEquipmeSchema = new mongoose.Schema(
+const PurchaseCapitalEquipmentSchema = new mongoose.Schema(
   {
     s_no: { type: Number }, // Original: S_No
     criteria_no_name: { type: String }, // Original: Criteria_No_Name
@@ -20,4 +20,4 @@ const PurchaseCapitalEquipmeSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('PurchaseCapitalEquipme', PurchaseCapitalEquipmeSchema);
+module.exports = mongoose.model('PurchaseCapitalEquipment', PurchaseCapitalEquipmentSchema);

@@ -16,7 +16,7 @@ services:
       - "5000:5000"
     environment:
       - PORT=5000
-      - MONGO_URI=mongodb://mongodb:28017/sad_db
+      - MONGO_URI=mongodb://mongodb:27017/sad_db
     depends_on:
       - mongodb
 

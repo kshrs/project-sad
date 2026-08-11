@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const PrgmAttendAbove5daysSchema = new mongoose.Schema(
+const PrgmAttendAbove5DaysSchema = new mongoose.Schema(
   {
     s_no: { type: Number }, // Original: S_No
     criteria_no_name: { type: String }, // Original: Criteria_No_Name
@@ -25,4 +25,4 @@ const PrgmAttendAbove5daysSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('PrgmAttendAbove5days', PrgmAttendAbove5daysSchema);
+module.exports = mongoose.model('PrgmAttendAbove5Days', PrgmAttendAbove5DaysSchema);

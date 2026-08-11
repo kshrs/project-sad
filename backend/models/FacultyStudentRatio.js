@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const FacultystudentratioSchema = new mongoose.Schema(
+const FacultyStudentRatioSchema = new mongoose.Schema(
   {
     s_no: { type: Number }, // Original: S_No
     criteria_no_name: { type: String }, // Original: Criteria_No_Name
@@ -19,4 +19,4 @@ const FacultystudentratioSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Facultystudentratio', FacultystudentratioSchema);
+module.exports = mongoose.model('FacultyStudentRatio', FacultyStudentRatioSchema);

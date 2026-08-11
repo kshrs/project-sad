@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ReveuneConsultancySchema = new mongoose.Schema(
+const RevenueConsultancySchema = new mongoose.Schema(
   {
     s_no: { type: Number }, // Original: S_No
     criteria_no_name: { type: String }, // Original: Criteria_No_Name
@@ -19,4 +19,4 @@ const ReveuneConsultancySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('ReveuneConsultancy', ReveuneConsultancySchema);
+module.exports = mongoose.model('RevenueConsultancy', RevenueConsultancySchema);
