@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controllers = require('../controllers');
+const upload = require('../middleware/upload');
 
 // Health check endpoint
 router.get('/health', (req, res) => {
@@ -40,5 +41,12 @@ router.delete('/sheets-entry/:sheetName/:id', controllers.sheetEntry.deleteEntry
 router.get('/sheets', controllers.sheets.getAllSheetsMetadata);
 router.get('/sheets/full-report', controllers.sheets.getFullReport);
 router.get('/sheets/:sheetKey', controllers.sheets.getSheetItems);
+
+// ==========================================
+// 5. Layer 5: GridFS File Upload & Download Routes
+// ==========================================
+router.post('/files/upload', upload.single('file'), controllers.file.uploadFile);
+router.get('/files/:id', controllers.file.getFileById);
+router.delete('/files/:id', controllers.file.deleteFileById);
 
 module.exports = router;
