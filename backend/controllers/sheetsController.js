@@ -12,14 +12,17 @@ const getSheetModels = () => {
 };
 
 const sheetsController = {
-  // Get metadata list of all 52 sheets with current document counts
+  // Get metadata list of all 52 sheets with document counts (optional ?month_id=... filter)
   getAllSheetsMetadata: async (req, res) => {
     try {
+      const { month_id } = req.query;
+      const filter = month_id ? { month_id } : {};
       const sheetModels = getSheetModels();
+
       const sheetsList = await Promise.all(
         Object.keys(sheetModels).map(async (modelName) => {
           const Model = sheetModels[modelName];
-          const count = await Model.countDocuments();
+          const count = await Model.countDocuments(filter);
           return {
             sheetName: modelName,
             totalItems: count
@@ -32,17 +35,19 @@ const sheetsController = {
     }
   },
 
-  // Fetch all entries for a specific sheet by sheetName
+  // Fetch all entries for a specific sheet by sheetName (optional ?month_id=... filter)
   getSheetItems: async (req, res) => {
     try {
       const { sheetName } = req.params;
+      const { month_id } = req.query;
+      const filter = month_id ? { month_id } : {};
       const TargetModel = models[sheetName];
 
       if (!TargetModel || sheetName === 'AcademicYear' || sheetName === 'MonthlyReport') {
         return res.status(404).json({ success: false, message: `Sheet '${sheetName}' not found.` });
       }
 
-      const items = await TargetModel.find();
+      const items = await TargetModel.find(filter);
       res.json({
         success: true,
         sheetName: sheetName,
@@ -54,15 +59,18 @@ const sheetsController = {
     }
   },
 
-  // Fetch aggregate report containing all entries across all 52 sheets
+  // Fetch aggregate report containing entries across all 52 sheets (optional ?month_id=... filter)
   getFullReport: async (req, res) => {
     try {
+      const { month_id } = req.query;
+      const filter = month_id ? { month_id } : {};
       const sheetModels = getSheetModels();
       const fullReport = {};
+
       await Promise.all(
         Object.keys(sheetModels).map(async (modelName) => {
           const Model = sheetModels[modelName];
-          const items = await Model.find();
+          const items = await Model.find(filter);
           fullReport[modelName] = {
             totalItems: items.length,
             items: items
