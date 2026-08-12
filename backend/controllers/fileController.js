@@ -23,7 +23,7 @@ const fileController = {
           id: req.file.id,
           filename: req.file.filename,
           originalname: req.file.originalname,
-          contentType: req.file.contentType,
+          contentType: req.file.mimetype,
           size: req.file.size
         }
       });
@@ -50,7 +50,9 @@ const fileController = {
       }
 
       const file = files[0];
-      res.set('Content-Type', file.contentType);
+      const contentType = file.contentType || file.metadata?.contentType || 'application/pdf';
+
+      res.set('Content-Type', contentType);
       res.set('Content-Disposition', `inline; filename="${file.filename}"`);
 
       // Stream chunks from GridFS directly to HTTP response
