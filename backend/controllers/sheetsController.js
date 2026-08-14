@@ -59,6 +59,36 @@ const sheetsController = {
     }
   },
 
+  // Get schema column field names and types for a specific sheet
+  getSheetColumns: async (req, res) => {
+    try {
+      const { sheetName } = req.params;
+      const TargetModel = models[sheetName];
+
+      if (!TargetModel || sheetName === 'AcademicYear' || sheetName === 'MonthlyReport') {
+        return res.status(404).json({ success: false, message: `Sheet '${sheetName}' not found.` });
+      }
+
+      const EXCLUDED = ['_id', '__v', 'month_id', 'created_by', 'createdAt', 'updatedAt'];
+      const paths = TargetModel.schema.paths;
+      const columns = Object.keys(paths)
+        .filter((field) => !EXCLUDED.includes(field))
+        .map((field) => ({
+          name: field,
+          type: paths[field].instance || 'String',
+          required: !!paths[field].isRequired
+        }));
+
+      res.json({
+        success: true,
+        sheetName: sheetName,
+        columns: columns
+      });
+    } catch (error) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  },
+
   // Fetch aggregate report containing entries across all 52 sheets (optional ?month_id=... filter)
   getFullReport: async (req, res) => {
     try {

@@ -40,7 +40,9 @@ router.delete('/sheets-entry/:sheetName/:id', controllers.sheetEntry.deleteEntry
 // ==========================================
 router.get('/sheets', controllers.sheets.getAllSheetsMetadata);
 router.get('/sheets/full-report', controllers.sheets.getFullReport);
+router.get('/sheets/:sheetName/columns', controllers.sheets.getSheetColumns);
 router.get('/sheets/:sheetName', controllers.sheets.getSheetItems);
+
 
 // ==========================================
 // 5. Layer 5: GridFS File Upload & Download Routes
