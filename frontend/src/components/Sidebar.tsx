@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const Sidebar: React.FC<Props> = ({ isOpen = true, activeSheet, onSelectSheet }) => {
-  const { monthId } = useReport();
+  const { monthId, refreshKey } = useReport();
   const [sheets, setSheets] = useState<SheetMeta[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -41,7 +41,7 @@ export const Sidebar: React.FC<Props> = ({ isOpen = true, activeSheet, onSelectS
     return () => {
       mounted = false;
     };
-  }, [monthId]);
+  }, [monthId, refreshKey]);
 
   return (
     <aside className={`sidebar ${isOpen ? 'open' : 'closed'}`} aria-label="Sheets navigation" aria-hidden={!isOpen}>

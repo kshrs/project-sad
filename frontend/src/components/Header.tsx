@@ -1,6 +1,7 @@
 import React from 'react';
 import ProfileHover from './ProfileHover';
 import KI_Logo from '../assets/KILogo.jpeg';
+import { useReport } from '../context/ReportContext';
 
 interface HeaderProps {
     isSidebarOpen: boolean;
@@ -8,6 +9,12 @@ interface HeaderProps {
 }
 
 export default function Header({ isSidebarOpen, onToggleSidebar }: HeaderProps) {
+    const {
+        monthlyReports,
+        monthId,
+        changeMonth
+    } = useReport();
+
     return (
         <header style={styles.header}>
             <div style={styles.leftSection}>
@@ -42,6 +49,27 @@ export default function Header({ isSidebarOpen, onToggleSidebar }: HeaderProps) 
             </div>
             
             <div style={styles.rightSection}>
+                {/* Month Selection Dropdown (Only selectable up to current month) */}
+                {monthlyReports.length > 0 && (
+                    <select
+                        style={styles.select}
+                        value={monthId || ''}
+                        onChange={(e) => changeMonth(e.target.value)}
+                        aria-label="Select Month"
+                    >
+                        {monthlyReports
+                            .filter((m) => {
+                                const currentMonthNumber = new Date().getMonth() + 1; // 1-12
+                                return m.month_number <= currentMonthNumber;
+                            })
+                            .map((m) => (
+                                <option key={m._id} value={m._id}>
+                                    {m.month_name}
+                                </option>
+                            ))}
+                    </select>
+                )}
+
                 <ProfileHover />
             </div>
         </header>
@@ -72,8 +100,22 @@ const styles: Record<string, React.CSSProperties> = {
       rightSection: {
         display: 'flex',
         alignItems: 'center',
+        gap: '12px',
         userSelect: 'none',
         WebkitUserSelect: 'none'
+      },
+      select: {
+        padding: '6px 12px',
+        borderRadius: '6px',
+        border: '1px solid #cbd5e1',
+        backgroundColor: '#f8fafc',
+        color: '#1e293b',
+        fontFamily: 'var(--sans)',
+        fontSize: '0.85rem',
+        fontWeight: 600,
+        outline: 'none',
+        cursor: 'pointer',
+        transition: 'border-color 0.15s ease'
       },
       hamburgerBtn: {
         background: 'none',

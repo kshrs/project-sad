@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
+import Mainpage from './Mainpage';
 
 export const Dashboard: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
@@ -19,16 +20,11 @@ export const Dashboard: React.FC = () => {
           activeSheet={activeSheet}
           onSelectSheet={setActiveSheet}
         />
-        <main className="main-content">
-          {activeSheet ? (
-            <p>Selected Sheet: <strong>{activeSheet}</strong></p>
-          ) : (
-            <p>Select a sheet from the sidebar to view details.</p>
-          )}
-        </main>
+        <Mainpage sheetName={activeSheet} />
       </div>
     </div>
   );
 };
 
 export default Dashboard;
+
