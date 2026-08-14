@@ -1,0 +1,172 @@
+.sidebar {
+  width: 270px;
+  min-width: 270px;
+  background-color: #0f172a; /* Rich Dark Blue */
+  border-right: 1px solid #1e293b;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1.25rem 0;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  text-align: left;
+  color: #e2e8f0;
+  font-family: var(--sans);
+  user-select: text; /* Make sidebar content selectable */
+  -webkit-user-select: text;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              min-width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              padding 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s ease,
+              opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0.3s ease;
+  will-change: width, min-width, opacity;
+}
+
+.sidebar.closed {
+  width: 0 !important;
+  min-width: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  border-right-color: transparent !important;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Custom modern scrollbar for dark sidebar */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+.sidebar-header {
+  font-family: var(--heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+  padding: 0 1.25rem 0.85rem 1.25rem;
+  border-bottom: 1px solid #1e293b;
+  user-select: text;
+  -webkit-user-select: text;
+  white-space: nowrap;
+}
+
+.sidebar-loading,
+.sidebar-error {
+  padding: 1rem 1.25rem;
+  font-size: 0.875rem;
+  font-family: var(--sans);
+  user-select: text;
+  -webkit-user-select: text;
+  white-space: nowrap;
+}
+
+.sidebar-loading {
+  color: #94a3b8;
+}
+
+.sidebar-error {
+  color: #f87171;
+}
+
+.sheets-list {
+  list-style: none;
+  margin: 0;
+  padding: 0.75rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  user-select: text;
+  -webkit-user-select: text;
+  min-width: 254px; /* Maintain content width during transition */
+}
+
+.sheets-list .empty {
+  padding: 1rem 0.75rem;
+  color: #64748b;
+  font-size: 0.875rem;
+  text-align: center;
+  font-family: var(--sans);
+  white-space: nowrap;
+}
+
+.sheet-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.85rem;
+  border-radius: 0.5rem;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  color: #cbd5e1;
+  font-family: var(--sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.sheet-btn:hover {
+  background-color: #1e293b;
+  color: #ffffff;
+}
+
+.sheet-btn.active {
+  background-color: #1e3a8a; /* Deep sapphire active highlight */
+  color: #ffffff;
+  font-weight: 600;
+  border-color: #3b82f6;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.sheet-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.sheet-count {
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: #1e293b;
+  color: #94a3b8;
+  padding: 0.15rem 0.55rem;
+  border-radius: 9999px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.sheet-btn:hover .sheet-count {
+  background-color: #334155;
+  color: #f1f5f9;
+}
+
+.sheet-btn.active .sheet-count {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+
