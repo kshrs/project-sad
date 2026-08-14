@@ -1,0 +1,39 @@
+.sheet-table-wrapper {
+  padding: 24px;
+  color: inherit;
+}
+
+.sheet-title {
+  margin: 0 0 12px 0;
+  font-size: 1.15rem;
+}
+
+.table-scroll {
+  overflow: auto;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.02);
+  padding: 8px;
+}
+
+.sheet-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sheet-table th, .sheet-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.sheet-table th {
+  position: sticky;
+  top: 0;
+  background: rgba(3,7,18,0.6);
+}
+
+.sheet-table-empty, .sheet-table-loading, .sheet-table-error, .sheet-table-placeholder {
+  padding: 28px;
+  color: #cbd5e1;
+}
