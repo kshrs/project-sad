@@ -7,6 +7,8 @@ const sheetShareController = require('../controllers/sheetShareController');
 const sheetUnlockController = require('../controllers/sheetUnlockController');
 const userController = require('../controllers/userController');
 const pdfReportController = require('../controllers/pdfReportController');
+const fileController = require('../controllers/fileController');
+const { uploadToGridFS } = require('../middleware/uploadMiddleware');
 const backupService = require('../services/backupService');
 const { authenticate, requireRole } = require('../middleware/authMiddleware');
 const auditMiddleware = require('../middleware/auditMiddleware');
@@ -66,6 +68,10 @@ router.get('/users/me/data', authenticate, userController.exportMyData);
 
 // --- Deterministic Infographic PDF Engine ---
 router.get('/reports/export-pdf', authenticate, pdfReportController.exportPdf);
+
+// --- File Upload & Streaming Routes ---
+router.post('/files/upload', authenticate, uploadToGridFS, fileController.uploadFile);
+router.get('/files/:id', fileController.getFileById);
 
 // --- Global Activity Logs (Admin & Coordinator Explorer) ---
 router.get('/admin/activity-logs', authenticate, requireRole('ADMIN', 'COORDINATOR'), async (req, res) => {

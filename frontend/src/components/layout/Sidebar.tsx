@@ -57,13 +57,17 @@ export default function Sidebar({ isOpen, activeSheetKey, onSelectSheet }: Sideb
     <aside
       style={{
         width: 'var(--sidebar-width)',
+        minWidth: 'var(--sidebar-width)',
+        maxWidth: 'var(--sidebar-width)',
+        flexShrink: 0,
         backgroundColor: 'var(--color-primary)',
         color: '#ffffff',
         display: 'flex',
         flexDirection: 'column',
         height: 'calc(100vh - var(--header-height))',
         borderRight: '1px solid rgba(255, 255, 255, 0.1)',
-        userSelect: 'none'
+        userSelect: 'none',
+        overflow: 'hidden'
       }}
     >
       {/* Search Input */}

@@ -6,7 +6,7 @@ import { useAuth } from '../../context/AuthContext';
 import { ColumnDefinition, SheetEntry, ActiveCollaborator } from '../../types';
 import SheetEntryModal from '../modals/SheetEntryModal';
 import ManageAccessModal from '../modals/ManageAccessModal';
-import { Plus, Users, RefreshCw, Edit2, Trash2, ShieldAlert, Check, Clock, Undo, Redo, Lock, Key } from 'lucide-react';
+import { Plus, Users, RefreshCw, Edit2, Trash2, ShieldAlert, Check, Clock, Undo, Redo, Lock, Key, FileText } from 'lucide-react';
 
 interface SheetTableProps {
   sheetKey: string;
@@ -532,43 +532,77 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
                         return key !== 's_no' && key !== 'sno' && key !== 'sl_no' && key !== 'serial_no';
                       })
                       .map((col) => {
-                      const val = entry.data ? entry.data[col.fieldKey] ?? '' : '';
-                      return (
-                        <td key={col.fieldKey} style={{ padding: '6px 10px' }}>
-                          <input
-                            type={col.type === 'Number' ? 'number' : 'text'}
-                            value={val}
-                            disabled={effectiveIsLocked}
-                            onFocus={() => {
-                              getSocket().emit('row_focus', { rowId });
-                            }}
-                            onBlur={() => {
-                              getSocket().emit('row_blur', { rowId });
-                            }}
-                            onChange={(e) => handleCellEdit(rowId, col.fieldKey, e.target.value)}
-                            style={{
-                              width: '100%',
-                              padding: '5px 8px',
-                              borderRadius: '4px',
-                              border: '1px solid transparent',
-                              backgroundColor: 'transparent',
-                              fontSize: '12px',
-                              color: '#1e2842',
-                              outline: 'none',
-                              transition: 'border-color 0.15s ease'
-                            }}
-                            onMouseEnter={(e) => {
-                              if (!effectiveIsLocked) (e.target as HTMLElement).style.borderColor = '#cbd5e1';
-                            }}
-                            onMouseLeave={(e) => {
-                              if (document.activeElement !== e.target) {
-                                (e.target as HTMLElement).style.borderColor = 'transparent';
-                              }
-                            }}
-                          />
-                        </td>
-                      );
-                    })}
+                        const val = entry.data ? entry.data[col.fieldKey] ?? '' : '';
+
+                        if (col.type === 'File') {
+                          return (
+                            <td key={col.fieldKey} style={{ padding: '6px 10px' }}>
+                              {val ? (
+                                <a
+                                  href={`${api.defaults.baseURL}/files/${val}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '4px',
+                                    padding: '3px 8px',
+                                    borderRadius: '4px',
+                                    backgroundColor: '#eff6ff',
+                                    color: '#2563eb',
+                                    border: '1px solid #bfdbfe',
+                                    fontSize: '11px',
+                                    fontWeight: 600,
+                                    textDecoration: 'none'
+                                  }}
+                                >
+                                  <FileText size={12} /> View Proof
+                                </a>
+                              ) : (
+                                <span style={{ color: '#94a3b8', fontStyle: 'italic', fontSize: '11px' }}>
+                                  No file
+                                </span>
+                              )}
+                            </td>
+                          );
+                        }
+
+                        return (
+                          <td key={col.fieldKey} style={{ padding: '6px 10px' }}>
+                            <input
+                              type={col.type === 'Number' ? 'number' : 'text'}
+                              value={val}
+                              disabled={effectiveIsLocked}
+                              onFocus={() => {
+                                getSocket().emit('row_focus', { rowId });
+                              }}
+                              onBlur={() => {
+                                getSocket().emit('row_blur', { rowId });
+                              }}
+                              onChange={(e) => handleCellEdit(rowId, col.fieldKey, e.target.value)}
+                              style={{
+                                width: '100%',
+                                padding: '5px 8px',
+                                borderRadius: '4px',
+                                border: '1px solid transparent',
+                                backgroundColor: 'transparent',
+                                fontSize: '12px',
+                                color: '#1e2842',
+                                outline: 'none',
+                                transition: 'border-color 0.15s ease'
+                              }}
+                              onMouseEnter={(e) => {
+                                if (!effectiveIsLocked) (e.target as HTMLElement).style.borderColor = '#cbd5e1';
+                              }}
+                              onMouseLeave={(e) => {
+                                if (document.activeElement !== e.target) {
+                                  (e.target as HTMLElement).style.borderColor = 'transparent';
+                                }
+                              }}
+                            />
+                          </td>
+                        );
+                      })}
                   </tr>
                 );
               })}

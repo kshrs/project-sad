@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../services/apiClient';
 import { ColumnDefinition } from '../../types';
-import { X, Check, Upload, Calendar, AlertCircle } from 'lucide-react';
+import { X, Check, Upload, AlertCircle, FileText, Trash2, Loader2 } from 'lucide-react';
 
 interface EntryModalProps {
   isOpen: boolean;
@@ -21,14 +21,28 @@ export default function SheetEntryModal({
   title
 }: EntryModalProps) {
   const [formData, setFormData] = useState<Record<string, any>>({});
+  const [fileDetails, setFileDetails] = useState<Record<string, { id: string; name: string }>>({});
+  const [uploadingField, setUploadingField] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (initialData) {
       setFormData(initialData);
+      // Populate any existing file fields
+      const files: Record<string, { id: string; name: string }> = {};
+      columns.forEach((c) => {
+        if (c.type === 'File' && initialData[c.fieldKey]) {
+          files[c.fieldKey] = {
+            id: initialData[c.fieldKey],
+            name: 'Attached Proof Document'
+          };
+        }
+      });
+      setFileDetails(files);
     } else {
       setFormData({});
+      setFileDetails({});
     }
     setErrors({});
   }, [initialData, isOpen]);
@@ -44,6 +58,49 @@ export default function SheetEntryModal({
         return copy;
       });
     }
+  };
+
+  const handleFileUpload = async (fieldKey: string, file: File) => {
+    if (file.size > 5 * 1024 * 1024) {
+      alert('File size exceeds 5MB limit. Please upload a smaller file.');
+      return;
+    }
+
+    try {
+      setUploadingField(fieldKey);
+      const data = new FormData();
+      data.append('file', file);
+
+      const res = await api.post('/files/upload', data, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+
+      if (res.data?.success && res.data?.file) {
+        const uploadedFile = res.data.file;
+        setFormData((prev) => ({ ...prev, [fieldKey]: uploadedFile.id }));
+        setFileDetails((prev) => ({
+          ...prev,
+          [fieldKey]: { id: uploadedFile.id, name: uploadedFile.originalname }
+        }));
+      }
+    } catch (err: any) {
+      alert(err.response?.data?.message || 'File upload failed');
+    } finally {
+      setUploadingField(null);
+    }
+  };
+
+  const handleRemoveFile = (fieldKey: string) => {
+    setFormData((prev) => {
+      const copy = { ...prev };
+      delete copy[fieldKey];
+      return copy;
+    });
+    setFileDetails((prev) => {
+      const copy = { ...prev };
+      delete copy[fieldKey];
+      return copy;
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -127,7 +184,7 @@ export default function SheetEntryModal({
           </button>
         </div>
 
-        {/* Modal Form Body (2-Column Responsive Layout) */}
+        {/* Modal Form Body */}
         <form onSubmit={handleSubmit} style={{ flex: 1, overflowY: 'auto', padding: '20px' }}>
           <div
             style={{
@@ -142,81 +199,147 @@ export default function SheetEntryModal({
                 return key !== 's_no' && key !== 'sno' && key !== 'sl_no' && key !== 'serial_no';
               })
               .map((col) => {
-              const hasError = !!errors[col.fieldKey];
-              const value = formData[col.fieldKey] || '';
+                const hasError = !!errors[col.fieldKey];
+                const value = formData[col.fieldKey] || '';
+                const attachedFile = fileDetails[col.fieldKey];
+                const isUploading = uploadingField === col.fieldKey;
 
-              return (
-                <div key={col.fieldKey} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <label style={{ fontSize: '12px', fontWeight: 700, color: '#334155' }}>
-                    {col.label} {col.required && <span style={{ color: '#dc2626' }}>*</span>}
-                  </label>
+                return (
+                  <div key={col.fieldKey} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    <label style={{ fontSize: '12px', fontWeight: 700, color: '#334155' }}>
+                      {col.label} {col.required && <span style={{ color: '#dc2626' }}>*</span>}
+                    </label>
 
-                  {col.type === 'Date' ? (
-                    <input
-                      type="date"
-                      value={value ? String(value).split('T')[0] : ''}
-                      onChange={(e) => handleChange(col.fieldKey, e.target.value)}
-                      style={{
-                        padding: '8px 10px',
-                        borderRadius: '6px',
-                        border: `1px solid ${hasError ? '#dc2626' : '#cbd5e1'}`,
-                        fontSize: '13px',
-                        outline: 'none'
-                      }}
-                    />
-                  ) : col.type === 'Number' ? (
-                    <input
-                      type="number"
-                      placeholder={`Enter ${col.label.toLowerCase()}`}
-                      value={value}
-                      onChange={(e) => handleChange(col.fieldKey, e.target.value)}
-                      style={{
-                        padding: '8px 10px',
-                        borderRadius: '6px',
-                        border: `1px solid ${hasError ? '#dc2626' : '#cbd5e1'}`,
-                        fontSize: '13px',
-                        outline: 'none'
-                      }}
-                    />
-                  ) : col.type === 'File' ? (
-                    <div
-                      style={{
-                        padding: '12px',
-                        borderRadius: '6px',
-                        border: '1px dashed #cbd5e1',
-                        backgroundColor: '#f8fafc',
-                        textAlign: 'center',
-                        fontSize: '12px',
-                        color: '#64748b'
-                      }}
-                    >
-                      <Upload size={18} style={{ margin: '0 auto 4px', display: 'block', color: '#94a3b8' }} />
-                      <span>Attach Proof Document (PDF/Image &le; 5MB)</span>
-                    </div>
-                  ) : (
-                    <input
-                      type="text"
-                      placeholder={`Enter ${col.label.toLowerCase()}`}
-                      value={value}
-                      onChange={(e) => handleChange(col.fieldKey, e.target.value)}
-                      style={{
-                        padding: '8px 10px',
-                        borderRadius: '6px',
-                        border: `1px solid ${hasError ? '#dc2626' : '#cbd5e1'}`,
-                        fontSize: '13px',
-                        outline: 'none'
-                      }}
-                    />
-                  )}
+                    {col.type === 'Date' ? (
+                      <input
+                        type="date"
+                        value={value ? String(value).split('T')[0] : ''}
+                        onChange={(e) => handleChange(col.fieldKey, e.target.value)}
+                        style={{
+                          padding: '8px 10px',
+                          borderRadius: '6px',
+                          border: `1px solid ${hasError ? '#dc2626' : '#cbd5e1'}`,
+                          fontSize: '13px',
+                          outline: 'none'
+                        }}
+                      />
+                    ) : col.type === 'Number' ? (
+                      <input
+                        type="number"
+                        placeholder={`Enter ${col.label.toLowerCase()}`}
+                        value={value}
+                        onChange={(e) => handleChange(col.fieldKey, e.target.value)}
+                        style={{
+                          padding: '8px 10px',
+                          borderRadius: '6px',
+                          border: `1px solid ${hasError ? '#dc2626' : '#cbd5e1'}`,
+                          fontSize: '13px',
+                          outline: 'none'
+                        }}
+                      />
+                    ) : col.type === 'File' ? (
+                      <div>
+                        {attachedFile ? (
+                          <div
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                              padding: '8px 12px',
+                              backgroundColor: '#f0fdf4',
+                              border: '1px solid #bbf7d0',
+                              borderRadius: '6px'
+                            }}
+                          >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden' }}>
+                              <FileText size={16} color="#16a34a" />
+                              <span
+                                style={{
+                                  fontSize: '12px',
+                                  fontWeight: 600,
+                                  color: '#166534',
+                                  whiteSpace: 'nowrap',
+                                  overflow: 'hidden',
+                                  textOverflow: 'ellipsis'
+                                }}
+                              >
+                                {attachedFile.name}
+                              </span>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveFile(col.fieldKey)}
+                              style={{ color: '#dc2626', padding: '2px', cursor: 'pointer' }}
+                              title="Remove File"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
+                        ) : (
+                          <label
+                            style={{
+                              display: 'flex',
+                              flexDirection: 'column',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              padding: '12px',
+                              borderRadius: '6px',
+                              border: `1px dashed ${hasError ? '#dc2626' : '#cbd5e1'}`,
+                              backgroundColor: '#f8fafc',
+                              textAlign: 'center',
+                              fontSize: '12px',
+                              color: '#64748b',
+                              cursor: isUploading ? 'not-allowed' : 'pointer'
+                            }}
+                          >
+                            <input
+                              type="file"
+                              accept=".pdf,.png,.jpg,.jpeg"
+                              disabled={isUploading}
+                              onChange={(e) => {
+                                if (e.target.files && e.target.files[0]) {
+                                  handleFileUpload(col.fieldKey, e.target.files[0]);
+                                }
+                              }}
+                              style={{ display: 'none' }}
+                            />
+                            {isUploading ? (
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#2563eb' }}>
+                                <Loader2 size={16} className="spin" /> Uploading to server...
+                              </div>
+                            ) : (
+                              <>
+                                <Upload size={18} style={{ margin: '0 auto 4px', display: 'block', color: '#94a3b8' }} />
+                                <span>Click to Upload Proof (PDF/Image &le; 5MB)</span>
+                              </>
+                            )}
+                          </label>
+                        )}
+                      </div>
+                    ) : (
+                      <input
+                        type="text"
+                        placeholder={`Enter ${col.label.toLowerCase()}`}
+                        value={value}
+                        onChange={(e) => handleChange(col.fieldKey, e.target.value)}
+                        style={{
+                          padding: '8px 10px',
+                          borderRadius: '6px',
+                          border: `1px solid ${hasError ? '#dc2626' : '#cbd5e1'}`,
+                          fontSize: '13px',
+                          outline: 'none'
+                        }}
+                      />
+                    )}
 
-                  {hasError && (
-                    <span style={{ fontSize: '11px', color: '#dc2626', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <AlertCircle size={12} /> {errors[col.fieldKey]}
-                    </span>
-                  )}
-                </div>
-              );
-            })}
+                    {hasError && (
+                      <span style={{ fontSize: '11px', color: '#dc2626', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <AlertCircle size={12} /> {errors[col.fieldKey]}
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
           </div>
 
           {/* Modal Actions */}
@@ -247,7 +370,7 @@ export default function SheetEntryModal({
             </button>
             <button
               type="submit"
-              disabled={submitting}
+              disabled={submitting || !!uploadingField}
               style={{
                 display: 'flex',
                 alignItems: 'center',
