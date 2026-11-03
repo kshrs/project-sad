@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../services/apiClient';
 import { User } from '../../types';
-import { X, Search, Shield, Clock, Trash2, Check, AlertCircle } from 'lucide-react';
+import { X, Search, Shield, Clock, Trash2, Check, UserPlus, Users } from 'lucide-react';
 
 interface ManageAccessModalProps {
   isOpen: boolean;
@@ -18,9 +18,11 @@ export default function ManageAccessModal({
 }: ManageAccessModalProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<User[]>([]);
-  const [selectedStaff, setSelectedStaff] = useState<User | null>(null);
+  
+  // Multi-staff selection list
+  const [selectedStaffList, setSelectedStaffList] = useState<User[]>([]);
 
-  // Delegation Options
+  // Delegation Options applied to the selected batch
   const [accessType, setAccessType] = useState<'READ_ONLY' | 'READ_WRITE'>('READ_WRITE');
   const [canViewExisting, setCanViewExisting] = useState(true);
   const [canEditExisting, setCanEditExisting] = useState(false);
@@ -59,7 +61,9 @@ export default function ManageAccessModal({
       try {
         const res = await api.get('/users/search', { params: { q: searchQuery } });
         if (res.data?.success) {
-          setSearchResults(res.data.users || []);
+          // Filter out already selected staff
+          const selectedIds = new Set(selectedStaffList.map((s) => s.email));
+          setSearchResults((res.data.users || []).filter((u: User) => !selectedIds.has(u.email)));
         }
       } catch (err) {
         console.error('User search failed', err);
@@ -67,30 +71,47 @@ export default function ManageAccessModal({
     }, 250);
 
     return () => clearTimeout(timer);
-  }, [searchQuery]);
+  }, [searchQuery, selectedStaffList]);
 
   if (!isOpen) return null;
 
-  const handleGrant = async () => {
-    if (!selectedStaff) return;
+  const handleAddStaff = (staff: User) => {
+    setSelectedStaffList((prev) => [...prev, staff]);
+    setSearchQuery('');
+    setSearchResults([]);
+  };
+
+  const handleRemoveSelectedStaff = (email: string) => {
+    setSelectedStaffList((prev) => prev.filter((s) => s.email !== email));
+  };
+
+  // Grant delegation access to ALL selected staff members
+  const handleGrantBatch = async () => {
+    if (selectedStaffList.length === 0) return;
     try {
       setSubmitting(true);
       const expiresAt = new Date(Date.now() + expiryDays * 24 * 60 * 60 * 1000).toISOString();
-      await api.post('/share', {
-        sheetKey,
-        monthId,
-        sharedWithEmail: selectedStaff.email,
-        accessType,
-        canViewExisting,
-        canEditExisting,
-        canDeleteExisting,
-        expiresAt
-      });
-      setSelectedStaff(null);
+
+      await Promise.all(
+        selectedStaffList.map((staff) =>
+          api.post('/share', {
+            sheetKey,
+            monthId,
+            sharedWithEmail: staff.email,
+            accessType,
+            canViewExisting,
+            canEditExisting,
+            canDeleteExisting,
+            expiresAt
+          })
+        )
+      );
+
+      setSelectedStaffList([]);
       setSearchQuery('');
       await loadGrantedShares();
     } catch (err: any) {
-      alert(err.response?.data?.message || err.message || 'Failed to grant share');
+      alert(err.response?.data?.message || err.message || 'Failed to grant delegation');
     } finally {
       setSubmitting(false);
     }
@@ -122,7 +143,7 @@ export default function ManageAccessModal({
       <div
         style={{
           width: '100%',
-          maxWidth: '650px',
+          maxWidth: '680px',
           maxHeight: '85vh',
           backgroundColor: '#ffffff',
           borderRadius: '10px',
@@ -145,10 +166,10 @@ export default function ManageAccessModal({
         >
           <div>
             <h2 style={{ fontSize: '15px', fontWeight: 700, color: '#1e2842' }}>
-              Manage Access & Delegation
+              Manage Access & Multi-Staff Delegation
             </h2>
             <div style={{ fontSize: '12px', color: '#64748b' }}>
-              Delegate read/write authority for sheet: <strong>{sheetKey}</strong>
+              Delegate read/write authority for: <strong>{sheetKey.replace(/([a-z])([A-Z])/g, '$1 $2')}</strong>
             </div>
           </div>
           <button onClick={onClose} style={{ padding: '6px', color: '#64748b', cursor: 'pointer' }}>
@@ -157,11 +178,44 @@ export default function ManageAccessModal({
         </div>
 
         <div style={{ flex: 1, overflowY: 'auto', padding: '20px', display: 'flex', flexDirection: 'column', gap: '18px' }}>
-          {/* Staff Search */}
+          {/* Multi-Staff Selection */}
           <div>
             <label style={{ fontSize: '12px', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '6px' }}>
-              Select Staff Member to Grant Access
+              Add Staff Members to Access List
             </label>
+            
+            {/* Selected staff tags */}
+            {selectedStaffList.length > 0 && (
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '8px' }}>
+                {selectedStaffList.map((s) => (
+                  <span
+                    key={s.email}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      padding: '4px 10px',
+                      borderRadius: '16px',
+                      backgroundColor: '#eff6ff',
+                      color: '#1e40af',
+                      border: '1px solid #bfdbfe',
+                      fontSize: '12px',
+                      fontWeight: 600
+                    }}
+                  >
+                    {s.displayName}
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveSelectedStaff(s.email)}
+                      style={{ color: '#ef4444', display: 'flex', alignItems: 'center' }}
+                    >
+                      <X size={12} />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
+
             <div
               style={{
                 display: 'flex',
@@ -176,23 +230,15 @@ export default function ManageAccessModal({
               <Search size={16} color="#94a3b8" />
               <input
                 type="text"
-                placeholder="Type name or email to search staff directory..."
-                value={selectedStaff ? `${selectedStaff.displayName} (${selectedStaff.email})` : searchQuery}
-                onChange={(e) => {
-                  setSelectedStaff(null);
-                  setSearchQuery(e.target.value);
-                }}
+                placeholder="Search staff by name or email to add..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 style={{ border: 'none', background: 'transparent', outline: 'none', fontSize: '13px', width: '100%' }}
               />
-              {selectedStaff && (
-                <button onClick={() => setSelectedStaff(null)} style={{ color: '#dc2626' }}>
-                  <X size={14} />
-                </button>
-              )}
             </div>
 
             {/* Dropdown Suggestions */}
-            {searchResults.length > 0 && !selectedStaff && (
+            {searchResults.length > 0 && (
               <div
                 style={{
                   border: '1px solid #e2e8f0',
@@ -207,10 +253,7 @@ export default function ManageAccessModal({
                 {searchResults.map((u) => (
                   <div
                     key={u.email}
-                    onClick={() => {
-                      setSelectedStaff(u);
-                      setSearchResults([]);
-                    }}
+                    onClick={() => handleAddStaff(u)}
                     style={{
                       padding: '8px 12px',
                       display: 'flex',
@@ -223,8 +266,8 @@ export default function ManageAccessModal({
                   >
                     <div style={{ fontWeight: 600, color: '#1e2842' }}>{u.displayName}</div>
                     <div style={{ color: '#64748b' }}>({u.email})</div>
-                    <div style={{ marginLeft: 'auto', fontSize: '10px', backgroundColor: '#e2e8f0', padding: '1px 6px', borderRadius: '4px' }}>
-                      {u.department}
+                    <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', color: '#2563eb' }}>
+                      <UserPlus size={13} /> Add
                     </div>
                   </div>
                 ))}
@@ -233,10 +276,10 @@ export default function ManageAccessModal({
           </div>
 
           {/* Granular Permission Options */}
-          {selectedStaff && (
+          {selectedStaffList.length > 0 && (
             <div style={{ backgroundColor: '#f8fafc', padding: '14px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
               <div style={{ fontSize: '12px', fontWeight: 700, color: '#1e2842', marginBottom: '10px' }}>
-                Configure Permissions for {selectedStaff.displayName}
+                Permissions for {selectedStaffList.length} Selected {selectedStaffList.length === 1 ? 'Staff' : 'Staff Members'}
               </div>
 
               {/* Access Mode */}
@@ -283,7 +326,7 @@ export default function ManageAccessModal({
                 </div>
               )}
 
-              {/* Expiration Duration */}
+              {/* Expiration Duration & Grant Action */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '10px' }}>
                 <span style={{ fontSize: '12px', color: '#475569' }}>Access Expiration:</span>
                 <select
@@ -297,11 +340,11 @@ export default function ManageAccessModal({
                   <option value={30}>1 Month</option>
                 </select>
                 <button
-                  onClick={handleGrant}
+                  onClick={handleGrantBatch}
                   disabled={submitting}
                   style={{
                     marginLeft: 'auto',
-                    padding: '6px 14px',
+                    padding: '7px 16px',
                     borderRadius: '6px',
                     backgroundColor: '#1e2842',
                     color: '#ffffff',
@@ -309,7 +352,7 @@ export default function ManageAccessModal({
                     fontWeight: 700
                   }}
                 >
-                  Grant Access
+                  Grant to All {selectedStaffList.length} Staff
                 </button>
               </div>
             </div>

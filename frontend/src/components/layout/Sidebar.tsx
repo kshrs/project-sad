@@ -1,28 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../services/apiClient';
 import { useReport } from '../../context/ReportContext';
-import { SheetDefinition, SharedSheetItem } from '../../types';
-import { Search, FolderGit2, Users, Layers, ChevronRight, Clock } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import { SheetDefinition, SharedSheetItem, User } from '../../types';
+import CreateSheetModal from '../modals/CreateSheetModal';
+import { Search, Users, Layers, Clock, Plus, UserCheck } from 'lucide-react';
 
 interface SidebarProps {
   isOpen: boolean;
   activeSheetKey: string | null;
   onSelectSheet: (sheetKey: string, sharedOwnerId?: string) => void;
+  selectedStaffUser: User | null;
+  onSelectStaffUser: (staff: User | null) => void;
 }
 
-export default function Sidebar({ isOpen, activeSheetKey, onSelectSheet }: SidebarProps) {
+export default function Sidebar({
+  isOpen,
+  activeSheetKey,
+  onSelectSheet,
+  selectedStaffUser,
+  onSelectStaffUser
+}: SidebarProps) {
   const { selectedMonth, refreshKey } = useReport();
+  const { user } = useAuth();
+
   const [sheets, setSheets] = useState<SheetDefinition[]>([]);
   const [sharedSheets, setSharedSheets] = useState<SharedSheetItem[]>([]);
+  const [allStaffList, setAllStaffList] = useState<User[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [isCreateSheetOpen, setIsCreateSheetOpen] = useState(false);
+
+  const isAdminOrCoordinator = user?.role === 'ADMIN' || user?.role === 'COORDINATOR';
+
+  // Fetch all staff users for Admin view
+  useEffect(() => {
+    if (isAdminOrCoordinator) {
+      api.get('/users/search?q=a').then((res) => {
+        if (res.data?.success) {
+          setAllStaffList(res.data.users || []);
+        }
+      });
+    }
+  }, [isAdminOrCoordinator]);
+
+  // Fetch sheets metadata (for selected staff if Admin, or for current user if Staff)
+  const targetOwnerId = isAdminOrCoordinator ? selectedStaffUser?.id : user?.id;
 
   useEffect(() => {
     const fetchMetadata = async () => {
       try {
-        setLoading(true);
         const res = await api.get('/sheets', {
-          params: { monthId: selectedMonth?._id }
+          params: {
+            monthId: selectedMonth?._id,
+            staffId: targetOwnerId
+          }
         });
         if (res.data?.success) {
           setSheets(res.data.sheets || []);
@@ -30,13 +61,11 @@ export default function Sidebar({ isOpen, activeSheetKey, onSelectSheet }: Sideb
         }
       } catch (err) {
         console.error('Failed to load sheets metadata', err);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchMetadata();
-  }, [selectedMonth?._id, refreshKey]);
+  }, [selectedMonth?._id, targetOwnerId, refreshKey]);
 
   // Filter sheets by search query
   const filteredSheets = sheets.filter(
@@ -70,8 +99,64 @@ export default function Sidebar({ isOpen, activeSheetKey, onSelectSheet }: Sideb
         overflow: 'hidden'
       }}
     >
+      {/* Admin Staff Selector Header */}
+      {isAdminOrCoordinator && (
+        <div style={{ padding: '12px 14px', borderBottom: '1px solid rgba(255, 255, 255, 0.12)', backgroundColor: 'rgba(0, 0, 0, 0.15)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+            <span style={{ fontSize: '11px', fontWeight: 800, color: '#93c5fd', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+              Staff Portfolio View
+            </span>
+            <button
+              onClick={() => setIsCreateSheetOpen(true)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                fontSize: '11px',
+                fontWeight: 700,
+                color: '#60a5fa',
+                backgroundColor: 'rgba(37, 99, 235, 0.25)',
+                padding: '3px 8px',
+                borderRadius: '4px'
+              }}
+              title="Create & publish a new sheet"
+            >
+              <Plus size={12} /> New Sheet
+            </button>
+          </div>
+
+          <select
+            value={selectedStaffUser?.id || ''}
+            onChange={(e) => {
+              const staffId = e.target.value;
+              const found = allStaffList.find((s) => s.id === staffId);
+              onSelectStaffUser(found || null);
+            }}
+            style={{
+              width: '100%',
+              padding: '6px 10px',
+              borderRadius: '6px',
+              backgroundColor: '#ffffff',
+              color: '#0f172a',
+              fontSize: '12px',
+              fontWeight: 600,
+              border: 'none',
+              outline: 'none',
+              cursor: 'pointer'
+            }}
+          >
+            <option value="">All Department Overview (Aggregate)</option>
+            {allStaffList.map((st) => (
+              <option key={st.id} value={st.id}>
+                {st.displayName} ({st.email})
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
       {/* Search Input */}
-      <div style={{ padding: '12px 14px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+      <div style={{ padding: '10px 14px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
         <div
           style={{
             display: 'flex',
@@ -85,7 +170,7 @@ export default function Sidebar({ isOpen, activeSheetKey, onSelectSheet }: Sideb
           <Search size={15} color="#94a3b8" />
           <input
             type="text"
-            placeholder="Search sheets..."
+            placeholder="Search criteria sheets..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             style={{
@@ -102,7 +187,7 @@ export default function Sidebar({ isOpen, activeSheetKey, onSelectSheet }: Sideb
 
       {/* Sheets Navigation List */}
       <div style={{ flex: 1, overflowY: 'auto', padding: '10px 8px' }}>
-        {/* Section 1: My Sheets */}
+        {/* Section 1: Sheets */}
         <div style={{ marginBottom: '16px' }}>
           <div
             style={{
@@ -118,7 +203,7 @@ export default function Sidebar({ isOpen, activeSheetKey, onSelectSheet }: Sideb
               gap: '6px'
             }}
           >
-            <Layers size={12} /> My Achievement Sheets ({filteredSheets.length})
+            <Layers size={12} /> Criteria Sheets ({filteredSheets.length})
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
@@ -127,7 +212,7 @@ export default function Sidebar({ isOpen, activeSheetKey, onSelectSheet }: Sideb
               return (
                 <button
                   key={s.sheetKey}
-                  onClick={() => onSelectSheet(s.sheetKey)}
+                  onClick={() => onSelectSheet(s.sheetKey, targetOwnerId)}
                   title={s.displayName}
                   style={{
                     display: 'flex',
@@ -176,8 +261,8 @@ export default function Sidebar({ isOpen, activeSheetKey, onSelectSheet }: Sideb
           </div>
         </div>
 
-        {/* Section 2: Shared With Me (Grouped by Staff) */}
-        {sharedSheets.length > 0 && (
+        {/* Section 2: Shared With Me (Only relevant for individual staff) */}
+        {!isAdminOrCoordinator && sharedSheets.length > 0 && (
           <div style={{ marginTop: '14px', borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '12px' }}>
             <div
               style={{
@@ -256,6 +341,18 @@ export default function Sidebar({ isOpen, activeSheetKey, onSelectSheet }: Sideb
           </div>
         )}
       </div>
+
+      {/* Admin Create Sheet Modal */}
+      <CreateSheetModal
+        isOpen={isCreateSheetOpen}
+        onClose={() => setIsCreateSheetOpen(false)}
+        onCreated={() => {
+          // Trigger refresh
+          api.get('/sheets', { params: { monthId: selectedMonth?._id, staffId: targetOwnerId } }).then((res) => {
+            if (res.data?.success) setSheets(res.data.sheets || []);
+          });
+        }}
+      />
     </aside>
   );
 }

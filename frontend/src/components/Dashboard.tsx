@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import Header from './layout/Header';
 import Sidebar from './layout/Sidebar';
 import SheetTable from './sheets/SheetTable';
+import { User } from '../types';
 import { Layers } from 'lucide-react';
 
 export default function Dashboard() {
@@ -10,10 +11,16 @@ export default function Dashboard() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [activeSheetKey, setActiveSheetKey] = useState<string | null>('AwardsReceived');
   const [sharedOwnerId, setSharedOwnerId] = useState<string | undefined>(undefined);
+  const [selectedStaffUser, setSelectedStaffUser] = useState<User | null>(null);
 
   const handleSelectSheet = (sheetKey: string, ownerId?: string) => {
     setActiveSheetKey(sheetKey);
     setSharedOwnerId(ownerId);
+  };
+
+  const handleSelectStaffUser = (staff: User | null) => {
+    setSelectedStaffUser(staff);
+    setSharedOwnerId(staff?.id);
   };
 
   return (
@@ -25,6 +32,8 @@ export default function Dashboard() {
           isOpen={isSidebarOpen}
           activeSheetKey={activeSheetKey}
           onSelectSheet={handleSelectSheet}
+          selectedStaffUser={selectedStaffUser}
+          onSelectStaffUser={handleSelectStaffUser}
         />
 
         <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>

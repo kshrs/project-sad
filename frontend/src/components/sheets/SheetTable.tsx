@@ -568,38 +568,16 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
                         }
 
                         return (
-                          <td key={col.fieldKey} style={{ padding: '6px 10px' }}>
-                            <input
-                              type={col.type === 'Number' ? 'number' : 'text'}
-                              value={val}
-                              disabled={effectiveIsLocked}
-                              onFocus={() => {
-                                getSocket().emit('row_focus', { rowId });
-                              }}
-                              onBlur={() => {
-                                getSocket().emit('row_blur', { rowId });
-                              }}
-                              onChange={(e) => handleCellEdit(rowId, col.fieldKey, e.target.value)}
-                              style={{
-                                width: '100%',
-                                padding: '5px 8px',
-                                borderRadius: '4px',
-                                border: '1px solid transparent',
-                                backgroundColor: 'transparent',
-                                fontSize: '12px',
-                                color: '#1e2842',
-                                outline: 'none',
-                                transition: 'border-color 0.15s ease'
-                              }}
-                              onMouseEnter={(e) => {
-                                if (!effectiveIsLocked) (e.target as HTMLElement).style.borderColor = '#cbd5e1';
-                              }}
-                              onMouseLeave={(e) => {
-                                if (document.activeElement !== e.target) {
-                                  (e.target as HTMLElement).style.borderColor = 'transparent';
-                                }
-                              }}
-                            />
+                          <td key={col.fieldKey} style={{ padding: '8px 10px', color: '#1e2842', fontSize: '12px' }}>
+                            {val !== undefined && val !== null && val !== '' ? (
+                              col.type === 'Date' ? (
+                                new Date(val).toLocaleDateString('en-GB')
+                              ) : (
+                                String(val)
+                              )
+                            ) : (
+                              <span style={{ color: '#cbd5e1' }}>—</span>
+                            )}
                           </td>
                         );
                       })}

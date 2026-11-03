@@ -1,7 +1,7 @@
 [
   {
     "sheetKey": "AlumniEntrepreneurDetails",
-    "displayName": "Alumn ntrepreneu etails",
+    "displayName": "Alumni Entrepreneur Details",
     "category": "OUTREACH",
     "columns": [
       {
@@ -80,7 +80,7 @@
   },
   {
     "sheetKey": "AlumniMeet",
-    "displayName": "Alumn eet",
+    "displayName": "Alumni Meet",
     "category": "OUTREACH",
     "columns": [
       {
@@ -153,7 +153,7 @@
   },
   {
     "sheetKey": "AlumniVisit",
-    "displayName": "Alumn isit",
+    "displayName": "Alumni Visit",
     "category": "OUTREACH",
     "columns": [
       {
@@ -226,7 +226,7 @@
   },
   {
     "sheetKey": "AwardsReceived",
-    "displayName": "Award eceived",
+    "displayName": "Awards Received",
     "category": "FACULTY",
     "columns": [
       {
@@ -317,7 +317,7 @@
   },
   {
     "sheetKey": "BookChapterPublication",
-    "displayName": "Boo hapte ublication",
+    "displayName": "Book Chapter Publication",
     "category": "RESEARCH",
     "columns": [
       {
@@ -408,7 +408,7 @@
   },
   {
     "sheetKey": "BookPublication",
-    "displayName": "Boo ublication",
+    "displayName": "Book Publication",
     "category": "RESEARCH",
     "columns": [
       {
@@ -499,7 +499,7 @@
   },
   {
     "sheetKey": "CareerGuidance",
-    "displayName": "Caree uidance",
+    "displayName": "Career Guidance",
     "category": "FACULTY",
     "columns": [
       {
@@ -578,7 +578,7 @@
   },
   {
     "sheetKey": "CollaborativeActivity",
-    "displayName": "Collaborativ ctivity",
+    "displayName": "Collaborative Activity",
     "category": "FACULTY",
     "columns": [
       {
@@ -681,7 +681,7 @@
   },
   {
     "sheetKey": "FacultyCompetition",
-    "displayName": "Facult ompetition",
+    "displayName": "Faculty Competition",
     "category": "FACULTY",
     "columns": [
       {
@@ -820,7 +820,7 @@
   },
   {
     "sheetKey": "FacultyParticipateOthers",
-    "displayName": "Facult articipat thers",
+    "displayName": "Faculty Participate Others",
     "category": "FACULTY",
     "columns": [
       {
@@ -941,7 +941,7 @@
   },
   {
     "sheetKey": "FacultyResearch",
-    "displayName": "Facult esearch",
+    "displayName": "Faculty Research",
     "category": "RESEARCH",
     "columns": [
       {
@@ -954,7 +954,7 @@
   },
   {
     "sheetKey": "FacultyResourcePerson",
-    "displayName": "Facult esourc erson",
+    "displayName": "Faculty Resource Person",
     "category": "FACULTY",
     "columns": [
       {
@@ -1039,7 +1039,7 @@
   },
   {
     "sheetKey": "FacultyStudentRatio",
-    "displayName": "Facult tuden atio",
+    "displayName": "Faculty Student Ratio",
     "category": "STUDENT",
     "columns": [
       {
@@ -1124,7 +1124,7 @@
   },
   {
     "sheetKey": "GuestLecturesOrganised",
-    "displayName": "Gues ecture rganised",
+    "displayName": "Guest Lectures Organised",
     "category": "FACULTY",
     "columns": [
       {
@@ -1203,7 +1203,7 @@
   },
   {
     "sheetKey": "HigherStudies",
-    "displayName": "Highe tudies",
+    "displayName": "Higher Studies",
     "category": "STUDENT",
     "columns": [
       {
@@ -1288,7 +1288,7 @@
   },
   {
     "sheetKey": "IndustrialTour",
-    "displayName": "Industria our",
+    "displayName": "Industrial Tour",
     "category": "FACULTY",
     "columns": [
       {
@@ -1379,7 +1379,7 @@
   },
   {
     "sheetKey": "IndustrialVisit",
-    "displayName": "Industria isit",
+    "displayName": "Industrial Visit",
     "category": "FACULTY",
     "columns": [
       {
@@ -1470,7 +1470,7 @@
   },
   {
     "sheetKey": "IndustryLinkage",
-    "displayName": "Industr inkage",
+    "displayName": "Industry Linkage",
     "category": "OUTREACH",
     "columns": [
       {
@@ -1640,7 +1640,7 @@
   },
   {
     "sheetKey": "JournalNonScopus",
-    "displayName": "Journa o copus",
+    "displayName": "Journal Non Scopus",
     "category": "RESEARCH",
     "columns": [
       {
@@ -1761,7 +1761,7 @@
   },
   {
     "sheetKey": "JournalPublicationScopus",
-    "displayName": "Journa ublicatio copus",
+    "displayName": "Journal Publication Scopus",
     "category": "RESEARCH",
     "columns": [
       {
@@ -1882,7 +1882,7 @@
   },
   {
     "sheetKey": "MouActivities",
-    "displayName": "Mo ctivities",
+    "displayName": "Mou Activities",
     "category": "OUTREACH",
     "columns": [
       {
@@ -1967,7 +1967,7 @@
   },
   {
     "sheetKey": "MouSigned",
-    "displayName": "Mo igned",
+    "displayName": "Mou Signed",
     "category": "OUTREACH",
     "columns": [
       {
@@ -2107,7 +2107,7 @@
   },
   {
     "sheetKey": "OneCreditCourseOrganised",
-    "displayName": "On redi ours rganised",
+    "displayName": "One Credit Course Organised",
     "category": "FACULTY",
     "columns": [
       {
@@ -2210,7 +2210,7 @@
   },
   {
     "sheetKey": "PaperPresented",
-    "displayName": "Pape resented",
+    "displayName": "Paper Presented",
     "category": "FACULTY",
     "columns": [
       {
@@ -2313,7 +2313,7 @@
   },
   {
     "sheetKey": "PapersReviewed",
-    "displayName": "Paper eviewed",
+    "displayName": "Papers Reviewed",
     "category": "FACULTY",
     "columns": [
       {
@@ -2501,7 +2501,7 @@
   },
   {
     "sheetKey": "PhdCompleted",
-    "displayName": "Ph ompleted",
+    "displayName": "Phd Completed",
     "category": "FACULTY",
     "columns": [
       {
@@ -2574,7 +2574,7 @@
   },
   {
     "sheetKey": "PhdStudents",
-    "displayName": "Ph tudents",
+    "displayName": "Phd Students",
     "category": "STUDENT",
     "columns": [
       {
@@ -2653,7 +2653,7 @@
   },
   {
     "sheetKey": "PrgmAttendAbove5Days",
-    "displayName": "Prg tten bove5Days",
+    "displayName": "Prgm Attend Above5 Days",
     "category": "FACULTY",
     "columns": [
       {
@@ -2774,7 +2774,7 @@
   },
   {
     "sheetKey": "ProfessionalSociety",
-    "displayName": "Professiona ociety",
+    "displayName": "Professional Society",
     "category": "FACULTY",
     "columns": [
       {
@@ -2847,7 +2847,7 @@
   },
   {
     "sheetKey": "ProgramsOrganisedStudents",
-    "displayName": "Program rganise tudents",
+    "displayName": "Programs Organised Students",
     "category": "STUDENT",
     "columns": [
       {
@@ -2962,7 +2962,7 @@
   },
   {
     "sheetKey": "ProgramsOrganizedFaculty",
-    "displayName": "Program rganize aculty",
+    "displayName": "Programs Organized Faculty",
     "category": "FACULTY",
     "columns": [
       {
@@ -3077,7 +3077,7 @@
   },
   {
     "sheetKey": "PurchaseCapitalEquipment",
-    "displayName": "Purchas apita quipment",
+    "displayName": "Purchase Capital Equipment",
     "category": "FACULTY",
     "columns": [
       {
@@ -3168,7 +3168,7 @@
   },
   {
     "sheetKey": "PurchaseConsumables",
-    "displayName": "Purchas onsumables",
+    "displayName": "Purchase Consumables",
     "category": "FACULTY",
     "columns": [
       {
@@ -3229,7 +3229,7 @@
   },
   {
     "sheetKey": "ResearchFunds",
-    "displayName": "Researc unds",
+    "displayName": "Research Funds",
     "category": "RESEARCH",
     "columns": [
       {
@@ -3338,7 +3338,7 @@
   },
   {
     "sheetKey": "RevenueConsultancy",
-    "displayName": "Revenu onsultancy",
+    "displayName": "Revenue Consultancy",
     "category": "OUTREACH",
     "columns": [
       {
@@ -3423,7 +3423,7 @@
   },
   {
     "sheetKey": "RevenueCorporateTraining",
-    "displayName": "Revenu orporat raining",
+    "displayName": "Revenue Corporate Training",
     "category": "FACULTY",
     "columns": [
       {
@@ -3581,7 +3581,7 @@
   },
   {
     "sheetKey": "SeedMoney",
-    "displayName": "See oney",
+    "displayName": "Seed Money",
     "category": "RESEARCH",
     "columns": [
       {
@@ -3660,7 +3660,7 @@
   },
   {
     "sheetKey": "StudentCareerExams",
-    "displayName": "Studen aree xams",
+    "displayName": "Student Career Exams",
     "category": "STUDENT",
     "columns": [
       {
@@ -3727,7 +3727,7 @@
   },
   {
     "sheetKey": "StudentCompetitionParticiDetails",
-    "displayName": "Studen ompetitio artic etails",
+    "displayName": "Student Competition Partici Details",
     "category": "STUDENT",
     "columns": [
       {
@@ -3746,7 +3746,7 @@
   },
   {
     "sheetKey": "StudentCompetitionParticipation",
-    "displayName": "Studen ompetitio articipation",
+    "displayName": "Student Competition Participation",
     "category": "STUDENT",
     "columns": [
       {
@@ -3855,7 +3855,7 @@
   },
   {
     "sheetKey": "StudentIndustryProjects",
-    "displayName": "Studen ndustr rojects",
+    "displayName": "Student Industry Projects",
     "category": "STUDENT",
     "columns": [
       {
@@ -3952,7 +3952,7 @@
   },
   {
     "sheetKey": "StudentInhouseProjects",
-    "displayName": "Studen nhous rojects",
+    "displayName": "Student Inhouse Projects",
     "category": "STUDENT",
     "columns": [
       {
@@ -4043,7 +4043,7 @@
   },
   {
     "sheetKey": "StudentOnlineCourseComp",
-    "displayName": "Studen nlin ours omp",
+    "displayName": "Student Online Course Comp",
     "category": "STUDENT",
     "columns": [
       {
@@ -4116,7 +4116,7 @@
   },
   {
     "sheetKey": "StudentPaperPresent",
-    "displayName": "Studen ape resent",
+    "displayName": "Student Paper Present",
     "category": "STUDENT",
     "columns": [
       {
@@ -4231,7 +4231,7 @@
   },
   {
     "sheetKey": "StudentPublication",
-    "displayName": "Studen ublication",
+    "displayName": "Student Publication",
     "category": "STUDENT",
     "columns": [
       {
@@ -4334,7 +4334,7 @@
   },
   {
     "sheetKey": "StudentsParticipationProg",
-    "displayName": "Student articipatio rog",
+    "displayName": "Students Participation Prog",
     "category": "STUDENT",
     "columns": [
       {
@@ -4425,7 +4425,7 @@
   },
   {
     "sheetKey": "ValueAddedCourseOrganised",
-    "displayName": "Valu dde ours rganised",
+    "displayName": "Value Added Course Organised",
     "category": "FACULTY",
     "columns": [
       {
