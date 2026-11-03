@@ -369,7 +369,7 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
           )}
 
           {/* Manage Access Button (Available to Staff for their own sheets) */}
-          {!sharedOwnerId && user?.role === 'STAFF' && (
+          {user?.role === 'STAFF' && (!sharedOwnerId || sharedOwnerId === user.id) && (
             <button
               onClick={() => setIsAccessModalOpen(true)}
               style={{

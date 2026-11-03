@@ -212,7 +212,7 @@ export default function Sidebar({
               return (
                 <button
                   key={s.sheetKey}
-                  onClick={() => onSelectSheet(s.sheetKey, targetOwnerId)}
+                  onClick={() => onSelectSheet(s.sheetKey, isAdminOrCoordinator ? targetOwnerId : undefined)}
                   title={s.displayName}
                   style={{
                     display: 'flex',
