@@ -4,7 +4,7 @@ import { useReport } from '../../context/ReportContext';
 import { useAuth } from '../../context/AuthContext';
 import { SheetDefinition, SharedSheetItem, User } from '../../types';
 import CreateSheetModal from '../modals/CreateSheetModal';
-import { Search, Users, Layers, Clock, Plus, UserCheck } from 'lucide-react';
+import { Search, Users, Layers, Clock, Plus, UserCheck, ArrowLeft } from 'lucide-react';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -12,6 +12,9 @@ interface SidebarProps {
   onSelectSheet: (sheetKey: string, sharedOwnerId?: string) => void;
   selectedStaffUser: User | null;
   onSelectStaffUser: (staff: User | null) => void;
+  isViewingShared?: boolean;
+  onBackToMySheets?: () => void;
+  sharedSheetsCount?: number;
 }
 
 export default function Sidebar({
@@ -19,7 +22,9 @@ export default function Sidebar({
   activeSheetKey,
   onSelectSheet,
   selectedStaffUser,
-  onSelectStaffUser
+  onSelectStaffUser,
+  isViewingShared = false,
+  onBackToMySheets
 }: SidebarProps) {
   const { selectedMonth, refreshKey } = useReport();
   const { user } = useAuth();
@@ -99,6 +104,42 @@ export default function Sidebar({
         overflow: 'hidden'
       }}
     >
+      {/* Shared Mode Top Banner & Back Action */}
+      {isViewingShared && onBackToMySheets && (
+        <div
+          style={{
+            padding: '12px 14px',
+            backgroundColor: '#1d4ed8',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.2)'
+          }}
+        >
+          <div style={{ fontSize: '11px', fontWeight: 800, color: '#bfdbfe', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '6px' }}>
+            Viewing Delegated Sheets
+          </div>
+          <button
+            onClick={onBackToMySheets}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
+              width: '100%',
+              padding: '8px 12px',
+              borderRadius: '6px',
+              backgroundColor: '#ffffff',
+              color: '#1e2842',
+              fontSize: '12px',
+              fontWeight: 700,
+              cursor: 'pointer',
+              border: 'none',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
+            }}
+          >
+            <ArrowLeft size={14} /> Go Back to Your Sheets
+          </button>
+        </div>
+      )}
+
       {/* Admin Staff Selector Header */}
       {isAdminOrCoordinator && (
         <div style={{ padding: '12px 14px', borderBottom: '1px solid rgba(255, 255, 255, 0.12)', backgroundColor: 'rgba(0, 0, 0, 0.15)' }}>
@@ -187,158 +228,256 @@ export default function Sidebar({
 
       {/* Sheets Navigation List */}
       <div style={{ flex: 1, overflowY: 'auto', padding: '10px 8px' }}>
-        {/* Section 1: Sheets */}
-        <div style={{ marginBottom: '16px' }}>
-          <div
-            style={{
-              fontSize: '10px',
-              fontWeight: 800,
-              color: '#94a3b8',
-              textTransform: 'uppercase',
-              letterSpacing: '0.06em',
-              padding: '4px 8px',
-              marginBottom: '4px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px'
-            }}
-          >
-            <Layers size={12} /> Criteria Sheets ({filteredSheets.length})
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-            {filteredSheets.map((s) => {
-              const isActive = activeSheetKey === s.sheetKey;
-              return (
-                <button
-                  key={s.sheetKey}
-                  onClick={() => onSelectSheet(s.sheetKey, isAdminOrCoordinator ? targetOwnerId : undefined)}
-                  title={s.displayName}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    width: '100%',
-                    padding: '7px 10px',
-                    borderRadius: '5px',
-                    backgroundColor: isActive ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
-                    color: isActive ? '#ffffff' : '#cbd5e1',
-                    fontSize: '12px',
-                    fontWeight: isActive ? 700 : 500,
-                    textAlign: 'left',
-                    transition: 'all 0.15s ease',
-                    minWidth: 0
-                  }}
-                >
-                  <span
-                    style={{
-                      flex: 1,
-                      minWidth: 0,
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                      paddingRight: '8px'
-                    }}
-                  >
-                    {s.displayName}
-                  </span>
-                  <span
-                    style={{
-                      flexShrink: 0,
-                      fontSize: '10px',
-                      fontWeight: 700,
-                      padding: '1px 6px',
-                      borderRadius: '10px',
-                      backgroundColor: s.totalItems > 0 ? '#2563eb' : 'rgba(255, 255, 255, 0.1)',
-                      color: '#ffffff'
-                    }}
-                  >
-                    {s.totalItems}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Section 2: Shared With Me (Only relevant for individual staff) */}
-        {!isAdminOrCoordinator && sharedSheets.length > 0 && (
-          <div style={{ marginTop: '14px', borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '12px' }}>
+        {/* If in Shared Sheets Mode: show ONLY the shared sheets list with owner details */}
+        {isViewingShared ? (
+          <div>
             <div
               style={{
                 fontSize: '10px',
                 fontWeight: 800,
-                color: '#60a5fa',
+                color: '#93c5fd',
                 textTransform: 'uppercase',
                 letterSpacing: '0.06em',
                 padding: '4px 8px',
-                marginBottom: '4px',
+                marginBottom: '8px',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '6px'
               }}
             >
-              <Users size={12} /> Shared With Me ({filteredShared.length})
+              <Users size={12} /> Delegated Sheets Shared With You ({filteredShared.length})
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              {filteredShared.map((item) => (
-                <button
-                  key={item.ruleId}
-                  onClick={() => onSelectSheet(item.sheetKey, item.owner.id)}
-                  title={`${item.sheetName} (${item.owner.displayName})`}
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    width: '100%',
-                    padding: '8px 10px',
-                    borderRadius: '6px',
-                    backgroundColor: 'rgba(37, 99, 235, 0.12)',
-                    border: '1px solid rgba(37, 99, 235, 0.25)',
-                    color: '#ffffff',
-                    fontSize: '12px',
-                    textAlign: 'left',
-                    minWidth: 0
-                  }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', minWidth: 0 }}>
-                    <span
+            {filteredShared.length === 0 ? (
+              <div style={{ padding: '20px 10px', textAlign: 'center', color: '#94a3b8', fontSize: '12px' }}>
+                No sheets have been shared with you for this month.
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                {filteredShared.map((item) => {
+                  const isActive = activeSheetKey === item.sheetKey && targetOwnerId === item.owner.id;
+                  return (
+                    <button
+                      key={item.ruleId}
+                      onClick={() => onSelectSheet(item.sheetKey, item.owner.id)}
+                      title={`${item.sheetName} (${item.owner.displayName})`}
                       style={{
-                        flex: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        width: '100%',
+                        padding: '10px 12px',
+                        borderRadius: '6px',
+                        backgroundColor: isActive ? 'rgba(37, 99, 235, 0.4)' : 'rgba(255, 255, 255, 0.08)',
+                        border: `1px solid ${isActive ? '#60a5fa' : 'rgba(255, 255, 255, 0.15)'}`,
+                        color: '#ffffff',
+                        fontSize: '12px',
+                        textAlign: 'left',
                         minWidth: 0,
-                        fontWeight: 700,
-                        color: '#93c5fd',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        paddingRight: '6px'
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease'
                       }}
                     >
-                      {item.sheetName}
-                    </span>
-                    <span style={{ flexShrink: 0, fontSize: '10px', backgroundColor: '#1e40af', padding: '1px 5px', borderRadius: '4px' }}>
-                      {item.totalItems}
-                    </span>
-                  </div>
-                  <div
-                    style={{
-                      fontSize: '11px',
-                      color: '#cbd5e1',
-                      marginTop: '2px',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap'
-                    }}
-                  >
-                    Owner: {item.owner.displayName}
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '10px', color: '#94a3b8', marginTop: '3px' }}>
-                    <Clock size={10} /> Exp: {new Date(item.expiresAt).toLocaleDateString()}
-                  </div>
-                </button>
-              ))}
-            </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', minWidth: 0 }}>
+                        <span
+                          style={{
+                            flex: 1,
+                            minWidth: 0,
+                            fontWeight: 700,
+                            color: '#ffffff',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            paddingRight: '6px'
+                          }}
+                        >
+                          {item.sheetName}
+                        </span>
+                        <span style={{ flexShrink: 0, fontSize: '10px', backgroundColor: '#2563eb', padding: '1px 6px', borderRadius: '4px', fontWeight: 700 }}>
+                          {item.totalItems}
+                        </span>
+                      </div>
+                      <div
+                        style={{
+                          fontSize: '11px',
+                          color: '#93c5fd',
+                          marginTop: '4px',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                          fontWeight: 600
+                        }}
+                      >
+                        Owner: {item.owner.displayName}
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '10px', color: '#cbd5e1', marginTop: '4px' }}>
+                        <span>Mode: {item.accessType}</span>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+                          <Clock size={10} /> Exp: {new Date(item.expiresAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
+        ) : (
+          /* Normal Personal Sheets Mode */
+          <>
+            {/* Section 1: Sheets */}
+            <div style={{ marginBottom: '16px' }}>
+              <div
+                style={{
+                  fontSize: '10px',
+                  fontWeight: 800,
+                  color: '#94a3b8',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.06em',
+                  padding: '4px 8px',
+                  marginBottom: '4px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                <Layers size={12} /> Criteria Sheets ({filteredSheets.length})
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                {filteredSheets.map((s) => {
+                  const isActive = activeSheetKey === s.sheetKey;
+                  return (
+                    <button
+                      key={s.sheetKey}
+                      onClick={() => onSelectSheet(s.sheetKey, isAdminOrCoordinator ? targetOwnerId : undefined)}
+                      title={s.displayName}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        width: '100%',
+                        padding: '7px 10px',
+                        borderRadius: '5px',
+                        backgroundColor: isActive ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
+                        color: isActive ? '#ffffff' : '#cbd5e1',
+                        fontSize: '12px',
+                        fontWeight: isActive ? 700 : 500,
+                        textAlign: 'left',
+                        transition: 'all 0.15s ease',
+                        minWidth: 0
+                      }}
+                    >
+                      <span
+                        style={{
+                          flex: 1,
+                          minWidth: 0,
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                          paddingRight: '8px'
+                        }}
+                      >
+                        {s.displayName}
+                      </span>
+                      <span
+                        style={{
+                          flexShrink: 0,
+                          fontSize: '10px',
+                          fontWeight: 700,
+                          padding: '1px 6px',
+                          borderRadius: '10px',
+                          backgroundColor: s.totalItems > 0 ? '#2563eb' : 'rgba(255, 255, 255, 0.1)',
+                          color: '#ffffff'
+                        }}
+                      >
+                        {s.totalItems}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Section 2: Shared With Me Preview (Only for individual staff) */}
+            {!isAdminOrCoordinator && sharedSheets.length > 0 && (
+              <div style={{ marginTop: '14px', borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '12px' }}>
+                <div
+                  style={{
+                    fontSize: '10px',
+                    fontWeight: 800,
+                    color: '#60a5fa',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.06em',
+                    padding: '4px 8px',
+                    marginBottom: '4px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px'
+                  }}
+                >
+                  <Users size={12} /> Shared With Me ({filteredShared.length})
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  {filteredShared.map((item) => (
+                    <button
+                      key={item.ruleId}
+                      onClick={() => onSelectSheet(item.sheetKey, item.owner.id)}
+                      title={`${item.sheetName} (${item.owner.displayName})`}
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        width: '100%',
+                        padding: '8px 10px',
+                        borderRadius: '6px',
+                        backgroundColor: 'rgba(37, 99, 235, 0.12)',
+                        border: '1px solid rgba(37, 99, 235, 0.25)',
+                        color: '#ffffff',
+                        fontSize: '12px',
+                        textAlign: 'left',
+                        minWidth: 0
+                      }}
+                    >
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', minWidth: 0 }}>
+                        <span
+                          style={{
+                            flex: 1,
+                            minWidth: 0,
+                            fontWeight: 700,
+                            color: '#93c5fd',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            paddingRight: '6px'
+                          }}
+                        >
+                          {item.sheetName}
+                        </span>
+                        <span style={{ flexShrink: 0, fontSize: '10px', backgroundColor: '#1e40af', padding: '1px 5px', borderRadius: '4px' }}>
+                          {item.totalItems}
+                        </span>
+                      </div>
+                      <div
+                        style={{
+                          fontSize: '11px',
+                          color: '#cbd5e1',
+                          marginTop: '2px',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap'
+                        }}
+                      >
+                        Owner: {item.owner.displayName}
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '10px', color: '#94a3b8', marginTop: '3px' }}>
+                        <Clock size={10} /> Exp: {new Date(item.expiresAt).toLocaleDateString()}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
 

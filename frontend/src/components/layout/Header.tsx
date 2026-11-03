@@ -1,23 +1,36 @@
 import React from 'react';
 import { useReport } from '../../context/ReportContext';
+import { useAuth } from '../../context/AuthContext';
 import ProfileHover from './ProfileHover';
 import KILogo from '../../assets/KILogo.jpeg';
-import { Menu, FileDown, Lock, Unlock } from 'lucide-react';
+import { Menu, FileDown, Lock, Unlock, Users, ArrowLeft } from 'lucide-react';
 import api from '../../services/apiClient';
 
 interface HeaderProps {
   isSidebarOpen: boolean;
   onToggleSidebar: () => void;
+  isViewingShared?: boolean;
+  onToggleSharedView?: () => void;
+  sharedCount?: number;
 }
 
-export default function Header({ isSidebarOpen, onToggleSidebar }: HeaderProps) {
+export default function Header({
+  isSidebarOpen,
+  onToggleSidebar,
+  isViewingShared = false,
+  onToggleSharedView,
+  sharedCount = 0
+}: HeaderProps) {
   const { months, selectedMonth, selectMonth, isMonthLocked } = useReport();
+  const { user } = useAuth();
 
   const handleExportPdf = () => {
     if (!selectedMonth) return;
     const url = `${api.defaults.baseURL}/reports/export-pdf?monthId=${selectedMonth._id}`;
     window.open(url, '_blank');
   };
+
+  const isStaff = user?.role === 'STAFF';
 
   return (
     <header
@@ -62,6 +75,54 @@ export default function Header({ isSidebarOpen, onToggleSidebar }: HeaderProps) 
           </span>
         </div>
       </div>
+
+      {/* Center: Shared Sheets Header Switcher for Staff */}
+      {isStaff && onToggleSharedView && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <button
+            onClick={onToggleSharedView}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '6px 14px',
+              borderRadius: '20px',
+              backgroundColor: isViewingShared ? '#eff6ff' : '#f8fafc',
+              border: `1px solid ${isViewingShared ? '#3b82f6' : '#cbd5e1'}`,
+              color: isViewingShared ? '#1d4ed8' : '#334155',
+              fontSize: '12px',
+              fontWeight: 700,
+              cursor: 'pointer',
+              boxShadow: isViewingShared ? '0 1px 3px rgba(37,99,235,0.2)' : 'none',
+              transition: 'all 0.15s ease'
+            }}
+          >
+            {isViewingShared ? (
+              <>
+                <ArrowLeft size={14} /> Back to My Sheets
+              </>
+            ) : (
+              <>
+                <Users size={14} color="#2563eb" /> Shared Sheets
+                {sharedCount > 0 && (
+                  <span
+                    style={{
+                      backgroundColor: '#2563eb',
+                      color: '#ffffff',
+                      fontSize: '10px',
+                      padding: '1px 6px',
+                      borderRadius: '10px',
+                      fontWeight: 700
+                    }}
+                  >
+                    {sharedCount}
+                  </span>
+                )}
+              </>
+            )}
+          </button>
+        </div>
+      )}
 
       {/* Right: Month Selector + PDF Export + User Profile */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
