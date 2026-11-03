@@ -100,7 +100,7 @@ function LoginScreen() {
                 fontWeight: 600
               }}
             >
-              <UserIcon size={14} /> Staff 2 (Nithya)
+              <UserIcon size={14} /> Staff 2 (staff2@kct.ac.in)
             </button>
             <button
               onClick={() => loginAsDev('staff3@kct.ac.in')}
@@ -118,7 +118,7 @@ function LoginScreen() {
                 fontWeight: 600
               }}
             >
-              <UserIcon size={14} /> Staff 3 (Sathya)
+              <UserIcon size={14} /> Staff 3 (staff3@kct.ac.in)
             </button>
           </div>
         </div>

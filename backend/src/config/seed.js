@@ -35,13 +35,16 @@ async function seedDatabase() {
     if (!staff) {
       staff = await User.create({
         email: 'kishor14112006@gmail.com',
-        displayName: 'Kishor Staff',
+        displayName: 'Staff 1',
         role: 'STAFF',
         department: 'Information Technology',
         authProvider: 'local_dev',
-        avatarUrl: 'https://ui-avatars.com/api/?name=Kishor+Staff&background=2563eb&color=fff'
+        avatarUrl: 'https://ui-avatars.com/api/?name=Staff+1&background=2563eb&color=fff'
       });
       logger.info('Seeded default Staff: kishor14112006@gmail.com');
+    } else if (staff.displayName !== 'Staff 1') {
+      staff.displayName = 'Staff 1';
+      await staff.save();
     }
 
     // Staff 2: staff2@kct.ac.in (For delegation testing)
@@ -49,13 +52,16 @@ async function seedDatabase() {
     if (!staff2) {
       staff2 = await User.create({
         email: 'staff2@kct.ac.in',
-        displayName: 'Dr. S. Nithya Roopa',
+        displayName: 'Staff 2',
         role: 'STAFF',
         department: 'Information Technology',
         authProvider: 'local_dev',
-        avatarUrl: 'https://ui-avatars.com/api/?name=Nithya+Roopa&background=059669&color=fff'
+        avatarUrl: 'https://ui-avatars.com/api/?name=Staff+2&background=059669&color=fff'
       });
       logger.info('Seeded test Staff: staff2@kct.ac.in');
+    } else if (staff2.displayName !== 'Staff 2') {
+      staff2.displayName = 'Staff 2';
+      await staff2.save();
     }
 
     // Staff 3: staff3@kct.ac.in
@@ -63,13 +69,16 @@ async function seedDatabase() {
     if (!staff3) {
       staff3 = await User.create({
         email: 'staff3@kct.ac.in',
-        displayName: 'Dr. S. Sathyavathi',
+        displayName: 'Staff 3',
         role: 'STAFF',
         department: 'Information Technology',
         authProvider: 'local_dev',
-        avatarUrl: 'https://ui-avatars.com/api/?name=Sathyavathi&background=7c3aed&color=fff'
+        avatarUrl: 'https://ui-avatars.com/api/?name=Staff+3&background=7c3aed&color=fff'
       });
       logger.info('Seeded test Staff: staff3@kct.ac.in');
+    } else if (staff3.displayName !== 'Staff 3') {
+      staff3.displayName = 'Staff 3';
+      await staff3.save();
     }
 
     // 2. Seed Academic Year based on current system time

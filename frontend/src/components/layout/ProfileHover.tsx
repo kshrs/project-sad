@@ -135,7 +135,7 @@ export default function ProfileHover() {
                   border: '1px solid #cbd5e1'
                 }}
               >
-                Staff 1 (Kishor)
+                Staff 1
               </button>
               <button
                 onClick={() => {
@@ -152,7 +152,7 @@ export default function ProfileHover() {
                   border: '1px solid #cbd5e1'
                 }}
               >
-                Staff 2 (Nithya)
+                Staff 2
               </button>
               <button
                 onClick={() => {
@@ -169,7 +169,7 @@ export default function ProfileHover() {
                   border: '1px solid #cbd5e1'
                 }}
               >
-                Staff 3 (Sathya)
+                Staff 3
               </button>
             </div>
           </div>
