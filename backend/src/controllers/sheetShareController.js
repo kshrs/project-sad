@@ -59,25 +59,39 @@ const sheetShareController = {
     }
   },
 
-  // 2. Get active delegations granted by current user for a sheet
+  // 2. Get active delegations granted for a sheet (Staff sees rules they granted; Admin sees all active rules for this sheet/month or specific staff)
   getGrantedShares: async (req, res) => {
     try {
       const { sheetKey } = req.params;
-      const { monthId } = req.query;
-      const ownerId = req.user.id;
+      const { monthId, staffId } = req.query;
+      const user = req.user;
+      const isAdminOrCoordinator = user.role === 'ADMIN' || user.role === 'COORDINATOR';
 
       const sheet = await SheetDefinition.findOne({ sheetKey });
       if (!sheet) {
         return res.status(404).json({ success: false, message: 'Sheet not found' });
       }
 
-      const rules = await SheetShareRule.find({
+      let query = {
         sheetId: sheet._id,
         monthId: monthId,
-        ownerId: ownerId,
         isRevoked: false,
         expiresAt: { $gt: new Date() }
-      }).populate('sharedWithId', 'displayName email avatarUrl department');
+      };
+
+      if (isAdminOrCoordinator) {
+        // Admin monitoring: filter by specific staff if provided, or view all delegations for this sheet
+        if (staffId) {
+          query.ownerId = staffId;
+        }
+      } else {
+        // Staff view: only see rules granted from their own account
+        query.ownerId = user.id;
+      }
+
+      const rules = await SheetShareRule.find(query)
+        .populate('ownerId', 'displayName email avatarUrl department')
+        .populate('sharedWithId', 'displayName email avatarUrl department');
 
       res.json({
         success: true,
@@ -89,15 +103,21 @@ const sheetShareController = {
     }
   },
 
-  // 3. Revoke delegation access
+  // 3. Revoke delegation access (Staff can revoke their own rules; Admin can revoke/modify any rule)
   revokeShare: async (req, res) => {
     try {
       const { ruleId } = req.params;
-      const ownerId = req.user.id;
+      const user = req.user;
+      const isAdminOrCoordinator = user.role === 'ADMIN' || user.role === 'COORDINATOR';
 
-      const rule = await SheetShareRule.findOne({ _id: ruleId, ownerId: ownerId });
+      let query = { _id: ruleId };
+      if (!isAdminOrCoordinator) {
+        query.ownerId = user.id;
+      }
+
+      const rule = await SheetShareRule.findOne(query);
       if (!rule) {
-        return res.status(404).json({ success: false, message: 'Share rule not found or you are not the owner' });
+        return res.status(404).json({ success: false, message: 'Share rule not found or you do not have permission' });
       }
 
       rule.isRevoked = true;

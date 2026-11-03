@@ -368,8 +368,8 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
             </button>
           )}
 
-          {/* Manage Access Button */}
-          {!sharedOwnerId && (
+          {/* Manage Access Button (Available to Staff for their own sheets) */}
+          {!sharedOwnerId && user?.role === 'STAFF' && (
             <button
               onClick={() => setIsAccessModalOpen(true)}
               style={{
@@ -386,6 +386,28 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
               }}
             >
               <Users size={14} /> Manage Access
+            </button>
+          )}
+
+          {/* Admin Delegation Audit Button (Admin monitors staff delegation rules) */}
+          {user?.role === 'ADMIN' && (
+            <button
+              onClick={() => setIsAccessModalOpen(true)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '6px 12px',
+                borderRadius: '6px',
+                backgroundColor: '#f8fafc',
+                border: '1px solid #cbd5e1',
+                color: '#475569',
+                fontSize: '12px',
+                fontWeight: 600
+              }}
+              title="Monitor and govern active staff delegation rules"
+            >
+              <Users size={14} /> Audit Delegations
             </button>
           )}
 
@@ -607,6 +629,7 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
         onClose={() => setIsAccessModalOpen(false)}
         sheetKey={sheetKey}
         monthId={selectedMonth?._id || ''}
+        staffId={sharedOwnerId}
       />
     </div>
   );
