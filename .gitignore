@@ -1,0 +1,38 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Environment files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Vite / Build outputs
+dist/
+dist-ssr/
+*.local
+
+# Logs & Runtime
+logs/
+*.log
+npm-debug.log*
+
+# Database & Upload storage (local dev)
+backups/
+uploads/
+mongo_data/
+
+# OS / Editor files
+.DS_Store
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
