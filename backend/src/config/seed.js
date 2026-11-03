@@ -44,64 +44,69 @@ async function seedDatabase() {
       logger.info('Seeded default Staff: kishor14112006@gmail.com');
     }
 
-    // 2. Seed Default Academic Year (e.g. 2025-2026)
-    const currentYearKey = '2025-2026';
+    // 2. Seed Academic Year based on current system time
+    const nowIST = DateTime.now().setZone(TIMEZONE);
+    // Academic year runs from June to May: e.g. June 2026 to May 2027 is 2026-2027
+    const startYear = nowIST.month >= 6 ? nowIST.year : nowIST.year - 1;
+    const endYear = startYear + 1;
+    const currentYearKey = `${startYear}-${endYear}`;
+
     let academicYear = await AcademicYear.findOne({ yearKey: currentYearKey });
     if (!academicYear) {
       academicYear = await AcademicYear.create({
         yearKey: currentYearKey,
-        displayName: 'Academic Year 2025-2026',
+        displayName: `Academic Year ${currentYearKey}`,
         department: 'Information Technology',
-        startDate: new Date('2025-06-01T00:00:00.000Z'),
-        endDate: new Date('2026-05-31T23:59:59.999Z'),
+        startDate: new Date(`${startYear}-06-01T00:00:00.000Z`),
+        endDate: new Date(`${endYear}-05-31T23:59:59.999Z`),
         isActive: true,
         createdBy: admin._id
       });
-      logger.info(`Seeded default Academic Year: ${currentYearKey}`);
+      logger.info(`Seeded Academic Year: ${currentYearKey}`);
     }
 
-    // 3. Seed Monthly Reports for 12 months (June to May academic cycle)
+    // 3. Seed Monthly Reports for 12 months in this academic cycle
     const monthsCycle = [
-      { num: 6, name: 'June', year: 2025 },
-      { num: 7, name: 'July', year: 2025 },
-      { num: 8, name: 'August', year: 2025 },
-      { num: 9, name: 'September', year: 2025 },
-      { num: 10, name: 'October', year: 2025 },
-      { num: 11, name: 'November', year: 2025 },
-      { num: 12, name: 'December', year: 2025 },
-      { num: 1, name: 'January', year: 2026 },
-      { num: 2, name: 'February', year: 2026 },
-      { num: 3, name: 'March', year: 2026 },
-      { num: 4, name: 'April', year: 2026 },
-      { num: 5, name: 'May', year: 2026 }
+      { num: 6, name: 'June', year: startYear },
+      { num: 7, name: 'July', year: startYear },
+      { num: 8, name: 'August', year: startYear },
+      { num: 9, name: 'September', year: startYear },
+      { num: 10, name: 'October', year: startYear },
+      { num: 11, name: 'November', year: startYear },
+      { num: 12, name: 'December', year: startYear },
+      { num: 1, name: 'January', year: endYear },
+      { num: 2, name: 'February', year: endYear },
+      { num: 3, name: 'March', year: endYear },
+      { num: 4, name: 'April', year: endYear },
+      { num: 5, name: 'May', year: endYear }
     ];
-
-    const nowIST = DateTime.now().setZone(TIMEZONE);
 
     for (const m of monthsCycle) {
       const monthKey = `${m.year}-${String(m.num).padStart(2, '0')}`;
-      const existing = await MonthlyReport.findOne({ monthKey });
       
-      // Calculate locking: past months in IST are locked
-      // Lock date is 00:00:00 IST on 1st of next month
+      // Calculate locking: past months strictly BEFORE current month in IST are locked
+      // Current month and future months are ACTIVE!
+      const isPastMonth = m.year < nowIST.year || (m.year === nowIST.year && m.num < nowIST.month);
+
       const startOfNextMonth = DateTime.fromObject(
         { year: m.num === 12 ? m.year + 1 : m.year, month: m.num === 12 ? 1 : m.num + 1, day: 1 },
         { zone: TIMEZONE }
       );
-      const isPastMonth = nowIST >= startOfNextMonth;
 
-      if (!existing) {
-        await MonthlyReport.create({
+      await MonthlyReport.findOneAndUpdate(
+        { monthKey },
+        {
           yearId: academicYear._id,
           monthKey: monthKey,
           monthNumber: m.num,
           monthName: m.name,
           status: isPastMonth ? 'LOCKED' : 'ACTIVE',
           lockDateIST: startOfNextMonth.toJSDate()
-        });
-      }
+        },
+        { upsert: true, new: true }
+      );
     }
-    logger.info('Verified monthly reports cycle in IST.');
+    logger.info('Verified monthly reports cycle in IST with active current month.');
 
     // 4. Seed Default 52 Sheet Definitions
     const sheetCount = await SheetDefinition.countDocuments();

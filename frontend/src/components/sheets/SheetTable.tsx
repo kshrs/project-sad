@@ -470,7 +470,12 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
               <tr style={{ backgroundColor: '#f8fafc', borderBottom: '2px solid #e2e8f0' }}>
                 <th style={{ padding: '10px 12px', width: '80px', color: '#475569', fontWeight: 700 }}>Actions</th>
                 <th style={{ padding: '10px 12px', width: '50px', color: '#475569', fontWeight: 700 }}>#</th>
-                {columns.map((col) => (
+              {columns
+                .filter((col) => {
+                  const key = col.fieldKey.toLowerCase();
+                  return key !== 's_no' && key !== 'sno' && key !== 'sl_no' && key !== 'serial_no';
+                })
+                .map((col) => (
                   <th key={col.fieldKey} style={{ padding: '10px 12px', color: '#475569', fontWeight: 700, minWidth: '140px' }}>
                     {col.label}
                   </th>
@@ -521,7 +526,12 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
                     <td style={{ padding: '8px 12px', color: '#64748b', fontWeight: 600 }}>{idx + 1}</td>
 
                     {/* Data Cells (Editable inline with auto-save) */}
-                    {columns.map((col) => {
+                    {columns
+                      .filter((col) => {
+                        const key = col.fieldKey.toLowerCase();
+                        return key !== 's_no' && key !== 'sno' && key !== 'sl_no' && key !== 'serial_no';
+                      })
+                      .map((col) => {
                       const val = entry.data ? entry.data[col.fieldKey] ?? '' : '';
                       return (
                         <td key={col.fieldKey} style={{ padding: '6px 10px' }}>

@@ -49,9 +49,11 @@ export default function SheetEntryModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate required fields
+    // Validate required fields (excluding automatic serial number)
     const newErrors: Record<string, string> = {};
     columns.forEach((col) => {
+      const key = col.fieldKey.toLowerCase();
+      if (key === 's_no' || key === 'sno' || key === 'sl_no' || key === 'serial_no') return;
       if (col.required && !formData[col.fieldKey]) {
         newErrors[col.fieldKey] = `${col.label} is required`;
       }
@@ -134,7 +136,12 @@ export default function SheetEntryModal({
               gap: '16px'
             }}
           >
-            {columns.map((col) => {
+            {columns
+              .filter((col) => {
+                const key = col.fieldKey.toLowerCase();
+                return key !== 's_no' && key !== 'sno' && key !== 'sl_no' && key !== 'serial_no';
+              })
+              .map((col) => {
               const hasError = !!errors[col.fieldKey];
               const value = formData[col.fieldKey] || '';
 

@@ -124,10 +124,12 @@ export default function Sidebar({ isOpen, activeSheetKey, onSelectSheet }: Sideb
                 <button
                   key={s.sheetKey}
                   onClick={() => onSelectSheet(s.sheetKey)}
+                  title={s.displayName}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
+                    width: '100%',
                     padding: '7px 10px',
                     borderRadius: '5px',
                     backgroundColor: isActive ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
@@ -135,14 +137,25 @@ export default function Sidebar({ isOpen, activeSheetKey, onSelectSheet }: Sideb
                     fontSize: '12px',
                     fontWeight: isActive ? 700 : 500,
                     textAlign: 'left',
-                    transition: 'all 0.15s ease'
+                    transition: 'all 0.15s ease',
+                    minWidth: 0
                   }}
                 >
-                  <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', paddingRight: '6px' }}>
+                  <span
+                    style={{
+                      flex: 1,
+                      minWidth: 0,
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      paddingRight: '8px'
+                    }}
+                  >
                     {s.displayName}
                   </span>
                   <span
                     style={{
+                      flexShrink: 0,
                       fontSize: '10px',
                       fontWeight: 700,
                       padding: '1px 6px',
@@ -184,25 +197,50 @@ export default function Sidebar({ isOpen, activeSheetKey, onSelectSheet }: Sideb
                 <button
                   key={item.ruleId}
                   onClick={() => onSelectSheet(item.sheetKey, item.owner.id)}
+                  title={`${item.sheetName} (${item.owner.displayName})`}
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
+                    width: '100%',
                     padding: '8px 10px',
                     borderRadius: '6px',
                     backgroundColor: 'rgba(37, 99, 235, 0.12)',
                     border: '1px solid rgba(37, 99, 235, 0.25)',
                     color: '#ffffff',
                     fontSize: '12px',
-                    textAlign: 'left'
+                    textAlign: 'left',
+                    minWidth: 0
                   }}
                 >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontWeight: 700, color: '#93c5fd' }}>{item.sheetName}</span>
-                    <span style={{ fontSize: '10px', backgroundColor: '#1e40af', padding: '1px 5px', borderRadius: '4px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', minWidth: 0 }}>
+                    <span
+                      style={{
+                        flex: 1,
+                        minWidth: 0,
+                        fontWeight: 700,
+                        color: '#93c5fd',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                        paddingRight: '6px'
+                      }}
+                    >
+                      {item.sheetName}
+                    </span>
+                    <span style={{ flexShrink: 0, fontSize: '10px', backgroundColor: '#1e40af', padding: '1px 5px', borderRadius: '4px' }}>
                       {item.totalItems}
                     </span>
                   </div>
-                  <div style={{ fontSize: '11px', color: '#cbd5e1', marginTop: '2px' }}>
+                  <div
+                    style={{
+                      fontSize: '11px',
+                      color: '#cbd5e1',
+                      marginTop: '2px',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap'
+                    }}
+                  >
                     Owner: {item.owner.displayName}
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '10px', color: '#94a3b8', marginTop: '3px' }}>
