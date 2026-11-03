@@ -1,27 +1,34 @@
 const { User } = require('../models');
 
 const userController = {
-  // Real-time debounce search of staff by email or name
+  // Search staff by email or name (or list all active staff if no query provided)
   searchUsers: async (req, res) => {
     try {
       const { q } = req.query;
-      if (!q || q.trim().length === 0) {
-        return res.json({ success: true, users: [] });
+      let queryFilter = { isActive: true, role: 'STAFF' };
+
+      if (q && q.trim().length > 0) {
+        const queryRegex = new RegExp(q.trim(), 'i');
+        queryFilter.$or = [{ email: queryRegex }, { displayName: queryRegex }];
       }
 
-      const queryRegex = new RegExp(q.trim(), 'i');
-
-      const users = await User.find({
-        $or: [{ email: queryRegex }, { displayName: queryRegex }],
-        isActive: true
-      })
+      const users = await User.find(queryFilter)
         .select('displayName email role department avatarUrl')
-        .limit(10);
+        .sort({ displayName: 1 })
+        .limit(50);
 
       res.json({
         success: true,
         count: users.length,
-        users
+        users: users.map(u => ({
+          id: u._id,
+          _id: u._id,
+          displayName: u.displayName,
+          email: u.email,
+          role: u.role,
+          department: u.department,
+          avatarUrl: u.avatarUrl
+        }))
       });
     } catch (error) {
       res.status(500).json({ success: false, message: error.message });

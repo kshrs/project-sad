@@ -30,7 +30,7 @@ async function seedDatabase() {
       logger.info('Seeded default Admin: kishorjsk2006@gmail.com');
     }
 
-    // Staff: kishor14112006@gmail.com
+    // Staff 1: kishor14112006@gmail.com
     let staff = await User.findOne({ email: 'kishor14112006@gmail.com' });
     if (!staff) {
       staff = await User.create({
@@ -42,6 +42,34 @@ async function seedDatabase() {
         avatarUrl: 'https://ui-avatars.com/api/?name=Kishor+Staff&background=2563eb&color=fff'
       });
       logger.info('Seeded default Staff: kishor14112006@gmail.com');
+    }
+
+    // Staff 2: staff2@kct.ac.in (For delegation testing)
+    let staff2 = await User.findOne({ email: 'staff2@kct.ac.in' });
+    if (!staff2) {
+      staff2 = await User.create({
+        email: 'staff2@kct.ac.in',
+        displayName: 'Dr. S. Nithya Roopa',
+        role: 'STAFF',
+        department: 'Information Technology',
+        authProvider: 'local_dev',
+        avatarUrl: 'https://ui-avatars.com/api/?name=Nithya+Roopa&background=059669&color=fff'
+      });
+      logger.info('Seeded test Staff: staff2@kct.ac.in');
+    }
+
+    // Staff 3: staff3@kct.ac.in
+    let staff3 = await User.findOne({ email: 'staff3@kct.ac.in' });
+    if (!staff3) {
+      staff3 = await User.create({
+        email: 'staff3@kct.ac.in',
+        displayName: 'Dr. S. Sathyavathi',
+        role: 'STAFF',
+        department: 'Information Technology',
+        authProvider: 'local_dev',
+        avatarUrl: 'https://ui-avatars.com/api/?name=Sathyavathi&background=7c3aed&color=fff'
+      });
+      logger.info('Seeded test Staff: staff3@kct.ac.in');
     }
 
     // 2. Seed Academic Year based on current system time

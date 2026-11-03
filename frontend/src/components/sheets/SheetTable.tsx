@@ -6,7 +6,7 @@ import { useAuth } from '../../context/AuthContext';
 import { ColumnDefinition, SheetEntry, ActiveCollaborator } from '../../types';
 import SheetEntryModal from '../modals/SheetEntryModal';
 import ManageAccessModal from '../modals/ManageAccessModal';
-import { Plus, Users, RefreshCw, Edit2, Trash2, ShieldAlert, Check, Clock, Undo, Redo, Lock, Key, FileText } from 'lucide-react';
+import { Plus, Users, RefreshCw, Edit2, Trash2, ShieldAlert, Check, Clock, Undo, Redo, Lock, Key, FileText, ExternalLink } from 'lucide-react';
 
 interface SheetTableProps {
   sheetKey: string;
@@ -535,11 +535,13 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
                         const val = entry.data ? entry.data[col.fieldKey] ?? '' : '';
 
                         if (col.type === 'File') {
+                          const isUrl = typeof val === 'string' && (val.startsWith('http://') || val.startsWith('https://'));
+                          const fileHref = isUrl ? val : `${api.defaults.baseURL}/files/${val}`;
                           return (
                             <td key={col.fieldKey} style={{ padding: '6px 10px' }}>
                               {val ? (
                                 <a
-                                  href={`${api.defaults.baseURL}/files/${val}`}
+                                  href={fileHref}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   style={{
@@ -548,15 +550,16 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
                                     gap: '4px',
                                     padding: '3px 8px',
                                     borderRadius: '4px',
-                                    backgroundColor: '#eff6ff',
-                                    color: '#2563eb',
-                                    border: '1px solid #bfdbfe',
+                                    backgroundColor: isUrl ? '#f0fdf4' : '#eff6ff',
+                                    color: isUrl ? '#166534' : '#2563eb',
+                                    border: `1px solid ${isUrl ? '#bbf7d0' : '#bfdbfe'}`,
                                     fontSize: '11px',
                                     fontWeight: 600,
                                     textDecoration: 'none'
                                   }}
                                 >
-                                  <FileText size={12} /> View Proof
+                                  {isUrl ? <ExternalLink size={12} /> : <FileText size={12} />}
+                                  {isUrl ? 'Open Link' : 'View Proof'}
                                 </a>
                               ) : (
                                 <span style={{ color: '#94a3b8', fontStyle: 'italic', fontSize: '11px' }}>

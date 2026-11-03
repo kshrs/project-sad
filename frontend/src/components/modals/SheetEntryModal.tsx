@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../services/apiClient';
 import { ColumnDefinition } from '../../types';
-import { X, Check, Upload, AlertCircle, FileText, Trash2, Loader2 } from 'lucide-react';
+import { X, Check, Upload, AlertCircle, FileText, Trash2, Loader2, Link2 } from 'lucide-react';
 
 interface EntryModalProps {
   isOpen: boolean;
@@ -22,6 +22,7 @@ export default function SheetEntryModal({
 }: EntryModalProps) {
   const [formData, setFormData] = useState<Record<string, any>>({});
   const [fileDetails, setFileDetails] = useState<Record<string, { id: string; name: string }>>({});
+  const [fileMode, setFileMode] = useState<Record<string, 'UPLOAD' | 'LINK'>>({});
   const [uploadingField, setUploadingField] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -31,18 +32,24 @@ export default function SheetEntryModal({
       setFormData(initialData);
       // Populate any existing file fields
       const files: Record<string, { id: string; name: string }> = {};
+      const modes: Record<string, 'UPLOAD' | 'LINK'> = {};
       columns.forEach((c) => {
         if (c.type === 'File' && initialData[c.fieldKey]) {
+          const val = String(initialData[c.fieldKey]);
+          const isUrl = val.startsWith('http://') || val.startsWith('https://');
+          modes[c.fieldKey] = isUrl ? 'LINK' : 'UPLOAD';
           files[c.fieldKey] = {
-            id: initialData[c.fieldKey],
-            name: 'Attached Proof Document'
+            id: val,
+            name: isUrl ? val : 'Attached Proof Document'
           };
         }
       });
       setFileDetails(files);
+      setFileMode(modes);
     } else {
       setFormData({});
       setFileDetails({});
+      setFileMode({});
     }
     setErrors({});
   }, [initialData, isOpen]);
@@ -252,12 +259,16 @@ export default function SheetEntryModal({
                             }}
                           >
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden' }}>
-                              <FileText size={16} color="#16a34a" />
+                              {String(attachedFile.id).startsWith('http') ? (
+                                <Link2 size={16} color="#2563eb" />
+                              ) : (
+                                <FileText size={16} color="#16a34a" />
+                              )}
                               <span
                                 style={{
                                   fontSize: '12px',
                                   fontWeight: 600,
-                                  color: '#166534',
+                                  color: String(attachedFile.id).startsWith('http') ? '#1e40af' : '#166534',
                                   whiteSpace: 'nowrap',
                                   overflow: 'hidden',
                                   textOverflow: 'ellipsis'
@@ -270,50 +281,114 @@ export default function SheetEntryModal({
                               type="button"
                               onClick={() => handleRemoveFile(col.fieldKey)}
                               style={{ color: '#dc2626', padding: '2px', cursor: 'pointer' }}
-                              title="Remove File"
+                              title="Remove Proof"
                             >
                               <Trash2 size={14} />
                             </button>
                           </div>
                         ) : (
-                          <label
-                            style={{
-                              display: 'flex',
-                              flexDirection: 'column',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              padding: '12px',
-                              borderRadius: '6px',
-                              border: `1px dashed ${hasError ? '#dc2626' : '#cbd5e1'}`,
-                              backgroundColor: '#f8fafc',
-                              textAlign: 'center',
-                              fontSize: '12px',
-                              color: '#64748b',
-                              cursor: isUploading ? 'not-allowed' : 'pointer'
-                            }}
-                          >
-                            <input
-                              type="file"
-                              accept=".pdf,.png,.jpg,.jpeg"
-                              disabled={isUploading}
-                              onChange={(e) => {
-                                if (e.target.files && e.target.files[0]) {
-                                  handleFileUpload(col.fieldKey, e.target.files[0]);
-                                }
-                              }}
-                              style={{ display: 'none' }}
-                            />
-                            {isUploading ? (
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#2563eb' }}>
-                                <Loader2 size={16} className="spin" /> Uploading to server...
+                          <div>
+                            {/* Mode toggle */}
+                            <div style={{ display: 'flex', gap: '6px', marginBottom: '8px' }}>
+                              <button
+                                type="button"
+                                onClick={() => setFileMode((prev) => ({ ...prev, [col.fieldKey]: 'UPLOAD' }))}
+                                style={{
+                                  padding: '3px 8px',
+                                  fontSize: '11px',
+                                  fontWeight: 600,
+                                  borderRadius: '4px',
+                                  backgroundColor: (fileMode[col.fieldKey] || 'UPLOAD') === 'UPLOAD' ? '#1e2842' : '#f1f5f9',
+                                  color: (fileMode[col.fieldKey] || 'UPLOAD') === 'UPLOAD' ? '#ffffff' : '#475569',
+                                  border: '1px solid #cbd5e1'
+                                }}
+                              >
+                                Upload Document
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setFileMode((prev) => ({ ...prev, [col.fieldKey]: 'LINK' }))}
+                                style={{
+                                  padding: '3px 8px',
+                                  fontSize: '11px',
+                                  fontWeight: 600,
+                                  borderRadius: '4px',
+                                  backgroundColor: fileMode[col.fieldKey] === 'LINK' ? '#1e2842' : '#f1f5f9',
+                                  color: fileMode[col.fieldKey] === 'LINK' ? '#ffffff' : '#475569',
+                                  border: '1px solid #cbd5e1'
+                                }}
+                              >
+                                Web / OneDrive Link
+                              </button>
+                            </div>
+
+                            {fileMode[col.fieldKey] === 'LINK' ? (
+                              <div style={{ display: 'flex', gap: '6px' }}>
+                                <input
+                                  type="url"
+                                  placeholder="https://kumaragurudtsteam-my.sharepoint.com/... or OneDrive URL"
+                                  value={value || ''}
+                                  onChange={(e) => {
+                                    const linkVal = e.target.value;
+                                    handleChange(col.fieldKey, linkVal);
+                                    if (linkVal) {
+                                      setFileDetails((prev) => ({
+                                        ...prev,
+                                        [col.fieldKey]: { id: linkVal, name: linkVal }
+                                      }));
+                                    }
+                                  }}
+                                  style={{
+                                    flex: 1,
+                                    padding: '8px 10px',
+                                    borderRadius: '6px',
+                                    border: `1px solid ${hasError ? '#dc2626' : '#cbd5e1'}`,
+                                    fontSize: '12px',
+                                    outline: 'none'
+                                  }}
+                                />
                               </div>
                             ) : (
-                              <>
-                                <Upload size={18} style={{ margin: '0 auto 4px', display: 'block', color: '#94a3b8' }} />
-                                <span>Click to Upload Proof (PDF/Image &le; 5MB)</span>
-                              </>
+                              <label
+                                style={{
+                                  display: 'flex',
+                                  flexDirection: 'column',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  padding: '12px',
+                                  borderRadius: '6px',
+                                  border: `1px dashed ${hasError ? '#dc2626' : '#cbd5e1'}`,
+                                  backgroundColor: '#f8fafc',
+                                  textAlign: 'center',
+                                  fontSize: '12px',
+                                  color: '#64748b',
+                                  cursor: isUploading ? 'not-allowed' : 'pointer'
+                                }}
+                              >
+                                <input
+                                  type="file"
+                                  accept=".pdf,.png,.jpg,.jpeg"
+                                  disabled={isUploading}
+                                  onChange={(e) => {
+                                    if (e.target.files && e.target.files[0]) {
+                                      handleFileUpload(col.fieldKey, e.target.files[0]);
+                                    }
+                                  }}
+                                  style={{ display: 'none' }}
+                                />
+                                {isUploading ? (
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#2563eb' }}>
+                                    <Loader2 size={16} className="spin" /> Uploading to server...
+                                  </div>
+                                ) : (
+                                  <>
+                                    <Upload size={18} style={{ margin: '0 auto 4px', display: 'block', color: '#94a3b8' }} />
+                                    <span>Click to Upload Proof (PDF/Image &le; 5MB)</span>
+                                  </>
+                                )}
+                              </label>
                             )}
-                          </label>
+                          </div>
                         )}
                       </div>
                     ) : (

@@ -42,7 +42,7 @@ function LoginScreen() {
         </p>
 
         {/* 1-Click Dev Fast Logins */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '20px' }}>
           <button
             onClick={() => loginAsDev('kishorjsk2006@gmail.com')}
             disabled={loading}
@@ -51,7 +51,7 @@ function LoginScreen() {
               alignItems: 'center',
               justifyContent: 'center',
               gap: '10px',
-              padding: '12px',
+              padding: '10px',
               borderRadius: '8px',
               backgroundColor: '#1e2842',
               color: '#ffffff',
@@ -71,7 +71,7 @@ function LoginScreen() {
               alignItems: 'center',
               justifyContent: 'center',
               gap: '10px',
-              padding: '12px',
+              padding: '10px',
               borderRadius: '8px',
               backgroundColor: '#2563eb',
               color: '#ffffff',
@@ -80,8 +80,47 @@ function LoginScreen() {
               boxShadow: '0 2px 4px rgba(37, 99, 235, 0.2)'
             }}
           >
-            <UserIcon size={16} /> Sign in as Staff (kishor14112006@gmail.com)
+            <UserIcon size={16} /> Sign in as Staff 1 (kishor14112006@gmail.com)
           </button>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+            <button
+              onClick={() => loginAsDev('staff2@kct.ac.in')}
+              disabled={loading}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                padding: '8px',
+                borderRadius: '6px',
+                backgroundColor: '#059669',
+                color: '#ffffff',
+                fontSize: '12px',
+                fontWeight: 600
+              }}
+            >
+              <UserIcon size={14} /> Staff 2 (Nithya)
+            </button>
+            <button
+              onClick={() => loginAsDev('staff3@kct.ac.in')}
+              disabled={loading}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                padding: '8px',
+                borderRadius: '6px',
+                backgroundColor: '#7c3aed',
+                color: '#ffffff',
+                fontSize: '12px',
+                fontWeight: 600
+              }}
+            >
+              <UserIcon size={14} /> Staff 3 (Sathya)
+            </button>
+          </div>
         </div>
 
         <div style={{ position: 'relative', margin: '20px 0', borderTop: '1px solid #e2e8f0' }}>

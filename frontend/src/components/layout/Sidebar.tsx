@@ -35,7 +35,7 @@ export default function Sidebar({
   // Fetch all staff users for Admin view
   useEffect(() => {
     if (isAdminOrCoordinator) {
-      api.get('/users/search?q=a').then((res) => {
+      api.get('/users/search').then((res) => {
         if (res.data?.success) {
           setAllStaffList(res.data.users || []);
         }

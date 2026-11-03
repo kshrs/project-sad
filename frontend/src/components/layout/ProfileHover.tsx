@@ -100,22 +100,21 @@ export default function ProfileHover() {
           {/* Quick Dev Switcher */}
           <div style={{ backgroundColor: '#f8fafc', padding: '10px', borderRadius: '6px', border: '1px solid #e2e8f0' }}>
             <div style={{ fontSize: '11px', fontWeight: 700, color: '#64748b', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-              Switch Test Role (Dev)
+              Switch Test Account (Dev)
             </div>
-            <div style={{ display: 'flex', gap: '6px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
               <button
                 onClick={() => {
                   loginAsDev('kishorjsk2006@gmail.com');
                   setIsOpen(false);
                 }}
                 style={{
-                  flex: 1,
                   padding: '5px',
                   fontSize: '11px',
                   fontWeight: 600,
                   borderRadius: '4px',
-                  backgroundColor: isAdmin ? '#1e2842' : '#ffffff',
-                  color: isAdmin ? '#ffffff' : '#334155',
+                  backgroundColor: user.email === 'kishorjsk2006@gmail.com' ? '#1e2842' : '#ffffff',
+                  color: user.email === 'kishorjsk2006@gmail.com' ? '#ffffff' : '#334155',
                   border: '1px solid #cbd5e1'
                 }}
               >
@@ -127,17 +126,50 @@ export default function ProfileHover() {
                   setIsOpen(false);
                 }}
                 style={{
-                  flex: 1,
                   padding: '5px',
                   fontSize: '11px',
                   fontWeight: 600,
                   borderRadius: '4px',
-                  backgroundColor: !isAdmin ? '#1e2842' : '#ffffff',
-                  color: !isAdmin ? '#ffffff' : '#334155',
+                  backgroundColor: user.email === 'kishor14112006@gmail.com' ? '#1e2842' : '#ffffff',
+                  color: user.email === 'kishor14112006@gmail.com' ? '#ffffff' : '#334155',
                   border: '1px solid #cbd5e1'
                 }}
               >
-                Staff
+                Staff 1 (Kishor)
+              </button>
+              <button
+                onClick={() => {
+                  loginAsDev('staff2@kct.ac.in');
+                  setIsOpen(false);
+                }}
+                style={{
+                  padding: '5px',
+                  fontSize: '11px',
+                  fontWeight: 600,
+                  borderRadius: '4px',
+                  backgroundColor: user.email === 'staff2@kct.ac.in' ? '#1e2842' : '#ffffff',
+                  color: user.email === 'staff2@kct.ac.in' ? '#ffffff' : '#334155',
+                  border: '1px solid #cbd5e1'
+                }}
+              >
+                Staff 2 (Nithya)
+              </button>
+              <button
+                onClick={() => {
+                  loginAsDev('staff3@kct.ac.in');
+                  setIsOpen(false);
+                }}
+                style={{
+                  padding: '5px',
+                  fontSize: '11px',
+                  fontWeight: 600,
+                  borderRadius: '4px',
+                  backgroundColor: user.email === 'staff3@kct.ac.in' ? '#1e2842' : '#ffffff',
+                  color: user.email === 'staff3@kct.ac.in' ? '#ffffff' : '#334155',
+                  border: '1px solid #cbd5e1'
+                }}
+              >
+                Staff 3 (Sathya)
               </button>
             </div>
           </div>
