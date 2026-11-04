@@ -70,10 +70,44 @@ const sheetEntryController = {
 
       const entries = await SheetEntry.find(query).sort({ createdAt: -1 });
 
+      let userPermissions = {
+        canCreate: true,
+        canEditOwn: true,
+        canDeleteOwn: true,
+        canEditOthers: true,
+        canDeleteOthers: true,
+        isReadOnly: false
+      };
+
+      if (!isAdminOrCoordinator && staffId && staffId !== user.id) {
+        // Staff accessing a shared sheet: check their delegated permissions
+        const shareRule = await SheetShareRule.findOne({
+          sheetId: sheet._id,
+          monthId: monthId,
+          ownerId: staffId,
+          sharedWithId: user.id,
+          isRevoked: false,
+          expiresAt: { $gt: new Date() }
+        });
+
+        if (shareRule) {
+          const isReadOnly = shareRule.accessType === 'READ_ONLY';
+          userPermissions = {
+            canCreate: !isReadOnly,
+            canEditOwn: !isReadOnly,
+            canDeleteOwn: !isReadOnly,
+            canEditOthers: !isReadOnly && shareRule.canEditExisting,
+            canDeleteOthers: !isReadOnly && shareRule.canDeleteExisting,
+            isReadOnly: isReadOnly
+          };
+        }
+      }
+
       res.json({
         success: true,
         sheetKey,
         count: entries.length,
+        permissions: userPermissions,
         entries: entries.map((e) => ({
           id: e._id,
           _id: e._id,

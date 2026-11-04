@@ -20,6 +20,21 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
   const [columns, setColumns] = useState<ColumnDefinition[]>([]);
   const [entries, setEntries] = useState<SheetEntry[]>([]);
   const [loading, setLoading] = useState(true);
+  const [sheetPermissions, setSheetPermissions] = useState<{
+    canCreate: boolean;
+    canEditOwn: boolean;
+    canDeleteOwn: boolean;
+    canEditOthers: boolean;
+    canDeleteOthers: boolean;
+    isReadOnly: boolean;
+  }>({
+    canCreate: true,
+    canEditOwn: true,
+    canDeleteOwn: true,
+    canEditOthers: true,
+    canDeleteOthers: true,
+    isReadOnly: false
+  });
 
   // Auto-Save State Machine: 'IDLE' | 'DIRTY' | 'SYNCING' | 'SAVED' | 'ERROR'
   const [syncStatus, setSyncStatus] = useState<'IDLE' | 'DIRTY' | 'SYNCING' | 'SAVED' | 'ERROR'>('IDLE');
@@ -57,7 +72,21 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
       ]);
 
       if (colsRes.data?.success) setColumns(colsRes.data.columns || []);
-      if (entriesRes.data?.success) setEntries(entriesRes.data.entries || []);
+      if (entriesRes.data?.success) {
+        setEntries(entriesRes.data.entries || []);
+        if (entriesRes.data.permissions) {
+          setSheetPermissions(entriesRes.data.permissions);
+        } else {
+          setSheetPermissions({
+            canCreate: true,
+            canEditOwn: true,
+            canDeleteOwn: true,
+            canEditOthers: true,
+            canDeleteOthers: true,
+            isReadOnly: false
+          });
+        }
+      }
       if (unlockRes.data?.success) setUnlockInfo(unlockRes.data);
     } catch (err: any) {
       console.error('Failed to load sheet data', err);
@@ -412,27 +441,29 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
           )}
 
           {/* Add Entry Button */}
-          <button
-            onClick={() => {
-              setEditingEntry(null);
-              setIsEntryModalOpen(true);
-            }}
-            disabled={effectiveIsLocked}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '6px 14px',
-              borderRadius: '6px',
-              backgroundColor: effectiveIsLocked ? '#94a3b8' : '#1e2842',
-              color: '#ffffff',
-              fontSize: '12px',
-              fontWeight: 700,
-              cursor: effectiveIsLocked ? 'not-allowed' : 'pointer'
-            }}
-          >
-            <Plus size={14} /> Add Entry
-          </button>
+          {sheetPermissions.canCreate && (
+            <button
+              onClick={() => {
+                setEditingEntry(null);
+                setIsEntryModalOpen(true);
+              }}
+              disabled={effectiveIsLocked}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '6px 14px',
+                borderRadius: '6px',
+                backgroundColor: effectiveIsLocked ? '#94a3b8' : '#1e2842',
+                color: '#ffffff',
+                fontSize: '12px',
+                fontWeight: 700,
+                cursor: effectiveIsLocked ? 'not-allowed' : 'pointer'
+              }}
+            >
+              <Plus size={14} /> Add Entry
+            </button>
+          )}
         </div>
       </div>
 
@@ -521,27 +552,41 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
                   >
                     {/* Action Buttons */}
                     <td style={{ padding: '8px 12px' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <button
-                          onClick={() => {
-                            setEditingEntry(entry);
-                            setIsEntryModalOpen(true);
-                          }}
-                          disabled={effectiveIsLocked}
-                          title="Edit Entry"
-                          style={{ color: '#2563eb', cursor: effectiveIsLocked ? 'not-allowed' : 'pointer' }}
-                        >
-                          <Edit2 size={13} />
-                        </button>
-                        <button
-                          onClick={() => handleDeleteEntry(rowId)}
-                          disabled={effectiveIsLocked}
-                          title="Delete Entry"
-                          style={{ color: '#dc2626', cursor: effectiveIsLocked ? 'not-allowed' : 'pointer' }}
-                        >
-                          <Trash2 size={13} />
-                        </button>
-                      </div>
+                      {(() => {
+                        const isEntryCreator = entry.createdBy && user && (entry.createdBy === user.id || entry.createdBy === user._id);
+                        const canEditThisRow = !effectiveIsLocked && (isEntryCreator ? sheetPermissions.canEditOwn : sheetPermissions.canEditOthers);
+                        const canDeleteThisRow = !effectiveIsLocked && (isEntryCreator ? sheetPermissions.canDeleteOwn : sheetPermissions.canDeleteOthers);
+
+                        if (!canEditThisRow && !canDeleteThisRow) {
+                          return <span style={{ color: '#cbd5e1', fontSize: '11px' }}>—</span>;
+                        }
+
+                        return (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            {canEditThisRow && (
+                              <button
+                                onClick={() => {
+                                  setEditingEntry(entry);
+                                  setIsEntryModalOpen(true);
+                                }}
+                                title="Edit Entry"
+                                style={{ color: '#2563eb', cursor: 'pointer', background: 'none', border: 'none', padding: '2px' }}
+                              >
+                                <Edit2 size={13} />
+                              </button>
+                            )}
+                            {canDeleteThisRow && (
+                              <button
+                                onClick={() => handleDeleteEntry(rowId)}
+                                title="Delete Entry"
+                                style={{ color: '#dc2626', cursor: 'pointer', background: 'none', border: 'none', padding: '2px' }}
+                              >
+                                <Trash2 size={13} />
+                              </button>
+                            )}
+                          </div>
+                        );
+                      })()}
                     </td>
 
                     {/* S.No */}

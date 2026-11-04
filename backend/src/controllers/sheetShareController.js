@@ -29,6 +29,11 @@ const sheetShareController = {
       // Default expiry to 1 week if not specified
       const finalExpiry = expiresAt ? new Date(expiresAt) : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
+      const isReadOnly = accessType === 'READ_ONLY';
+      const effectiveCanView = isReadOnly ? true : (canViewExisting !== undefined ? canViewExisting : true);
+      const effectiveCanEdit = isReadOnly ? false : (effectiveCanView ? (canEditExisting !== undefined ? canEditExisting : false) : false);
+      const effectiveCanDelete = isReadOnly ? false : (effectiveCanView ? (canDeleteExisting !== undefined ? canDeleteExisting : false) : false);
+
       const rule = await SheetShareRule.findOneAndUpdate(
         {
           sheetId: sheet._id,
@@ -39,9 +44,9 @@ const sheetShareController = {
         {
           sheetKey: sheet.sheetKey,
           accessType: accessType || 'READ_ONLY',
-          canViewExisting: canViewExisting !== undefined ? canViewExisting : true,
-          canEditExisting: canEditExisting !== undefined ? canEditExisting : false,
-          canDeleteExisting: canDeleteExisting !== undefined ? canDeleteExisting : false,
+          canViewExisting: effectiveCanView,
+          canEditExisting: effectiveCanEdit,
+          canDeleteExisting: effectiveCanDelete,
           expiresAt: finalExpiry,
           isRevoked: false
         },

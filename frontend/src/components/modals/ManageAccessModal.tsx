@@ -325,14 +325,30 @@ export default function ManageAccessModal({
                     <input
                       type="checkbox"
                       checked={canViewExisting}
-                      onChange={(e) => setCanViewExisting(e.target.checked)}
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+                        setCanViewExisting(checked);
+                        if (!checked) {
+                          setCanEditExisting(false);
+                        }
+                      }}
                     />
                     View existing entries (if unchecked, staff can only append new rows)
                   </label>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', cursor: 'pointer' }}>
+                  <label
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      fontSize: '12px',
+                      cursor: !canViewExisting ? 'not-allowed' : 'pointer',
+                      color: !canViewExisting ? '#94a3b8' : '#1e2842'
+                    }}
+                  >
                     <input
                       type="checkbox"
-                      checked={canEditExisting}
+                      disabled={!canViewExisting}
+                      checked={canViewExisting && canEditExisting}
                       onChange={(e) => setCanEditExisting(e.target.checked)}
                     />
                     Update / Delete existing rows entered by you
