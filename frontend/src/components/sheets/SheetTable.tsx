@@ -96,6 +96,45 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
     return key !== 's_no' && key !== 'sno' && key !== 'sl_no' && key !== 'serial_no';
   });
 
+  // Check if current user can edit a specific row
+  const checkCanEditRow = (entry: SheetEntry): boolean => {
+    if (effectiveIsLocked) return false;
+    if (sheetPermissions.isReadOnly) return false;
+    if (user?.role === 'ADMIN' || user?.role === 'COORDINATOR') return true;
+
+    const currentUserId = user?.id || user?._id;
+    const isOwnerOfSheet = !sharedOwnerId || sharedOwnerId === currentUserId;
+    if (isOwnerOfSheet) return true;
+
+    // It's a shared sheet
+    const entryCreatorId = entry.createdBy ? (typeof entry.createdBy === 'object' ? (entry.createdBy as any)._id || (entry.createdBy as any).id : entry.createdBy).toString() : '';
+    const isEntryCreator = entryCreatorId && currentUserId && entryCreatorId === currentUserId.toString();
+
+    if (isEntryCreator) {
+      return sheetPermissions.canEditOwn;
+    }
+    return sheetPermissions.canEditOthers;
+  };
+
+  // Check if current user can delete a specific row
+  const checkCanDeleteRow = (entry: SheetEntry): boolean => {
+    if (effectiveIsLocked) return false;
+    if (sheetPermissions.isReadOnly) return false;
+    if (user?.role === 'ADMIN' || user?.role === 'COORDINATOR') return true;
+
+    const currentUserId = user?.id || user?._id;
+    const isOwnerOfSheet = !sharedOwnerId || sharedOwnerId === currentUserId;
+    if (isOwnerOfSheet) return true;
+
+    const entryCreatorId = entry.createdBy ? (typeof entry.createdBy === 'object' ? (entry.createdBy as any)._id || (entry.createdBy as any).id : entry.createdBy).toString() : '';
+    const isEntryCreator = entryCreatorId && currentUserId && entryCreatorId === currentUserId.toString();
+
+    if (isEntryCreator) {
+      return sheetPermissions.canDeleteOwn;
+    }
+    return sheetPermissions.canDeleteOthers;
+  };
+
   // 1. Fetch Sheet Schema & Data
   const loadSheetData = async () => {
     if (!selectedMonth) return;
@@ -295,6 +334,11 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
 
     const updated = entries.map((entry, idx) => {
       if (idx >= startIdx && idx <= endIdx && idx !== sourceRowIdx) {
+        // Enforce row-level edit permissions during drag-fill
+        if (!checkCanEditRow(entry)) {
+          return entry;
+        }
+
         let fillVal = sourceVal;
 
         if (baseDate) {
@@ -383,7 +427,10 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
         }
       } else if (e.key === 'Enter') {
         e.preventDefault();
-        setEditingCell({ rowIdx, colKey });
+        const entry = entries[rowIdx];
+        if (entry && checkCanEditRow(entry)) {
+          setEditingCell({ rowIdx, colKey });
+        }
       } else if (e.key === 'Escape') {
         setSelectedCell(null);
         setSelectionRange(null);
@@ -397,6 +444,11 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
 
   // 4. Inline Cell Edit with 2.5s Debounced Auto-Save
   const handleCellEdit = (entryId: string, fieldKey: string, newValue: any) => {
+    const targetEntry = entries.find((item) => (item.id || item._id) === entryId);
+    if (!targetEntry || !checkCanEditRow(targetEntry)) {
+      return;
+    }
+
     // Push current snapshot to undo stack (max 50)
     setUndoStack((prev) => [...prev.slice(-49), entries]);
     setRedoStack([]);
@@ -870,9 +922,8 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
                     {/* Action Buttons */}
                     <td style={{ padding: '6px 10px', borderRight: '1px solid #e2e8f0' }}>
                       {(() => {
-                        const isEntryCreator = entry.createdBy && user && (entry.createdBy === user.id || entry.createdBy === user._id);
-                        const canEditThisRow = !effectiveIsLocked && (isEntryCreator ? sheetPermissions.canEditOwn : sheetPermissions.canEditOthers);
-                        const canDeleteThisRow = !effectiveIsLocked && (isEntryCreator ? sheetPermissions.canDeleteOwn : sheetPermissions.canDeleteOthers);
+                        const canEditThisRow = checkCanEditRow(entry);
+                        const canDeleteThisRow = checkCanDeleteRow(entry);
 
                         if (!canEditThisRow && !canDeleteThisRow) {
                           return <span style={{ color: '#cbd5e1', fontSize: '11px' }}>—</span>;
@@ -935,8 +986,7 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
                         colIdx >= Math.min(selectionRange.startCol, selectionRange.endCol) &&
                         colIdx <= Math.max(selectionRange.startCol, selectionRange.endCol);
 
-                      const isEntryCreator = entry.createdBy && user && (entry.createdBy === user.id || entry.createdBy === user._id);
-                      const canEditThisRow = !effectiveIsLocked && (isEntryCreator ? sheetPermissions.canEditOwn : sheetPermissions.canEditOthers);
+                      const canEditThisRow = checkCanEditRow(entry);
 
                       const isFileCol = col.type === 'File';
 
