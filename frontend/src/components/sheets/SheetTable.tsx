@@ -77,6 +77,14 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
 
   // Excel Grid selection & fill-drag state
   const [selectedCell, setSelectedCell] = useState<{ rowIdx: number; colKey: string } | null>(null);
+  const [selectionRange, setSelectionRange] = useState<{
+    startRow: number;
+    startCol: number;
+    endRow: number;
+    endCol: number;
+  } | null>(null);
+  const [isMouseDownSelect, setIsMouseDownSelect] = useState(false);
+
   const [editingCell, setEditingCell] = useState<{ rowIdx: number; colKey: string } | null>(null);
   const [isDraggingFill, setIsDraggingFill] = useState(false);
   const [dragSource, setDragSource] = useState<{ rowIdx: number; colKey: string } | null>(null);
@@ -316,7 +324,7 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
     }, 2500);
   };
 
-  // Global mouse up for ending drag fill
+  // Global mouse up for ending drag fill and range selection
   useEffect(() => {
     const handleGlobalMouseUp = () => {
       if (isDraggingFill && dragSource && dragCurrentRow !== null) {
@@ -325,11 +333,12 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
       setIsDraggingFill(false);
       setDragSource(null);
       setDragCurrentRow(null);
+      setIsMouseDownSelect(false);
     };
 
     window.addEventListener('mouseup', handleGlobalMouseUp);
     return () => window.removeEventListener('mouseup', handleGlobalMouseUp);
-  }, [isDraggingFill, dragSource, dragCurrentRow, entries]);
+  }, [isDraggingFill, dragSource, dragCurrentRow, isMouseDownSelect, entries]);
 
   // Keyboard navigation across cells
   useEffect(() => {
@@ -343,30 +352,41 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
       if (e.key === 'ArrowDown') {
         e.preventDefault();
         if (rowIdx < entries.length - 1) {
-          setSelectedCell({ rowIdx: rowIdx + 1, colKey });
+          const nextRow = rowIdx + 1;
+          setSelectedCell({ rowIdx: nextRow, colKey });
+          setSelectionRange({ startRow: nextRow, startCol: colIdx, endRow: nextRow, endCol: colIdx });
         }
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
         if (rowIdx > 0) {
-          setSelectedCell({ rowIdx: rowIdx - 1, colKey });
+          const prevRow = rowIdx - 1;
+          setSelectedCell({ rowIdx: prevRow, colKey });
+          setSelectionRange({ startRow: prevRow, startCol: colIdx, endRow: prevRow, endCol: colIdx });
         }
       } else if (e.key === 'ArrowRight' || e.key === 'Tab') {
         e.preventDefault();
         if (colIdx < dataColumns.length - 1) {
-          setSelectedCell({ rowIdx, colKey: dataColumns[colIdx + 1].fieldKey });
+          const nextColKey = dataColumns[colIdx + 1].fieldKey;
+          setSelectedCell({ rowIdx, colKey: nextColKey });
+          setSelectionRange({ startRow: rowIdx, startCol: colIdx + 1, endRow: rowIdx, endCol: colIdx + 1 });
         } else if (rowIdx < entries.length - 1) {
-          setSelectedCell({ rowIdx: rowIdx + 1, colKey: dataColumns[0].fieldKey });
+          const nextRow = rowIdx + 1;
+          setSelectedCell({ rowIdx: nextRow, colKey: dataColumns[0].fieldKey });
+          setSelectionRange({ startRow: nextRow, startCol: 0, endRow: nextRow, endCol: 0 });
         }
       } else if (e.key === 'ArrowLeft') {
         e.preventDefault();
         if (colIdx > 0) {
-          setSelectedCell({ rowIdx, colKey: dataColumns[colIdx - 1].fieldKey });
+          const prevColKey = dataColumns[colIdx - 1].fieldKey;
+          setSelectedCell({ rowIdx, colKey: prevColKey });
+          setSelectionRange({ startRow: rowIdx, startCol: colIdx - 1, endRow: rowIdx, endCol: colIdx - 1 });
         }
       } else if (e.key === 'Enter') {
         e.preventDefault();
         setEditingCell({ rowIdx, colKey });
       } else if (e.key === 'Escape') {
         setSelectedCell(null);
+        setSelectionRange(null);
         setEditingCell(null);
       }
     };
@@ -782,7 +802,7 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
               textAlign: 'left',
               fontSize: '12px',
               border: '1px solid #cbd5e1',
-              userSelect: isDraggingFill ? 'none' : 'auto'
+              userSelect: 'none'
             }}
           >
             <thead>
@@ -902,10 +922,18 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
                     </td>
 
                     {/* Data Cells (Full Excel-like Interactive Grid) */}
-                    {dataColumns.map((col) => {
+                    {dataColumns.map((col, colIdx) => {
                       const isSelected = selectedCell?.rowIdx === rowIdx && selectedCell?.colKey === col.fieldKey;
                       const isEditing = editingCell?.rowIdx === rowIdx && editingCell?.colKey === col.fieldKey;
                       const val = entry.data ? entry.data[col.fieldKey] ?? '' : '';
+
+                      // Multi-cell range selection test
+                      const isInRange =
+                        selectionRange &&
+                        rowIdx >= Math.min(selectionRange.startRow, selectionRange.endRow) &&
+                        rowIdx <= Math.max(selectionRange.startRow, selectionRange.endRow) &&
+                        colIdx >= Math.min(selectionRange.startCol, selectionRange.endCol) &&
+                        colIdx <= Math.max(selectionRange.startCol, selectionRange.endCol);
 
                       const isEntryCreator = entry.createdBy && user && (entry.createdBy === user.id || entry.createdBy === user._id);
                       const canEditThisRow = !effectiveIsLocked && (isEntryCreator ? sheetPermissions.canEditOwn : sheetPermissions.canEditOthers);
@@ -920,7 +948,8 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
                             key={col.fieldKey}
                             style={{
                               padding: '6px 10px',
-                              borderRight: '1px solid #e2e8f0'
+                              borderRight: '1px solid #e2e8f0',
+                              userSelect: 'none'
                             }}
                           >
                             {val ? (
@@ -957,8 +986,25 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
                       return (
                         <td
                           key={col.fieldKey}
-                          onClick={() => {
+                          onMouseDown={(e) => {
+                            if (isEditing) return;
+                            // Prevent native browser text selection when clicking or dragging across cells
+                            e.preventDefault();
+                            setIsMouseDownSelect(true);
                             setSelectedCell({ rowIdx, colKey: col.fieldKey });
+                            setSelectionRange({
+                              startRow: rowIdx,
+                              startCol: colIdx,
+                              endRow: rowIdx,
+                              endCol: colIdx
+                            });
+                          }}
+                          onMouseEnter={() => {
+                            if (isMouseDownSelect && selectionRange && !isDraggingFill) {
+                              setSelectionRange((prev) =>
+                                prev ? { ...prev, endRow: rowIdx, endCol: colIdx } : null
+                              );
+                            }
                           }}
                           onDoubleClick={() => {
                             if (canEditThisRow) {
@@ -971,12 +1017,15 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
                             fontSize: '12px',
                             borderRight: '1px solid #e2e8f0',
                             position: 'relative',
-                            backgroundColor: isSelected
+                            backgroundColor: isInRange
+                              ? 'rgba(37, 99, 235, 0.08)'
+                              : isSelected
                               ? 'rgba(37, 99, 235, 0.05)'
                               : undefined,
-                            outline: isSelected ? '2px solid #2563eb' : 'none',
+                            outline: isSelected ? '2px solid #2563eb' : isInRange ? '1px solid #93c5fd' : 'none',
                             outlineOffset: '-2px',
-                            cursor: canEditThisRow ? 'cell' : 'default'
+                            cursor: canEditThisRow ? 'cell' : 'default',
+                            userSelect: isEditing ? 'text' : 'none'
                           }}
                         >
                           {isEditing ? (
@@ -1021,7 +1070,8 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
                                 fontSize: '12px',
                                 boxSizing: 'border-box',
                                 backgroundColor: '#ffffff',
-                                color: '#1e2842'
+                                color: '#1e2842',
+                                userSelect: 'text'
                               }}
                             />
                           ) : (
@@ -1029,7 +1079,8 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
                               style={{
                                 minHeight: '18px',
                                 display: 'flex',
-                                alignItems: 'center'
+                                alignItems: 'center',
+                                userSelect: 'none'
                               }}
                             >
                               {val !== undefined && val !== null && val !== '' ? (
