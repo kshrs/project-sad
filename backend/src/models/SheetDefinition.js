@@ -35,6 +35,11 @@ const SheetDefinitionSchema = new mongoose.Schema(
       default: 'GENERAL',
       index: true
     },
+    subDir: {
+      type: String,
+      trim: true,
+      default: ''
+    },
     orderIndex: {
       type: Number,
       default: 0

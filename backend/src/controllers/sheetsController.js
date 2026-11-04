@@ -35,6 +35,7 @@ const sheetsController = {
             sheetKey: sheet.sheetKey,
             displayName: sheet.displayName,
             category: sheet.category,
+            subDir: sheet.subDir || '',
             columnsCount: sheet.columns.length,
             totalItems: count,
             isSystemDefault: sheet.isSystemDefault
@@ -51,7 +52,7 @@ const sheetsController = {
           isRevoked: false,
           expiresAt: { $gt: new Date() }
         })
-          .populate('sheetId', 'sheetKey displayName category')
+          .populate('sheetId', 'sheetKey displayName category subDir')
           .populate('ownerId', 'displayName email avatarUrl department');
 
         sharedSheets = await Promise.all(
@@ -70,6 +71,7 @@ const sheetsController = {
               sheetKey: rule.sheetKey,
               sheetName: rule.sheetId.displayName,
               category: rule.sheetId.category,
+              subDir: rule.sheetId.subDir || '',
               owner: {
                 id: rule.ownerId._id,
                 displayName: rule.ownerId.displayName,
@@ -114,6 +116,7 @@ const sheetsController = {
         sheetKey: sheet.sheetKey,
         displayName: sheet.displayName,
         category: sheet.category,
+        subDir: sheet.subDir || '',
         columns: sheet.columns
       });
     } catch (error) {
@@ -165,7 +168,7 @@ const sheetsController = {
   // 4. Admin: Create a new custom sheet definition and publish
   createSheet: async (req, res) => {
     try {
-      const { sheetKey, displayName, category, columns, targetScope } = req.body;
+      const { sheetKey, displayName, category, subDir, columns, targetScope } = req.body;
 
       if (!sheetKey || !displayName || !columns) {
         return res.status(400).json({ success: false, message: 'sheetKey, displayName, and columns are required' });
@@ -180,6 +183,7 @@ const sheetsController = {
         sheetKey: sheetKey.trim(),
         displayName: displayName.trim(),
         category: category || 'GENERAL',
+        subDir: (subDir || '').trim(),
         columns: columns,
         targetScope: targetScope || 'ALL',
         isSystemDefault: false,

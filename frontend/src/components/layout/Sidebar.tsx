@@ -4,7 +4,20 @@ import { useReport } from '../../context/ReportContext';
 import { useAuth } from '../../context/AuthContext';
 import { SheetDefinition, SharedSheetItem, User } from '../../types';
 import CreateSheetModal from '../modals/CreateSheetModal';
-import { Search, Users, Layers, Clock, Plus, UserCheck, ArrowLeft } from 'lucide-react';
+import {
+  Search,
+  Users,
+  Layers,
+  Clock,
+  Plus,
+  UserCheck,
+  ArrowLeft,
+  ChevronDown,
+  ChevronRight,
+  Folder,
+  FolderOpen,
+  FileSpreadsheet
+} from 'lucide-react';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -34,6 +47,39 @@ export default function Sidebar({
   const [allStaffList, setAllStaffList] = useState<User[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isCreateSheetOpen, setIsCreateSheetOpen] = useState(false);
+
+  // VS Code Explorer-style Folder collapse state
+  // Categories: FACULTY, STUDENT, RESEARCH, OUTREACH, GENERAL
+  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({
+    FACULTY: true,
+    STUDENT: true,
+    RESEARCH: true,
+    OUTREACH: true,
+    GENERAL: true
+  });
+
+  // SubDir state, keyed by `category:subDir`
+  const [openSubDirs, setOpenSubDirs] = useState<Record<string, boolean>>({});
+
+  const toggleCategory = (catKey: string) => {
+    setOpenCategories((prev) => ({ ...prev, [catKey]: !prev[catKey] }));
+  };
+
+  const toggleSubDir = (subKey: string) => {
+    setOpenSubDirs((prev) => ({ ...prev, [subKey]: !prev[subKey] }));
+  };
+
+  // Expand parent folders automatically when activeSheetKey changes
+  useEffect(() => {
+    if (!activeSheetKey || sheets.length === 0) return;
+    const current = sheets.find((s) => s.sheetKey === activeSheetKey);
+    if (current) {
+      const cat = current.category || 'GENERAL';
+      const sub = current.subDir || 'General & Others';
+      setOpenCategories((prev) => ({ ...prev, [cat]: true }));
+      setOpenSubDirs((prev) => ({ ...prev, [`${cat}:${sub}`]: true }));
+    }
+  }, [activeSheetKey, sheets]);
 
   const isAdminOrCoordinator = user?.role === 'ADMIN' || user?.role === 'COORDINATOR';
 
@@ -324,7 +370,7 @@ export default function Sidebar({
         ) : (
           /* Normal Personal Sheets Mode */
           <>
-            {/* Section 1: Sheets */}
+            {/* Section 1: Sheets Grouped by Category & Sub-Directory */}
             <div style={{ marginBottom: '16px' }}>
               <div
                 style={{
@@ -334,68 +380,294 @@ export default function Sidebar({
                   textTransform: 'uppercase',
                   letterSpacing: '0.06em',
                   padding: '4px 8px',
-                  marginBottom: '4px',
+                  marginBottom: '6px',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '6px'
                 }}
               >
-                <Layers size={12} /> Criteria Sheets ({filteredSheets.length})
+                <Layers size={12} /> Criteria Explorer ({filteredSheets.length})
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                {filteredSheets.map((s) => {
-                  const isActive = activeSheetKey === s.sheetKey;
+              {/* Grouping Implementation */}
+              {(() => {
+                const CATEGORY_META: Record<string, { label: string; order: number }> = {
+                  FACULTY: { label: 'Faculty Development', order: 1 },
+                  STUDENT: { label: 'Student Achievements', order: 2 },
+                  RESEARCH: { label: 'Research & Publications', order: 3 },
+                  OUTREACH: { label: 'Outreach & Industry', order: 4 },
+                  GENERAL: { label: 'General Criteria', order: 5 }
+                };
+
+                // Group sheets by category, then subDir
+                const grouped: Record<string, Record<string, SheetDefinition[]>> = {};
+
+                filteredSheets.forEach((s) => {
+                  const cat = s.category || 'GENERAL';
+                  const sub = s.subDir || 'General & Others';
+                  if (!grouped[cat]) grouped[cat] = {};
+                  if (!grouped[cat][sub]) grouped[cat][sub] = [];
+                  grouped[cat][sub].push(s);
+                });
+
+                const sortedCategories = Object.keys(grouped).sort((a, b) => {
+                  const orderA = CATEGORY_META[a]?.order ?? 99;
+                  const orderB = CATEGORY_META[b]?.order ?? 99;
+                  return orderA - orderB;
+                });
+
+                if (sortedCategories.length === 0) {
                   return (
-                    <button
-                      key={s.sheetKey}
-                      onClick={() => onSelectSheet(s.sheetKey, isAdminOrCoordinator ? targetOwnerId : undefined)}
-                      title={s.displayName}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        width: '100%',
-                        padding: '7px 10px',
-                        borderRadius: '5px',
-                        backgroundColor: isActive ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
-                        color: isActive ? '#ffffff' : '#cbd5e1',
-                        fontSize: '12px',
-                        fontWeight: isActive ? 700 : 500,
-                        textAlign: 'left',
-                        transition: 'all 0.15s ease',
-                        minWidth: 0
-                      }}
-                    >
-                      <span
-                        style={{
-                          flex: 1,
-                          minWidth: 0,
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap',
-                          paddingRight: '8px'
-                        }}
-                      >
-                        {s.displayName}
-                      </span>
-                      <span
-                        style={{
-                          flexShrink: 0,
-                          fontSize: '10px',
-                          fontWeight: 700,
-                          padding: '1px 6px',
-                          borderRadius: '10px',
-                          backgroundColor: s.totalItems > 0 ? '#2563eb' : 'rgba(255, 255, 255, 0.1)',
-                          color: '#ffffff'
-                        }}
-                      >
-                        {s.totalItems}
-                      </span>
-                    </button>
+                    <div style={{ padding: '16px 8px', fontSize: '11px', color: '#94a3b8', textAlign: 'center' }}>
+                      No criteria sheets match "{searchQuery}"
+                    </div>
                   );
-                })}
-              </div>
+                }
+
+                return (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    {sortedCategories.map((catKey) => {
+                      const catMeta = CATEGORY_META[catKey] || { label: catKey, order: 99 };
+                      const subGroups = grouped[catKey];
+                      const isCatOpen = searchQuery ? true : !!openCategories[catKey];
+                      const catTotalItems = Object.values(subGroups)
+                        .flat()
+                        .reduce((sum, s) => sum + (s.totalItems || 0), 0);
+                      const catSheetCount = Object.values(subGroups).flat().length;
+
+                      return (
+                        <div key={catKey} style={{ borderRadius: '6px', overflow: 'hidden' }}>
+                          {/* Category Folder Header */}
+                          <button
+                            onClick={() => toggleCategory(catKey)}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                              width: '100%',
+                              padding: '6px 8px',
+                              backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                              border: 'none',
+                              borderRadius: '4px',
+                              color: '#93c5fd',
+                              fontSize: '11px',
+                              fontWeight: 800,
+                              cursor: 'pointer',
+                              textAlign: 'left',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.04em'
+                            }}
+                          >
+                            <span style={{ display: 'flex', alignItems: 'center', gap: '6px', minWidth: 0 }}>
+                              {isCatOpen ? <ChevronDown size={13} /> : <ChevronRight size={13} />}
+                              {isCatOpen ? (
+                                <FolderOpen size={14} color="#60a5fa" />
+                              ) : (
+                                <Folder size={14} color="#60a5fa" />
+                              )}
+                              <span
+                                style={{
+                                  overflow: 'hidden',
+                                  textOverflow: 'ellipsis',
+                                  whiteSpace: 'nowrap'
+                                }}
+                              >
+                                {catMeta.label}
+                              </span>
+                            </span>
+                            <span
+                              style={{
+                                flexShrink: 0,
+                                fontSize: '10px',
+                                padding: '1px 5px',
+                                borderRadius: '10px',
+                                backgroundColor: catTotalItems > 0 ? '#2563eb' : 'rgba(255, 255, 255, 0.08)',
+                                color: '#ffffff',
+                                fontWeight: 700
+                              }}
+                            >
+                              {catTotalItems > 0 ? `${catTotalItems} (${catSheetCount})` : catSheetCount}
+                            </span>
+                          </button>
+
+                          {/* Sub-Directories List */}
+                          {isCatOpen && (
+                            <div
+                              style={{
+                                marginLeft: '8px',
+                                paddingLeft: '8px',
+                                borderLeft: '1px solid rgba(255, 255, 255, 0.12)',
+                                marginTop: '2px',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '2px'
+                              }}
+                            >
+                              {Object.keys(subGroups)
+                                .sort()
+                                .map((subDirName) => {
+                                  const subKey = `${catKey}:${subDirName}`;
+                                  const subSheets = subGroups[subDirName];
+                                  const isSubOpen = searchQuery ? true : (openSubDirs[subKey] ?? true);
+                                  const subTotal = subSheets.reduce((sum, s) => sum + (s.totalItems || 0), 0);
+
+                                  return (
+                                    <div key={subKey} style={{ marginTop: '2px' }}>
+                                      {/* Sub-Directory Folder Header */}
+                                      <button
+                                        onClick={() => toggleSubDir(subKey)}
+                                        style={{
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          justifyContent: 'space-between',
+                                          width: '100%',
+                                          padding: '5px 6px',
+                                          backgroundColor: 'transparent',
+                                          border: 'none',
+                                          borderRadius: '4px',
+                                          color: '#e2e8f0',
+                                          fontSize: '11px',
+                                          fontWeight: 600,
+                                          cursor: 'pointer',
+                                          textAlign: 'left'
+                                        }}
+                                      >
+                                        <span style={{ display: 'flex', alignItems: 'center', gap: '5px', minWidth: 0 }}>
+                                          {isSubOpen ? <ChevronDown size={11} /> : <ChevronRight size={11} />}
+                                          {isSubOpen ? (
+                                            <FolderOpen size={12} color="#fbbf24" />
+                                          ) : (
+                                            <Folder size={12} color="#fbbf24" />
+                                          )}
+                                          <span
+                                            style={{
+                                              overflow: 'hidden',
+                                              textOverflow: 'ellipsis',
+                                              whiteSpace: 'nowrap'
+                                            }}
+                                          >
+                                            {subDirName}
+                                          </span>
+                                        </span>
+                                        <span
+                                          style={{
+                                            flexShrink: 0,
+                                            fontSize: '9px',
+                                            padding: '1px 4px',
+                                            borderRadius: '8px',
+                                            backgroundColor:
+                                              subTotal > 0 ? 'rgba(37, 99, 235, 0.4)' : 'rgba(255, 255, 255, 0.06)',
+                                            color: '#cbd5e1',
+                                            fontWeight: 600
+                                          }}
+                                        >
+                                          {subSheets.length}
+                                        </span>
+                                      </button>
+
+                                      {/* Sheets inside Sub-Directory */}
+                                      {isSubOpen && (
+                                        <div
+                                          style={{
+                                            marginLeft: '8px',
+                                            paddingLeft: '8px',
+                                            borderLeft: '1px solid rgba(255, 255, 255, 0.08)',
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            gap: '2px',
+                                            marginTop: '2px'
+                                          }}
+                                        >
+                                          {subSheets.map((s) => {
+                                            const isActive = activeSheetKey === s.sheetKey;
+                                            return (
+                                              <button
+                                                key={s.sheetKey}
+                                                onClick={() =>
+                                                  onSelectSheet(
+                                                    s.sheetKey,
+                                                    isAdminOrCoordinator ? targetOwnerId : undefined
+                                                  )
+                                                }
+                                                title={s.displayName}
+                                                style={{
+                                                  display: 'flex',
+                                                  alignItems: 'center',
+                                                  justifyContent: 'space-between',
+                                                  width: '100%',
+                                                  padding: '5px 8px',
+                                                  borderRadius: '4px',
+                                                  backgroundColor: isActive
+                                                    ? 'rgba(255, 255, 255, 0.18)'
+                                                    : 'transparent',
+                                                  color: isActive ? '#ffffff' : '#cbd5e1',
+                                                  fontSize: '11.5px',
+                                                  fontWeight: isActive ? 700 : 500,
+                                                  textAlign: 'left',
+                                                  transition: 'all 0.15s ease',
+                                                  minWidth: 0,
+                                                  border: 'none',
+                                                  cursor: 'pointer'
+                                                }}
+                                              >
+                                                <span
+                                                  style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '6px',
+                                                    flex: 1,
+                                                    minWidth: 0,
+                                                    overflow: 'hidden',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                    paddingRight: '6px'
+                                                  }}
+                                                >
+                                                  <FileSpreadsheet
+                                                    size={12}
+                                                    color={isActive ? '#60a5fa' : '#94a3b8'}
+                                                    style={{ flexShrink: 0 }}
+                                                  />
+                                                  <span
+                                                    style={{
+                                                      overflow: 'hidden',
+                                                      textOverflow: 'ellipsis',
+                                                      whiteSpace: 'nowrap'
+                                                    }}
+                                                  >
+                                                    {s.displayName}
+                                                  </span>
+                                                </span>
+                                                <span
+                                                  style={{
+                                                    flexShrink: 0,
+                                                    fontSize: '9.5px',
+                                                    fontWeight: 700,
+                                                    padding: '1px 5px',
+                                                    borderRadius: '10px',
+                                                    backgroundColor:
+                                                      s.totalItems > 0 ? '#2563eb' : 'rgba(255, 255, 255, 0.08)',
+                                                    color: '#ffffff'
+                                                  }}
+                                                >
+                                                  {s.totalItems}
+                                                </span>
+                                              </button>
+                                            );
+                                          })}
+                                        </div>
+                                      )}
+                                    </div>
+                                  );
+                                })}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
             </div>
 
             {/* Section 2: Shared With Me Preview (Only for individual staff) */}

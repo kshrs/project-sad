@@ -40,6 +40,7 @@ export interface SheetDefinition {
   sheetKey: string;
   displayName: string;
   category: 'FACULTY' | 'STUDENT' | 'RESEARCH' | 'OUTREACH' | 'GENERAL';
+  subDir?: string;
   columnsCount: number;
   totalItems: number;
   isSystemDefault: boolean;
@@ -50,6 +51,7 @@ export interface SharedSheetItem {
   sheetKey: string;
   sheetName: string;
   category: string;
+  subDir?: string;
   owner: {
     id: string;
     displayName: string;

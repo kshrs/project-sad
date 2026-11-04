@@ -9,10 +9,43 @@ interface CreateSheetModalProps {
   onCreated: () => void;
 }
 
+const SUB_DIR_OPTIONS: Record<string, string[]> = {
+  FACULTY: [
+    'Development & Training',
+    'Courses & Teaching',
+    'Publications & Review',
+    'Achievements & Research',
+    'Procurement & Finance',
+    'General & Others'
+  ],
+  STUDENT: [
+    'Activities & Events',
+    'Academics & Research',
+    'Progression & Support',
+    'General & Others'
+  ],
+  RESEARCH: [
+    'Publications',
+    'Grants & Patents',
+    'General & Others'
+  ],
+  OUTREACH: [
+    'Alumni Network',
+    'Industry & MOUs',
+    'General & Others'
+  ],
+  GENERAL: [
+    'Institutional Reports',
+    'Department Activities',
+    'General & Others'
+  ]
+};
+
 export default function CreateSheetModal({ isOpen, onClose, onCreated }: CreateSheetModalProps) {
   const [sheetKey, setSheetKey] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [category, setCategory] = useState<'FACULTY' | 'STUDENT' | 'RESEARCH' | 'OUTREACH' | 'GENERAL'>('FACULTY');
+  const [subDir, setSubDir] = useState<string>('Development & Training');
   const [columns, setColumns] = useState<ColumnDefinition[]>([
     { fieldKey: 'title', label: 'Title / Activity Name', type: 'String', required: true },
     { fieldKey: 'date', label: 'Date', type: 'Date', required: false },
@@ -23,6 +56,12 @@ export default function CreateSheetModal({ isOpen, onClose, onCreated }: CreateS
   const [error, setError] = useState<string | null>(null);
 
   if (!isOpen) return null;
+
+  const handleCategoryChange = (newCat: 'FACULTY' | 'STUDENT' | 'RESEARCH' | 'OUTREACH' | 'GENERAL') => {
+    setCategory(newCat);
+    const available = SUB_DIR_OPTIONS[newCat] || ['General & Others'];
+    setSubDir(available[0]);
+  };
 
   const handleAddColumn = () => {
     setColumns((prev) => [
@@ -63,6 +102,7 @@ export default function CreateSheetModal({ isOpen, onClose, onCreated }: CreateS
         sheetKey: finalKey,
         displayName: displayName.trim(),
         category,
+        subDir: subDir.trim(),
         columns,
         targetScope: 'ALL'
       });
@@ -131,7 +171,7 @@ export default function CreateSheetModal({ isOpen, onClose, onCreated }: CreateS
           )}
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-            <div>
+            <div style={{ gridColumn: 'span 2' }}>
               <label style={{ fontSize: '12px', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '4px' }}>
                 Sheet Display Name *
               </label>
@@ -147,11 +187,11 @@ export default function CreateSheetModal({ isOpen, onClose, onCreated }: CreateS
 
             <div>
               <label style={{ fontSize: '12px', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '4px' }}>
-                Category
+                Category (Primary Folder)
               </label>
               <select
                 value={category}
-                onChange={(e: any) => setCategory(e.target.value)}
+                onChange={(e: any) => handleCategoryChange(e.target.value)}
                 style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '13px' }}
               >
                 <option value="FACULTY">Faculty Development</option>
@@ -159,6 +199,23 @@ export default function CreateSheetModal({ isOpen, onClose, onCreated }: CreateS
                 <option value="RESEARCH">Research & Publications</option>
                 <option value="OUTREACH">Outreach & Industry</option>
                 <option value="GENERAL">General Criteria</option>
+              </select>
+            </div>
+
+            <div>
+              <label style={{ fontSize: '12px', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '4px' }}>
+                Sub-Directory (Sub-Folder)
+              </label>
+              <select
+                value={subDir}
+                onChange={(e) => setSubDir(e.target.value)}
+                style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+              >
+                {(SUB_DIR_OPTIONS[category] || ['General & Others']).map((sd) => (
+                  <option key={sd} value={sd}>
+                    {sd}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
