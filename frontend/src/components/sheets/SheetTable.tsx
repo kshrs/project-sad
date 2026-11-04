@@ -6,7 +6,25 @@ import { useAuth } from '../../context/AuthContext';
 import { ColumnDefinition, SheetEntry, ActiveCollaborator } from '../../types';
 import SheetEntryModal from '../modals/SheetEntryModal';
 import ManageAccessModal from '../modals/ManageAccessModal';
-import { Plus, Users, RefreshCw, Edit2, Trash2, ShieldAlert, Check, Clock, Undo, Redo, Lock, Key, FileText, ExternalLink } from 'lucide-react';
+import {
+  Plus,
+  Users,
+  RefreshCw,
+  Edit2,
+  Trash2,
+  ShieldAlert,
+  Check,
+  Clock,
+  Undo,
+  Redo,
+  Lock,
+  Key,
+  FileText,
+  ExternalLink,
+  Table,
+  Columns,
+  Rows
+} from 'lucide-react';
 
 interface SheetTableProps {
   sheetKey: string;
@@ -56,6 +74,19 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
   // 24-hr Unlock state
   const [unlockInfo, setUnlockInfo] = useState<{ isUnlocked: boolean; remainingUnlocks: number } | null>(null);
   const [delegationCount, setDelegationCount] = useState<number>(0);
+
+  // Excel Grid selection & fill-drag state
+  const [selectedCell, setSelectedCell] = useState<{ rowIdx: number; colKey: string } | null>(null);
+  const [editingCell, setEditingCell] = useState<{ rowIdx: number; colKey: string } | null>(null);
+  const [isDraggingFill, setIsDraggingFill] = useState(false);
+  const [dragSource, setDragSource] = useState<{ rowIdx: number; colKey: string } | null>(null);
+  const [dragCurrentRow, setDragCurrentRow] = useState<number | null>(null);
+
+  // Clean data columns (filtering out redundant s_no)
+  const dataColumns = columns.filter((col) => {
+    const key = col.fieldKey.toLowerCase();
+    return key !== 's_no' && key !== 'sno' && key !== 'sl_no' && key !== 'serial_no';
+  });
 
   // 1. Fetch Sheet Schema & Data
   const loadSheetData = async () => {
@@ -154,13 +185,17 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
     if (!selectedMonth) return;
     try {
       setSyncStatus('SYNCING');
-      const mutations = draftEntries.map((e) => ({
-        id: e.id || e._id,
-        version: e.version,
-        data: e.data
-      }));
+      const mutations = draftEntries.map((e) => {
+        const rawId = e.id || e._id;
+        const isDraft = typeof rawId === 'string' && rawId.startsWith('draft_');
+        return {
+          id: isDraft ? null : rawId,
+          version: isDraft ? undefined : e.version,
+          data: e.data
+        };
+      });
 
-      await api.post(
+      const res = await api.post(
         `/sheets/${sheetKey}/entries/batch-save`,
         {
           monthId: selectedMonth._id,
@@ -171,13 +206,174 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
           headers: { 'X-Idempotency-Key': crypto.randomUUID() }
         }
       );
+      if (res.data?.items) {
+        // Update local entries with newly assigned IDs and versions from server
+        setEntries((prev) => {
+          const map = new Map();
+          res.data.items.forEach((item: any) => {
+            if (item.id || item._id) map.set(item.id || item._id, item);
+          });
+          return prev.map((e) => {
+            const serverItem = map.get(e.id || e._id);
+            if (serverItem) {
+              return { ...e, ...serverItem };
+            }
+            return e;
+          });
+        });
+      }
       setSyncStatus('SAVED');
       setTimeout(() => setSyncStatus('IDLE'), 3000);
+      triggerRefresh();
     } catch (err: any) {
       setSyncStatus('ERROR');
       console.error('Batch auto-save error:', err);
     }
   };
+
+  // Add an empty row for Excel-like quick direct entry
+  const handleAddQuickRow = () => {
+    if (effectiveIsLocked || !sheetPermissions.canCreate) return;
+    setUndoStack((prev) => [...prev.slice(-49), entries]);
+    setRedoStack([]);
+
+    const newRowId = `draft_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+    const newEntry: SheetEntry = {
+      id: newRowId,
+      _id: newRowId,
+      sheetId: '',
+      sheetKey,
+      monthId: selectedMonth?._id || '',
+      ownerId: sharedOwnerId || user?.id || '',
+      createdBy: user?.id || '',
+      version: 0,
+      data: {}
+    };
+
+    const nextEntries = [...entries, newEntry];
+    setEntries(nextEntries);
+    setSelectedCell({ rowIdx: nextEntries.length - 1, colKey: dataColumns[0]?.fieldKey || '' });
+    setEditingCell({ rowIdx: nextEntries.length - 1, colKey: dataColumns[0]?.fieldKey || '' });
+    setSyncStatus('DIRTY');
+
+    if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
+    autoSaveTimerRef.current = setTimeout(() => {
+      flushSave(nextEntries);
+    }, 2500);
+  };
+
+  // Excel Drag-to-Fill Series or Copy Logic
+  const handleExecuteFill = (sourceRowIdx: number, targetRowIdx: number, colKey: string) => {
+    if (sourceRowIdx === targetRowIdx) return;
+    const startIdx = Math.min(sourceRowIdx, targetRowIdx);
+    const endIdx = Math.max(sourceRowIdx, targetRowIdx);
+
+    const sourceEntry = entries[sourceRowIdx];
+    if (!sourceEntry) return;
+
+    const sourceVal = sourceEntry.data ? sourceEntry.data[colKey] : '';
+    const colDef = dataColumns.find((c) => c.fieldKey === colKey);
+    const isDate = colDef?.type === 'Date';
+
+    // Parse source date if applicable
+    let baseDate: Date | null = null;
+    if (isDate && sourceVal) {
+      const d = new Date(sourceVal);
+      if (!isNaN(d.getTime())) baseDate = d;
+    }
+
+    setUndoStack((prev) => [...prev.slice(-49), entries]);
+    setRedoStack([]);
+
+    const updated = entries.map((entry, idx) => {
+      if (idx >= startIdx && idx <= endIdx && idx !== sourceRowIdx) {
+        let fillVal = sourceVal;
+
+        if (baseDate) {
+          // Auto-increment date per row offset (Excel fill behavior)
+          const offsetDays = idx - sourceRowIdx;
+          const incremented = new Date(baseDate.getTime() + offsetDays * 24 * 60 * 60 * 1000);
+          fillVal = incremented.toISOString().split('T')[0];
+        }
+
+        return {
+          ...entry,
+          data: {
+            ...entry.data,
+            [colKey]: fillVal
+          }
+        };
+      }
+      return entry;
+    });
+
+    setEntries(updated);
+    setSyncStatus('DIRTY');
+
+    if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
+    autoSaveTimerRef.current = setTimeout(() => {
+      flushSave(updated);
+    }, 2500);
+  };
+
+  // Global mouse up for ending drag fill
+  useEffect(() => {
+    const handleGlobalMouseUp = () => {
+      if (isDraggingFill && dragSource && dragCurrentRow !== null) {
+        handleExecuteFill(dragSource.rowIdx, dragCurrentRow, dragSource.colKey);
+      }
+      setIsDraggingFill(false);
+      setDragSource(null);
+      setDragCurrentRow(null);
+    };
+
+    window.addEventListener('mouseup', handleGlobalMouseUp);
+    return () => window.removeEventListener('mouseup', handleGlobalMouseUp);
+  }, [isDraggingFill, dragSource, dragCurrentRow, entries]);
+
+  // Keyboard navigation across cells
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!selectedCell || editingCell) return;
+
+      const { rowIdx, colKey } = selectedCell;
+      const colIdx = dataColumns.findIndex((c) => c.fieldKey === colKey);
+      if (colIdx === -1) return;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (rowIdx < entries.length - 1) {
+          setSelectedCell({ rowIdx: rowIdx + 1, colKey });
+        }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (rowIdx > 0) {
+          setSelectedCell({ rowIdx: rowIdx - 1, colKey });
+        }
+      } else if (e.key === 'ArrowRight' || e.key === 'Tab') {
+        e.preventDefault();
+        if (colIdx < dataColumns.length - 1) {
+          setSelectedCell({ rowIdx, colKey: dataColumns[colIdx + 1].fieldKey });
+        } else if (rowIdx < entries.length - 1) {
+          setSelectedCell({ rowIdx: rowIdx + 1, colKey: dataColumns[0].fieldKey });
+        }
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        if (colIdx > 0) {
+          setSelectedCell({ rowIdx, colKey: dataColumns[colIdx - 1].fieldKey });
+        }
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        setEditingCell({ rowIdx, colKey });
+      } else if (e.key === 'Escape') {
+        setSelectedCell(null);
+        setEditingCell(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedCell, editingCell, entries.length, dataColumns]);
 
   // 4. Inline Cell Edit with 2.5s Debounced Auto-Save
   const handleCellEdit = (entryId: string, fieldKey: string, newValue: any) => {
@@ -467,7 +663,30 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
             </button>
           )}
 
-          {/* Add Entry Button */}
+          {/* Quick Add Row Button (Excel Grid Mode) */}
+          {sheetPermissions.canCreate && !effectiveIsLocked && (
+            <button
+              onClick={handleAddQuickRow}
+              title="Add a blank row directly in the spreadsheet (Ctrl+Enter)"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '6px 12px',
+                borderRadius: '6px',
+                backgroundColor: '#eff6ff',
+                color: '#1d4ed8',
+                border: '1px solid #bfdbfe',
+                fontSize: '12px',
+                fontWeight: 700,
+                cursor: 'pointer'
+              }}
+            >
+              <Rows size={14} /> + Quick Row
+            </button>
+          )}
+
+          {/* Add Entry Modal Button */}
           {sheetPermissions.canCreate && (
             <button
               onClick={() => {
@@ -562,49 +781,74 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
               borderCollapse: 'collapse',
               textAlign: 'left',
               fontSize: '12px',
-              border: '1px solid #e2e8f0'
+              border: '1px solid #cbd5e1',
+              userSelect: isDraggingFill ? 'none' : 'auto'
             }}
           >
             <thead>
-              <tr style={{ backgroundColor: '#f8fafc', borderBottom: '2px solid #e2e8f0' }}>
-                <th style={{ padding: '10px 12px', width: '80px', color: '#475569', fontWeight: 700 }}>Actions</th>
-                <th style={{ padding: '10px 12px', width: '50px', color: '#475569', fontWeight: 700 }}>#</th>
-                {columns
-                  .filter((col) => {
-                    const key = col.fieldKey.toLowerCase();
-                    return key !== 's_no' && key !== 'sno' && key !== 'sl_no' && key !== 'serial_no';
-                  })
-                  .map((col) => (
-                    <th key={col.fieldKey} style={{ padding: '10px 12px', color: '#475569', fontWeight: 700, minWidth: '140px' }}>
-                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
-                        {col.label}
-                        {col.required && (
-                          <span style={{ color: '#dc2626', fontWeight: 800, fontSize: '13px', lineHeight: 1 }} title="Required field">
-                            *
-                          </span>
-                        )}
-                      </span>
-                    </th>
-                  ))}
+              <tr style={{ backgroundColor: '#f1f5f9', borderBottom: '2px solid #cbd5e1' }}>
+                <th style={{ padding: '8px 10px', width: '70px', color: '#475569', fontWeight: 700, borderRight: '1px solid #e2e8f0' }}>Actions</th>
+                <th style={{ padding: '8px 10px', width: '45px', color: '#475569', fontWeight: 700, textAlign: 'center', borderRight: '1px solid #e2e8f0' }}>#</th>
+                {dataColumns.map((col) => (
+                  <th
+                    key={col.fieldKey}
+                    style={{
+                      padding: '8px 12px',
+                      color: '#334155',
+                      fontWeight: 700,
+                      minWidth: '150px',
+                      borderRight: '1px solid #e2e8f0',
+                      backgroundColor: '#f8fafc'
+                    }}
+                  >
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                      {col.label}
+                      {col.required && (
+                        <span style={{ color: '#dc2626', fontWeight: 800, fontSize: '13px', lineHeight: 1 }} title="Required field">
+                          *
+                        </span>
+                      )}
+                    </span>
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
-              {entries.map((entry, idx) => {
+              {entries.map((entry, rowIdx) => {
                 const rowId = entry.id || entry._id!;
                 const peerHighlight = highlightedRows[rowId];
+
+                // Is this row inside the active drag-to-fill zone?
+                const isRowInDrag =
+                  isDraggingFill &&
+                  dragSource &&
+                  dragCurrentRow !== null &&
+                  rowIdx >= Math.min(dragSource.rowIdx, dragCurrentRow) &&
+                  rowIdx <= Math.max(dragSource.rowIdx, dragCurrentRow);
 
                 return (
                   <tr
                     key={rowId}
+                    onMouseEnter={() => {
+                      if (isDraggingFill) {
+                        setDragCurrentRow(rowIdx);
+                      }
+                    }}
                     style={{
-                      borderBottom: '1px solid #f1f5f9',
-                      backgroundColor: peerHighlight ? `${peerHighlight.color}15` : '#ffffff',
+                      borderBottom: '1px solid #e2e8f0',
+                      backgroundColor: isRowInDrag
+                        ? 'rgba(37, 99, 235, 0.08)'
+                        : peerHighlight
+                        ? `${peerHighlight.color}15`
+                        : rowIdx % 2 === 0
+                        ? '#ffffff'
+                        : '#fafafa',
                       borderLeft: peerHighlight ? `4px solid ${peerHighlight.color}` : '4px solid transparent',
-                      transition: 'background 0.2s ease'
+                      transition: 'background 0.15s ease'
                     }}
                   >
                     {/* Action Buttons */}
-                    <td style={{ padding: '8px 12px' }}>
+                    <td style={{ padding: '6px 10px', borderRight: '1px solid #e2e8f0' }}>
                       {(() => {
                         const isEntryCreator = entry.createdBy && user && (entry.createdBy === user.id || entry.createdBy === user._id);
                         const canEditThisRow = !effectiveIsLocked && (isEntryCreator ? sheetPermissions.canEditOwn : sheetPermissions.canEditOthers);
@@ -622,7 +866,7 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
                                   setEditingEntry(entry);
                                   setIsEntryModalOpen(true);
                                 }}
-                                title="Edit Entry"
+                                title="Edit Row in Modal"
                                 style={{ color: '#2563eb', cursor: 'pointer', background: 'none', border: 'none', padding: '2px' }}
                               >
                                 <Edit2 size={13} />
@@ -631,7 +875,7 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
                             {canDeleteThisRow && (
                               <button
                                 onClick={() => handleDeleteEntry(rowId)}
-                                title="Delete Entry"
+                                title="Delete Row"
                                 style={{ color: '#dc2626', cursor: 'pointer', background: 'none', border: 'none', padding: '2px' }}
                               >
                                 <Trash2 size={13} />
@@ -642,68 +886,191 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
                       })()}
                     </td>
 
-                    {/* S.No */}
-                    <td style={{ padding: '8px 12px', color: '#64748b', fontWeight: 600 }}>{idx + 1}</td>
+                    {/* Excel Row Header Number */}
+                    <td
+                      style={{
+                        padding: '6px 8px',
+                        color: '#64748b',
+                        fontWeight: 600,
+                        textAlign: 'center',
+                        backgroundColor: '#f8fafc',
+                        borderRight: '1px solid #e2e8f0',
+                        fontSize: '11px'
+                      }}
+                    >
+                      {rowIdx + 1}
+                    </td>
 
-                    {/* Data Cells (Editable inline with auto-save) */}
-                    {columns
-                      .filter((col) => {
-                        const key = col.fieldKey.toLowerCase();
-                        return key !== 's_no' && key !== 'sno' && key !== 'sl_no' && key !== 'serial_no';
-                      })
-                      .map((col) => {
-                        const val = entry.data ? entry.data[col.fieldKey] ?? '' : '';
+                    {/* Data Cells (Full Excel-like Interactive Grid) */}
+                    {dataColumns.map((col) => {
+                      const isSelected = selectedCell?.rowIdx === rowIdx && selectedCell?.colKey === col.fieldKey;
+                      const isEditing = editingCell?.rowIdx === rowIdx && editingCell?.colKey === col.fieldKey;
+                      const val = entry.data ? entry.data[col.fieldKey] ?? '' : '';
 
-                        if (col.type === 'File') {
-                          const isUrl = typeof val === 'string' && (val.startsWith('http://') || val.startsWith('https://'));
-                          const fileHref = isUrl ? val : `${api.defaults.baseURL}/files/${val}`;
-                          return (
-                            <td key={col.fieldKey} style={{ padding: '6px 10px' }}>
-                              {val ? (
-                                <a
-                                  href={fileHref}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  style={{
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    gap: '4px',
-                                    padding: '3px 8px',
-                                    borderRadius: '4px',
-                                    backgroundColor: isUrl ? '#f0fdf4' : '#eff6ff',
-                                    color: isUrl ? '#166534' : '#2563eb',
-                                    border: `1px solid ${isUrl ? '#bbf7d0' : '#bfdbfe'}`,
-                                    fontSize: '11px',
-                                    fontWeight: 600,
-                                    textDecoration: 'none'
-                                  }}
-                                >
-                                  {isUrl ? <ExternalLink size={12} /> : <FileText size={12} />}
-                                  {isUrl ? 'Open Link' : 'View Proof'}
-                                </a>
-                              ) : (
-                                <span style={{ color: '#94a3b8', fontStyle: 'italic', fontSize: '11px' }}>
-                                  No file
-                                </span>
-                              )}
-                            </td>
-                          );
-                        }
+                      const isEntryCreator = entry.createdBy && user && (entry.createdBy === user.id || entry.createdBy === user._id);
+                      const canEditThisRow = !effectiveIsLocked && (isEntryCreator ? sheetPermissions.canEditOwn : sheetPermissions.canEditOthers);
 
+                      const isFileCol = col.type === 'File';
+
+                      if (isFileCol) {
+                        const isUrl = typeof val === 'string' && (val.startsWith('http://') || val.startsWith('https://'));
+                        const fileHref = isUrl ? val : `${api.defaults.baseURL}/files/${val}`;
                         return (
-                          <td key={col.fieldKey} style={{ padding: '8px 10px', color: '#1e2842', fontSize: '12px' }}>
-                            {val !== undefined && val !== null && val !== '' ? (
-                              col.type === 'Date' ? (
-                                new Date(val).toLocaleDateString('en-GB')
-                              ) : (
-                                String(val)
-                              )
+                          <td
+                            key={col.fieldKey}
+                            style={{
+                              padding: '6px 10px',
+                              borderRight: '1px solid #e2e8f0'
+                            }}
+                          >
+                            {val ? (
+                              <a
+                                href={fileHref}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '4px',
+                                  padding: '3px 8px',
+                                  borderRadius: '4px',
+                                  backgroundColor: isUrl ? '#f0fdf4' : '#eff6ff',
+                                  color: isUrl ? '#166534' : '#2563eb',
+                                  border: `1px solid ${isUrl ? '#bbf7d0' : '#bfdbfe'}`,
+                                  fontSize: '11px',
+                                  fontWeight: 600,
+                                  textDecoration: 'none'
+                                }}
+                              >
+                                {isUrl ? <ExternalLink size={12} /> : <FileText size={12} />}
+                                {isUrl ? 'Open Link' : 'View Proof'}
+                              </a>
                             ) : (
-                              <span style={{ color: '#cbd5e1' }}>—</span>
+                              <span style={{ color: '#94a3b8', fontStyle: 'italic', fontSize: '11px' }}>
+                                No file
+                              </span>
                             )}
                           </td>
                         );
-                      })}
+                      }
+
+                      return (
+                        <td
+                          key={col.fieldKey}
+                          onClick={() => {
+                            setSelectedCell({ rowIdx, colKey: col.fieldKey });
+                          }}
+                          onDoubleClick={() => {
+                            if (canEditThisRow) {
+                              setEditingCell({ rowIdx, colKey: col.fieldKey });
+                            }
+                          }}
+                          style={{
+                            padding: isEditing ? '0px' : '6px 10px',
+                            color: '#1e2842',
+                            fontSize: '12px',
+                            borderRight: '1px solid #e2e8f0',
+                            position: 'relative',
+                            backgroundColor: isSelected
+                              ? 'rgba(37, 99, 235, 0.05)'
+                              : undefined,
+                            outline: isSelected ? '2px solid #2563eb' : 'none',
+                            outlineOffset: '-2px',
+                            cursor: canEditThisRow ? 'cell' : 'default'
+                          }}
+                        >
+                          {isEditing ? (
+                            <input
+                              type={col.type === 'Date' ? 'date' : col.type === 'Number' ? 'number' : 'text'}
+                              autoFocus
+                              defaultValue={
+                                col.type === 'Date' && val
+                                  ? String(val).split('T')[0]
+                                  : val
+                              }
+                              onBlur={(e) => {
+                                handleCellEdit(rowId, col.fieldKey, e.target.value);
+                                setEditingCell(null);
+                              }}
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                  handleCellEdit(rowId, col.fieldKey, (e.target as HTMLInputElement).value);
+                                  setEditingCell(null);
+                                  // Move to row below
+                                  if (rowIdx < entries.length - 1) {
+                                    setSelectedCell({ rowIdx: rowIdx + 1, colKey: col.fieldKey });
+                                  }
+                                } else if (e.key === 'Tab') {
+                                  e.preventDefault();
+                                  handleCellEdit(rowId, col.fieldKey, (e.target as HTMLInputElement).value);
+                                  setEditingCell(null);
+                                  const cIdx = dataColumns.findIndex((c) => c.fieldKey === col.fieldKey);
+                                  if (cIdx < dataColumns.length - 1) {
+                                    setSelectedCell({ rowIdx, colKey: dataColumns[cIdx + 1].fieldKey });
+                                  }
+                                } else if (e.key === 'Escape') {
+                                  setEditingCell(null);
+                                }
+                              }}
+                              style={{
+                                width: '100%',
+                                height: '100%',
+                                padding: '6px 10px',
+                                border: '2px solid #2563eb',
+                                outline: 'none',
+                                fontSize: '12px',
+                                boxSizing: 'border-box',
+                                backgroundColor: '#ffffff',
+                                color: '#1e2842'
+                              }}
+                            />
+                          ) : (
+                            <div
+                              style={{
+                                minHeight: '18px',
+                                display: 'flex',
+                                alignItems: 'center'
+                              }}
+                            >
+                              {val !== undefined && val !== null && val !== '' ? (
+                                col.type === 'Date' ? (
+                                  new Date(val).toLocaleDateString('en-GB')
+                                ) : (
+                                  String(val)
+                                )
+                              ) : (
+                                <span style={{ color: '#cbd5e1' }}>—</span>
+                              )}
+                            </div>
+                          )}
+
+                          {/* Excel Fill Handle (Small bottom-right blue square) */}
+                          {isSelected && canEditThisRow && !isEditing && (
+                            <div
+                              onMouseDown={(e) => {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                setIsDraggingFill(true);
+                                setDragSource({ rowIdx, colKey: col.fieldKey });
+                                setDragCurrentRow(rowIdx);
+                              }}
+                              title="Click and drag down to auto-fill cells and increment dates"
+                              style={{
+                                position: 'absolute',
+                                right: '-1px',
+                                bottom: '-1px',
+                                width: '7px',
+                                height: '7px',
+                                backgroundColor: '#2563eb',
+                                cursor: 'crosshair',
+                                zIndex: 10,
+                                border: '1px solid #ffffff'
+                              }}
+                            />
+                          )}
+                        </td>
+                      );
+                    })}
                   </tr>
                 );
               })}
