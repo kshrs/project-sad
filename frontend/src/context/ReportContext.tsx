@@ -9,6 +9,7 @@ interface ReportContextType {
   selectedMonth: MonthlyReport | null;
   loading: boolean;
   isMonthLocked: boolean;
+  isMonthPastOrLocked: (m: MonthlyReport | null) => boolean;
   refreshKey: number;
   triggerRefresh: () => void;
   selectMonth: (monthId: string) => void;
@@ -47,6 +48,33 @@ export const ReportProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     fetchYears();
   }, []);
 
+  // Helper to determine current year-month in Asia/Kolkata (IST)
+  const getCurrentMonthKeyIST = (): string => {
+    try {
+      const parts = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Asia/Kolkata',
+        year: 'numeric',
+        month: '2-digit'
+      }).formatToParts(new Date());
+      const year = parts.find((p) => p.type === 'year')?.value;
+      const month = parts.find((p) => p.type === 'month')?.value;
+      if (year && month) return `${year}-${month}`;
+    } catch (e) {
+      // Fallback
+    }
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+  };
+
+  // Helper: check if a month is in the past relative to current IST month
+  const isMonthPastOrLocked = (m: MonthlyReport | null): boolean => {
+    if (!m) return false;
+    if (m.status === 'LOCKED') return true;
+    if (!m.monthKey) return false;
+    const currentKey = getCurrentMonthKeyIST();
+    return m.monthKey < currentKey;
+  };
+
   // Fetch Months when Selected Year changes
   useEffect(() => {
     if (!selectedYear) return;
@@ -59,8 +87,10 @@ export const ReportProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
         if (mList.length > 0) {
           // Default to current month or latest active month
-          const currentMonthNum = new Date().getMonth() + 1;
-          const match = mList.find((m: MonthlyReport) => m.monthNumber === currentMonthNum) || mList[0];
+          const currentKey = getCurrentMonthKeyIST();
+          const match = mList.find((m: MonthlyReport) => m.monthKey === currentKey) ||
+            mList.find((m: MonthlyReport) => m.status === 'ACTIVE') ||
+            mList[mList.length - 1];
           setSelectedMonth(match);
         }
       } catch (err) {
@@ -80,7 +110,7 @@ export const ReportProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     if (y) setSelectedYear(y);
   };
 
-  const isMonthLocked = selectedMonth?.status === 'LOCKED';
+  const isMonthLocked = isMonthPastOrLocked(selectedMonth);
 
   return (
     <ReportContext.Provider
@@ -91,6 +121,7 @@ export const ReportProvider: React.FC<{ children: ReactNode }> = ({ children }) 
         selectedMonth,
         loading,
         isMonthLocked,
+        isMonthPastOrLocked,
         refreshKey,
         triggerRefresh,
         selectMonth,

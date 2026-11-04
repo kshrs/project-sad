@@ -21,7 +21,7 @@ export default function Header({
   onToggleSharedView,
   sharedCount = 0
 }: HeaderProps) {
-  const { months, selectedMonth, selectMonth, isMonthLocked } = useReport();
+  const { months, selectedMonth, selectMonth, isMonthLocked, isMonthPastOrLocked } = useReport();
   const { user } = useAuth();
 
   const handleExportPdf = () => {
@@ -182,7 +182,7 @@ export default function Header({
           >
             {months.map((m) => (
               <option key={m._id} value={m._id}>
-                {m.monthName} {m.status === 'LOCKED' ? '(Locked)' : ''}
+                {m.monthName} {isMonthPastOrLocked(m) ? '(Locked)' : ''}
               </option>
             ))}
           </select>

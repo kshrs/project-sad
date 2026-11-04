@@ -34,8 +34,21 @@ router.get('/years', authenticate, async (req, res) => {
 
 router.get('/reports/year/:yearId', authenticate, async (req, res) => {
   try {
+    const currentMonthKey = new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'Asia/Kolkata',
+      year: 'numeric',
+      month: '2-digit'
+    }).format(new Date());
+
     const reports = await MonthlyReport.find({ yearId: req.params.yearId }).sort({ monthNumber: 1 });
-    res.json({ success: true, count: reports.length, data: reports });
+    const formatted = reports.map((r) => {
+      const obj = r.toObject();
+      if (obj.monthKey && obj.monthKey < currentMonthKey) {
+        obj.status = 'LOCKED';
+      }
+      return obj;
+    });
+    res.json({ success: true, count: formatted.length, data: formatted });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }

@@ -166,7 +166,16 @@ const sheetEntryController = {
       const isOwner = effectiveOwnerId.toString() === user.id.toString();
       const isAdminOrCoordinator = user.role === 'ADMIN' || user.role === 'COORDINATOR';
 
-      if (monthReport.status === 'LOCKED' && !isAdminOrCoordinator) {
+      const currentMonthKey = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Asia/Kolkata',
+        year: 'numeric',
+        month: '2-digit'
+      }).format(new Date());
+
+      const isPastMonth = monthReport.monthKey && monthReport.monthKey < currentMonthKey;
+      const isLocked = monthReport.status === 'LOCKED' || isPastMonth;
+
+      if (isLocked && !isAdminOrCoordinator) {
         // Check if there is an active 24-hr unlock grant
         const activeUnlock = await SheetUnlockGrant.findOne({
           sheetId: sheet._id,
@@ -340,6 +349,38 @@ const sheetEntryController = {
 
       const isAdminOrCoordinator = user.role === 'ADMIN' || user.role === 'COORDINATOR';
       const isOwner = entry.ownerId.toString() === user.id.toString();
+
+      // Check month lock status for non-admin
+      if (!isAdminOrCoordinator) {
+        const monthReport = await MonthlyReport.findById(entry.monthId);
+        if (monthReport) {
+          const currentMonthKey = new Intl.DateTimeFormat('en-CA', {
+            timeZone: 'Asia/Kolkata',
+            year: 'numeric',
+            month: '2-digit'
+          }).format(new Date());
+
+          const isPastMonth = monthReport.monthKey && monthReport.monthKey < currentMonthKey;
+          const isLocked = monthReport.status === 'LOCKED' || isPastMonth;
+
+          if (isLocked) {
+            const activeUnlock = await SheetUnlockGrant.findOne({
+              sheetId: entry.sheetId,
+              monthId: entry.monthId,
+              staffId: entry.ownerId,
+              expiresAt: { $gt: new Date() }
+            });
+
+            if (!activeUnlock) {
+              return res.status(423).json({
+                success: false,
+                code: 'MONTH_LOCKED',
+                message: 'This month is locked. Contact your administrator or coordinator to grant a 24-hour unlock window.'
+              });
+            }
+          }
+        }
+      }
 
       if (!isAdminOrCoordinator && !isOwner) {
         // Delegate delete check

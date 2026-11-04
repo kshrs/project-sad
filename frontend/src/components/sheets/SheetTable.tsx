@@ -515,9 +515,11 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
               No entries recorded for this month
             </div>
             <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '14px' }}>
-              Entries created for this academic criterion will appear here.
+              {effectiveIsLocked
+                ? 'This month is locked for editing. No entries can be added or modified.'
+                : 'Entries created for this academic criterion will appear here.'}
             </div>
-            {!effectiveIsLocked && (
+            {!effectiveIsLocked ? (
               <button
                 onClick={() => {
                   setEditingEntry(null);
@@ -534,6 +536,23 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
               >
                 + Create First Entry
               </button>
+            ) : (
+              <div
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '6px 12px',
+                  borderRadius: '6px',
+                  backgroundColor: '#fef2f2',
+                  color: '#dc2626',
+                  border: '1px solid #fecaca',
+                  fontSize: '12px',
+                  fontWeight: 600
+                }}
+              >
+                <Lock size={14} /> Locked for Editing
+              </div>
             )}
           </div>
         ) : (
