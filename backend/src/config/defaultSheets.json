@@ -1,0 +1,4590 @@
+[
+  {
+    "sheetKey": "AlumniEntrepreneurDetails",
+    "displayName": "Alumni Entrepreneur Details",
+    "category": "OUTREACH",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "programme_name",
+        "label": "Programme Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "roll_no",
+        "label": "Roll No",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "student_name",
+        "label": "Student Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "batch",
+        "label": "Batch",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "company_name_address",
+        "label": "Company Name Address",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "domain",
+        "label": "Domain",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "position_in_company",
+        "label": "Position In Company",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "AlumniMeet",
+    "displayName": "Alumni Meet",
+    "category": "OUTREACH",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "event_name",
+        "label": "Event Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "venue",
+        "label": "Venue",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "strength",
+        "label": "Strength",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "remarks",
+        "label": "Remarks",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "AlumniVisit",
+    "displayName": "Alumni Visit",
+    "category": "OUTREACH",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "roll_no",
+        "label": "Roll No",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "name",
+        "label": "Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "year_of_study",
+        "label": "Year Of Study",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "designation",
+        "label": "Designation",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "name_of_the_organization",
+        "label": "Name Of The Organization",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "address",
+        "label": "Address",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "AwardsReceived",
+    "displayName": "Awards Received",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_name",
+        "label": "Faculty Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "award_receiving_date",
+        "label": "Award Receiving Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "award_title",
+        "label": "Award Title",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "agency_offering_award",
+        "label": "Agency Offering Award",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "agency_level",
+        "label": "Agency Level",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "agency_type",
+        "label": "Agency Type",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "agency_address",
+        "label": "Agency Address",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "nature_of_activity_recognized",
+        "label": "Nature Of Activity Recognized",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "BookChapterPublication",
+    "displayName": "Book Chapter Publication",
+    "category": "RESEARCH",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_name",
+        "label": "Faculty Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "publication_month_year",
+        "label": "Publication Month Year",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "book_title",
+        "label": "Book Title",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "chapter_title",
+        "label": "Chapter Title",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "publisher_name",
+        "label": "Publisher Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "pages",
+        "label": "Pages",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "isbn_no",
+        "label": "Isbn No",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "co_author_details",
+        "label": "Co Author Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "BookPublication",
+    "displayName": "Book Publication",
+    "category": "RESEARCH",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_name",
+        "label": "Faculty Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "publication_month_year",
+        "label": "Publication Month Year",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "book_title",
+        "label": "Book Title",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "publisher_name",
+        "label": "Publisher Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "isbn_no",
+        "label": "Isbn No",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "collabortive_publication",
+        "label": "Collabortive Publication",
+        "type": "Boolean",
+        "required": false
+      },
+      {
+        "fieldKey": "co_author_details",
+        "label": "Co Author Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "level",
+        "label": "Level",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "CareerGuidance",
+    "displayName": "Career Guidance",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "activity",
+        "label": "Activity",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "agency_conducted_activity",
+        "label": "Agency Conducted Activity",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "no_of_students_attended",
+        "label": "No Of Students Attended",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "comments",
+        "label": "Comments",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "outcomes",
+        "label": "Outcomes",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "CollaborativeActivity",
+    "displayName": "Collaborative Activity",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "collaboration_month_year",
+        "label": "Collaboration Month Year",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "duration",
+        "label": "Duration",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "collaborative_activity_title",
+        "label": "Collaborative Activity Title",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "collaborative_agency_name_contact_details",
+        "label": "Collaborative Agency Name Contact Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "participant_name",
+        "label": "Participant Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "nature_of_the_activity",
+        "label": "Nature Of The Activity",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "financial_support_source",
+        "label": "Financial Support Source",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "outcome",
+        "label": "Outcome",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "FacultyCompetition",
+    "displayName": "Faculty Competition",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "competition_month_year",
+        "label": "Competition Month Year",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_name",
+        "label": "Faculty Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "programme_type",
+        "label": "Programme Type",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "event_name",
+        "label": "Event Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "organizing_agency_name",
+        "label": "Organizing Agency Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "level",
+        "label": "Level",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "duration",
+        "label": "Duration",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "hours_per_day",
+        "label": "Hours Per Day",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "programme_mode",
+        "label": "Programme Mode",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "organizing_agency_name2",
+        "label": "Organizing Agency Name2",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "organizing_agency_address",
+        "label": "Organizing Agency Address",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "achievements",
+        "label": "Achievements",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "sponsorship",
+        "label": "Sponsorship",
+        "type": "Boolean",
+        "required": false
+      },
+      {
+        "fieldKey": "sponsorship_amount",
+        "label": "Sponsorship Amount",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "FacultyParticipateOthers",
+    "displayName": "Faculty Participate Others",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_name",
+        "label": "Faculty Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "designation",
+        "label": "Designation",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "event_type",
+        "label": "Event Type",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "level",
+        "label": "Level",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "programme_title",
+        "label": "Programme Title",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "duration",
+        "label": "Duration",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "hours_per_day",
+        "label": "Hours Per Day",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "programme_mode",
+        "label": "Programme Mode",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "organizing_agency_name",
+        "label": "Organizing Agency Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "organizing_agency_address",
+        "label": "Organizing Agency Address",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "sponsorship",
+        "label": "Sponsorship",
+        "type": "Boolean",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "FacultyResearch",
+    "displayName": "Faculty Research",
+    "category": "RESEARCH",
+    "columns": [
+      {
+        "fieldKey": "note_kindly_update_all_faculty_details_in_this_table",
+        "label": "Note Kindly Update All Faculty Details In This Table",
+        "type": "Date",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "FacultyResourcePerson",
+    "displayName": "Faculty Resource Person",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_name",
+        "label": "Faculty Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "type_of_activity",
+        "label": "Type Of Activity",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "activity_title",
+        "label": "Activity Title",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "organised_by",
+        "label": "Organised By",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "level",
+        "label": "Level",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "FacultyStudentRatio",
+    "displayName": "Faculty Student Ratio",
+    "category": "STUDENT",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "programme",
+        "label": "Programme",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "first_year_pg",
+        "label": "First Year Pg",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "second_year_ug",
+        "label": "Second Year Ug",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "third_year_ug",
+        "label": "Third Year Ug",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "final_year_ug",
+        "label": "Final Year Ug",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "total",
+        "label": "Total",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_total",
+        "label": "Faculty Total",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_student_ratio",
+        "label": "Faculty Student Ratio",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "GuestLecturesOrganised",
+    "displayName": "Guest Lectures Organised",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "guest_lecture_topic",
+        "label": "Guest Lecture Topic",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "expert_name_designation",
+        "label": "Expert Name Designation",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "industry_institute_name",
+        "label": "Industry Institute Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "student_batch",
+        "label": "Student Batch",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "no_of_participants",
+        "label": "No Of Participants",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_coordinator",
+        "label": "Faculty Coordinator",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "HigherStudies",
+    "displayName": "Higher Studies",
+    "category": "STUDENT",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "programme",
+        "label": "Programme",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "roll_no",
+        "label": "Roll No",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "student_name",
+        "label": "Student Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "graduating_year",
+        "label": "Graduating Year",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "institution_name_joined",
+        "label": "Institution Name Joined",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "programme_name_admitted",
+        "label": "Programme Name Admitted",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "admission_year",
+        "label": "Admission Year",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "eligibility_exam_name",
+        "label": "Eligibility Exam Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "IndustrialTour",
+    "displayName": "Industrial Tour",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "programme",
+        "label": "Programme",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "year",
+        "label": "Year",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "no_of_students",
+        "label": "No Of Students",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "industry_name",
+        "label": "Industry Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "industry_location",
+        "label": "Industry Location",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_coordinator",
+        "label": "Faculty Coordinator",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "IndustrialVisit",
+    "displayName": "Industrial Visit",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "programme",
+        "label": "Programme",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "year",
+        "label": "Year",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "no_of_students",
+        "label": "No Of Students",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "industry_name",
+        "label": "Industry Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "industry_location",
+        "label": "Industry Location",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_coordinator",
+        "label": "Faculty Coordinator",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "IndustryLinkage",
+    "displayName": "Industry Linkage",
+    "category": "OUTREACH",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "linkage_title",
+        "label": "Linkage Title",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "partnering_institution_name_contact_details",
+        "label": "Partnering Institution Name Contact Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "nature_of_linkage",
+        "label": "Nature Of Linkage",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "participant_name",
+        "label": "Participant Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "Internships",
+    "displayName": "Internships",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "duration",
+        "label": "Duration",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "batch",
+        "label": "Batch",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "roll_no",
+        "label": "Roll No",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "student_name",
+        "label": "Student Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "industry_name_address",
+        "label": "Industry Name Address",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "stipend",
+        "label": "Stipend",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_name",
+        "label": "Faculty Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "JournalNonScopus",
+    "displayName": "Journal Non Scopus",
+    "category": "RESEARCH",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_name",
+        "label": "Faculty Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "publication_month_year",
+        "label": "Publication Month Year",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "publication_details",
+        "label": "Publication Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "publisher_details",
+        "label": "Publisher Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "impact_factor",
+        "label": "Impact Factor",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "indexed_in",
+        "label": "Indexed In",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "collaborative_publication",
+        "label": "Collaborative Publication",
+        "type": "Boolean",
+        "required": false
+      },
+      {
+        "fieldKey": "colloborator_name_affliation",
+        "label": "Colloborator Name Affliation",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "collaboration_details",
+        "label": "Collaboration Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "in_ugc_care_list",
+        "label": "In Ugc Care List",
+        "type": "Boolean",
+        "required": false
+      },
+      {
+        "fieldKey": "journal_home_page_link",
+        "label": "Journal Home Page Link",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "article_link",
+        "label": "Article Link",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      },
+      {
+        "fieldKey": "cite_the_publication_apa_style",
+        "label": "Cite The Publication Apa Style",
+        "type": "String",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "JournalPublicationScopus",
+    "displayName": "Journal Publication Scopus",
+    "category": "RESEARCH",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_name",
+        "label": "Faculty Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "publication_month_year",
+        "label": "Publication Month Year",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "publication_details",
+        "label": "Publication Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "publisher_details",
+        "label": "Publisher Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "impact_factor",
+        "label": "Impact Factor",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "indexed_in",
+        "label": "Indexed In",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "collaborative_publication",
+        "label": "Collaborative Publication",
+        "type": "Boolean",
+        "required": false
+      },
+      {
+        "fieldKey": "colloborator_name_affliation",
+        "label": "Colloborator Name Affliation",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "collaboration_details",
+        "label": "Collaboration Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "in_ugc_care_list",
+        "label": "In Ugc Care List",
+        "type": "Boolean",
+        "required": false
+      },
+      {
+        "fieldKey": "journal_home_page_link",
+        "label": "Journal Home Page Link",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "article_link",
+        "label": "Article Link",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      },
+      {
+        "fieldKey": "cite_the_publication_apa_style",
+        "label": "Cite The Publication Apa Style",
+        "type": "String",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "MouActivities",
+    "displayName": "Mou Activities",
+    "category": "OUTREACH",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "duration",
+        "label": "Duration",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "mou_signed_organization",
+        "label": "Mou Signed Organization",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "activity",
+        "label": "Activity",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "nature",
+        "label": "Nature",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "no_students_or_faculty_participated",
+        "label": "No Students Or Faculty Participated",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "status",
+        "label": "Status",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "MouSigned",
+    "displayName": "Mou Signed",
+    "category": "OUTREACH",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "mou_signed_organization",
+        "label": "Mou Signed Organization",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "academic_institution_or_industry",
+        "label": "Academic Institution Or Industry",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "national_or_international",
+        "label": "National Or International",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "mou_signed_date",
+        "label": "Mou Signed Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "duration",
+        "label": "Duration",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "kct_faculty_coordinator",
+        "label": "Kct Faculty Coordinator",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "mou_activities",
+        "label": "Mou Activities",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "no_students_or_faculty_participated",
+        "label": "No Students Or Faculty Participated",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "Newsletter",
+    "displayName": "Newsletter",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "publication_details",
+        "label": "Publication Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "remarks",
+        "label": "Remarks",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "OneCreditCourseOrganised",
+    "displayName": "One Credit Course Organised",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "course_code",
+        "label": "Course Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "course_name",
+        "label": "Course Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "expert_name_designation",
+        "label": "Expert Name Designation",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "industry_institute_name",
+        "label": "Industry Institute Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "total_hours",
+        "label": "Total Hours",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "student_batch",
+        "label": "Student Batch",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "no_of_students",
+        "label": "No Of Students",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_coordinator",
+        "label": "Faculty Coordinator",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "PaperPresented",
+    "displayName": "Paper Presented",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_coordinator",
+        "label": "Faculty Coordinator",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "designation",
+        "label": "Designation",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "event_name",
+        "label": "Event Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "organised_by",
+        "label": "Organised By",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "sponsored_by",
+        "label": "Sponsored By",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "level",
+        "label": "Level",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "paper_presented_title",
+        "label": "Paper Presented Title",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "isbn_proceeding",
+        "label": "Isbn Proceeding",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "PapersReviewed",
+    "displayName": "Papers Reviewed",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_name",
+        "label": "Faculty Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "paper_title",
+        "label": "Paper Title",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "journal_name",
+        "label": "Journal Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "journal_type",
+        "label": "Journal Type",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "indexed_in",
+        "label": "Indexed In",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "Patent",
+    "displayName": "Patent",
+    "category": "RESEARCH",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "ip_type",
+        "label": "Ip Type",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "applicants_name",
+        "label": "Applicants Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "inventors_name",
+        "label": "Inventors Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "inventor_affiliation_with_email",
+        "label": "Inventor Affiliation With Email",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "title",
+        "label": "Title",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "application_no_patent_filed_date",
+        "label": "Application No Patent Filed Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "patent_status",
+        "label": "Patent Status",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "design_status",
+        "label": "Design Status",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "copyright_status",
+        "label": "Copyright Status",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "collabortive_ip",
+        "label": "Collabortive Ip",
+        "type": "Boolean",
+        "required": false
+      },
+      {
+        "fieldKey": "collaborative_documents_details",
+        "label": "Collaborative Documents Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "earnings_if_any",
+        "label": "Earnings If Any",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "country_name_ip_filed",
+        "label": "Country Name Ip Filed",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "PhdCompleted",
+    "displayName": "Phd Completed",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_name",
+        "label": "Faculty Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "designation",
+        "label": "Designation",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "thesis_title",
+        "label": "Thesis Title",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "phd_completion_date",
+        "label": "Phd Completion Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "supervisor_details",
+        "label": "Supervisor Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "PhdStudents",
+    "displayName": "Phd Students",
+    "category": "STUDENT",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "student_name",
+        "label": "Student Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "registration_no",
+        "label": "Registration No",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "phd_registration_date",
+        "label": "Phd Registration Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "university_name",
+        "label": "University Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "guide_name_department",
+        "label": "Guide Name Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "phd_completion_date",
+        "label": "Phd Completion Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "mode",
+        "label": "Mode",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "PrgmAttendAbove5Days",
+    "displayName": "Prgm Attend Above5 Days",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_name",
+        "label": "Faculty Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "designation",
+        "label": "Designation",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "event_type",
+        "label": "Event Type",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "level",
+        "label": "Level",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "programme_title",
+        "label": "Programme Title",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "duration",
+        "label": "Duration",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "hours_per_day",
+        "label": "Hours Per Day",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "programme_mode",
+        "label": "Programme Mode",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "organizing_agency",
+        "label": "Organizing Agency",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "organizing_agency_address",
+        "label": "Organizing Agency Address",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "sponsorship",
+        "label": "Sponsorship",
+        "type": "Boolean",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "ProfessionalSociety",
+    "displayName": "Professional Society",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "details_of_activity",
+        "label": "Details Of Activity",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "chief_guest_details",
+        "label": "Chief Guest Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "no_of_student_participants",
+        "label": "No Of Student Participants",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "no_of_faculty_participants",
+        "label": "No Of Faculty Participants",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "ProgramsOrganisedStudents",
+    "displayName": "Programs Organised Students",
+    "category": "STUDENT",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "programme_type",
+        "label": "Programme Type",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "programme_title",
+        "label": "Programme Title",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "level",
+        "label": "Level",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "days",
+        "label": "Days",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_coordinator",
+        "label": "Faculty Coordinator",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "no_of_participants",
+        "label": "No Of Participants",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "resource_person_details",
+        "label": "Resource Person Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "is_resource_person_alumni",
+        "label": "Is Resource Person Alumni",
+        "type": "Boolean",
+        "required": false
+      },
+      {
+        "fieldKey": "external_agency",
+        "label": "External Agency",
+        "type": "Boolean",
+        "required": false
+      },
+      {
+        "fieldKey": "external_agency_name_address",
+        "label": "External Agency Name Address",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "ProgramsOrganizedFaculty",
+    "displayName": "Programs Organized Faculty",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "programme_type",
+        "label": "Programme Type",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "programme_title",
+        "label": "Programme Title",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "level",
+        "label": "Level",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "days",
+        "label": "Days",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_coordinator",
+        "label": "Faculty Coordinator",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "no_of_participants",
+        "label": "No Of Participants",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "resource_person_details",
+        "label": "Resource Person Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "is_resource_person_alumni",
+        "label": "Is Resource Person Alumni",
+        "type": "Boolean",
+        "required": false
+      },
+      {
+        "fieldKey": "external_agency",
+        "label": "External Agency",
+        "type": "Boolean",
+        "required": false
+      },
+      {
+        "fieldKey": "external_agency_name_address",
+        "label": "External Agency Name Address",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "PurchaseCapitalEquipment",
+    "displayName": "Purchase Capital Equipment",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "purchase_order_no",
+        "label": "Purchase Order No",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "name_of_laboratory",
+        "label": "Name Of Laboratory",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "indent_date",
+        "label": "Indent Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "delivery_date",
+        "label": "Delivery Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "installation_date",
+        "label": "Installation Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "equipment_details",
+        "label": "Equipment Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "quantity",
+        "label": "Quantity",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "total_investment",
+        "label": "Total Investment",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "purpose_of_purchase",
+        "label": "Purpose Of Purchase",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "PurchaseConsumables",
+    "displayName": "Purchase Consumables",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "laboratory_name",
+        "label": "Laboratory Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "semi_consumables_consumable_details",
+        "label": "Semi Consumables Consumable Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "quantity",
+        "label": "Quantity",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "total_cost",
+        "label": "Total Cost",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "ResearchFunds",
+    "displayName": "Research Funds",
+    "category": "RESEARCH",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "month_year",
+        "label": "Month Year",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "duration_months",
+        "label": "Duration Months",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "project_nature",
+        "label": "Project Nature",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "project_title",
+        "label": "Project Title",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "pi_name",
+        "label": "Pi Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "pi_employee_code",
+        "label": "Pi Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "co_pi_name",
+        "label": "Co Pi Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "co_pi_employee_code",
+        "label": "Co Pi Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "sponsored_by_agency",
+        "label": "Sponsored By Agency",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "agency_name",
+        "label": "Agency Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "total_grant_lakhs",
+        "label": "Total Grant Lakhs",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "amount_received_current_year_lakhs",
+        "label": "Amount Received Current Year Lakhs",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "RevenueConsultancy",
+    "displayName": "Revenue Consultancy",
+    "category": "OUTREACH",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_name",
+        "label": "Faculty Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "facility_used",
+        "label": "Facility Used",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "project_name",
+        "label": "Project Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "agency_details",
+        "label": "Agency Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "revenue_generated",
+        "label": "Revenue Generated",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "RevenueCorporateTraining",
+    "displayName": "Revenue Corporate Training",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_name",
+        "label": "Faculty Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "corporate_training_programme_name",
+        "label": "Corporate Training Programme Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "agency_details_seeking_training",
+        "label": "Agency Details Seeking Training",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "revenue_generated",
+        "label": "Revenue Generated",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "no_of_trainees",
+        "label": "No Of Trainees",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "Scholarship",
+    "displayName": "Scholarship",
+    "category": "STUDENT",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "roll_no",
+        "label": "Roll No",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "student_name",
+        "label": "Student Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "sponsoring_agency",
+        "label": "Sponsoring Agency",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "sponsorship_name",
+        "label": "Sponsorship Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "amount_received_rs",
+        "label": "Amount Received Rs",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "receipt_month_year",
+        "label": "Receipt Month Year",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "SeedMoney",
+    "displayName": "Seed Money",
+    "category": "RESEARCH",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_name",
+        "label": "Faculty Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "seed_money_amount",
+        "label": "Seed Money Amount",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "grant_received_month_year",
+        "label": "Grant Received Month Year",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "duration",
+        "label": "Duration",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "nature_of_activity",
+        "label": "Nature Of Activity",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "outcome",
+        "label": "Outcome",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "StudentCareerExams",
+    "displayName": "Student Career Exams",
+    "category": "STUDENT",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "roll_no",
+        "label": "Roll No",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "student_name",
+        "label": "Student Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "exam_details",
+        "label": "Exam Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "registration_no_date",
+        "label": "Registration No Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "success_details",
+        "label": "Success Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "StudentCompetitionParticiDetails",
+    "displayName": "Student Competition Partici Details",
+    "category": "STUDENT",
+    "columns": [
+      {
+        "fieldKey": "hackathonscompetitionexchange_programs_other_related_activities",
+        "label": "Hackathonscompetitionexchange Programs Other Related Activities",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "awardsrecognitionsprize_if_any",
+        "label": "Awardsrecognitionsprize If Any",
+        "type": "String",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "StudentCompetitionParticipation",
+    "displayName": "Student Competition Participation",
+    "category": "STUDENT",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "roll_no",
+        "label": "Roll No",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "student_name",
+        "label": "Student Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "programme_type",
+        "label": "Programme Type",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "event_date",
+        "label": "Event Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "organizing_name",
+        "label": "Organizing Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "organizing_address",
+        "label": "Organizing Address",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "level",
+        "label": "Level",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "achievements",
+        "label": "Achievements",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "internal_fund_rs",
+        "label": "Internal Fund Rs",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "external_fund_rs",
+        "label": "External Fund Rs",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "StudentIndustryProjects",
+    "displayName": "Student Industry Projects",
+    "category": "STUDENT",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "programme_name",
+        "label": "Programme Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "roll_no",
+        "label": "Roll No",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "student_name",
+        "label": "Student Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "industry_name",
+        "label": "Industry Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "project_title",
+        "label": "Project Title",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "internal_guide_name",
+        "label": "Internal Guide Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "external_guide_name",
+        "label": "External Guide Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "outcome",
+        "label": "Outcome",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "StudentInhouseProjects",
+    "displayName": "Student Inhouse Projects",
+    "category": "STUDENT",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "programme_name",
+        "label": "Programme Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "roll_no",
+        "label": "Roll No",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "student_name",
+        "label": "Student Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "project_title",
+        "label": "Project Title",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "guide_name",
+        "label": "Guide Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "outcome",
+        "label": "Outcome",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "fund",
+        "label": "Fund",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "StudentOnlineCourseComp",
+    "displayName": "Student Online Course Comp",
+    "category": "STUDENT",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "roll_no",
+        "label": "Roll No",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "student_name",
+        "label": "Student Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "name_of_the_course",
+        "label": "Name Of The Course",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date2",
+        "label": "To Date2",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "course_offering_platform",
+        "label": "Course Offering Platform",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "StudentPaperPresent",
+    "displayName": "Student Paper Present",
+    "category": "STUDENT",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "roll_no",
+        "label": "Roll No",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "student_name",
+        "label": "Student Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "event_name",
+        "label": "Event Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "event_date",
+        "label": "Event Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "level",
+        "label": "Level",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "organised_by",
+        "label": "Organised By",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "participated_presented_paper",
+        "label": "Participated Presented Paper",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "issn_no",
+        "label": "Issn No",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "impact_factor",
+        "label": "Impact Factor",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "paper_details",
+        "label": "Paper Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "indexed_in",
+        "label": "Indexed In",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "guide_name",
+        "label": "Guide Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "StudentPublication",
+    "displayName": "Student Publication",
+    "category": "STUDENT",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "roll_no",
+        "label": "Roll No",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "student_name",
+        "label": "Student Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_guide_name",
+        "label": "Faculty Guide Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "paper_details",
+        "label": "Paper Details",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "impact_factor",
+        "label": "Impact Factor",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "indexed_in",
+        "label": "Indexed In",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "collaborative_publication",
+        "label": "Collaborative Publication",
+        "type": "Boolean",
+        "required": false
+      },
+      {
+        "fieldKey": "collaborator_name_affiliation",
+        "label": "Collaborator Name Affiliation",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "listed_in_ugc_website_during_the_year",
+        "label": "Listed In Ugc Website During The Year",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "level",
+        "label": "Level",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "StudentsParticipationProg",
+    "displayName": "Students Participation Prog",
+    "category": "STUDENT",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "roll_no",
+        "label": "Roll No",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "student_name",
+        "label": "Student Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "programme_type",
+        "label": "Programme Type",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "event_name",
+        "label": "Event Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "organizing_name",
+        "label": "Organizing Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "organizing_address",
+        "label": "Organizing Address",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "level",
+        "label": "Level",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "ValueAddedCourseOrganised",
+    "displayName": "Value Added Course Organised",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "course_code",
+        "label": "Course Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "course_name",
+        "label": "Course Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "expert_name_designation",
+        "label": "Expert Name Designation",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "industry_institute_name",
+        "label": "Industry Institute Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "from_date",
+        "label": "From Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "to_date",
+        "label": "To Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "hours",
+        "label": "Hours",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "programme",
+        "label": "Programme",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "batch",
+        "label": "Batch",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "no_of_students",
+        "label": "No Of Students",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "no_of_students_completed",
+        "label": "No Of Students Completed",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "employee_code",
+        "label": "Employee Code",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "faculty_coordinator",
+        "label": "Faculty Coordinator",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sheetKey": "Website",
+    "displayName": "Website",
+    "category": "FACULTY",
+    "columns": [
+      {
+        "fieldKey": "s_no",
+        "label": "S No",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "fieldKey": "criteria_no_name",
+        "label": "Criteria No Name",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "date",
+        "label": "Date",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "department",
+        "label": "Department",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "updated_details",
+        "label": "Updated Details",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "fieldKey": "remarks",
+        "label": "Remarks",
+        "type": "String",
+        "required": false
+      },
+      {
+        "fieldKey": "file_name",
+        "label": "File Name",
+        "type": "File",
+        "required": false
+      }
+    ]
+  }
+]

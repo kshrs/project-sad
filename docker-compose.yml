@@ -1,32 +1,49 @@
 services:
-  # db
+  # MongoDB Database
   mongodb:
     image: mongo:latest
-    container_name: sad_db
+    container_name: sad2_db
+    restart: unless-stopped
     ports:
-      - "27017:27017"
+      - "27018:27017"
     volumes:
       - mongo_data:/data/db
 
-  # backend
+  # Backend Node.js / Express API Server
   backend:
     build: ./backend
-    container_name: sad_backend
+    container_name: sad2_backend
+    restart: unless-stopped
     ports:
       - "5000:5000"
     environment:
+      - NODE_ENV=development
       - PORT=5000
       - MONGO_URI=mongodb://mongodb:27017/sad_db
+      - CLIENT_URL=http://localhost:5100,http://127.0.0.1:5100,http://localhost:3000
+      - JWT_SECRET=sad_jwt_super_secret_dev_key_2026_institutional
+      - ALLOW_TEST_LOGIN=true
+      - TIMEZONE=Asia/Kolkata
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - ./backups:/home/kshrs/Projects/project_sad2/backups
     depends_on:
       - mongodb
 
-  # frontend
+  # Frontend Vite React Application
   frontend:
     build: ./frontend
-    container_name: sad_frontend
+    container_name: sad2_frontend
+    restart: unless-stopped
     ports:
-      # "3000:80" production
       - "5100:5100"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:5000/api/v1
+      - VITE_SOCKET_URL=http://localhost:5000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
     depends_on:
       - backend
 

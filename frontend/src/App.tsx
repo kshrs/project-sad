@@ -1,122 +1,192 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import React, { useState } from 'react';
+import { useAuth } from './context/AuthContext';
+import { ReportProvider } from './context/ReportContext';
+import Dashboard from './components/Dashboard';
+import KILogo from './assets/KILogo.jpeg';
+import { Shield, User as UserIcon, ArrowRight } from 'lucide-react';
 
-function App() {
-  const [count, setCount] = useState(0)
+function LoginScreen() {
+  const { loginAsDev, loading } = useAuth();
+  const [customEmail, setCustomEmail] = useState('');
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        width: '100vw',
+        backgroundColor: '#f8fafc',
+        fontFamily: 'var(--font-family-sans)'
+      }}
+    >
+      <div
+        style={{
+          width: '100%',
+          maxWidth: '440px',
+          padding: '36px',
+          backgroundColor: '#ffffff',
+          borderRadius: '12px',
+          boxShadow: 'var(--shadow-modal)',
+          border: '1px solid #e2e8f0',
+          textAlign: 'center'
+        }}
+      >
+        <img src={KILogo} alt="Kumaraguru Institutions" style={{ height: '64px', margin: '0 auto 16px', borderRadius: '6px' }} />
+        <h1 style={{ fontSize: '18px', fontWeight: 800, color: '#1e2842', marginBottom: '6px' }}>
+          Staff & Student Achievement Portal
+        </h1>
+        <p style={{ fontSize: '12px', color: '#64748b', marginBottom: '24px' }}>
+          Kumaraguru College of Technology
+        </p>
+
+        {/* 1-Click Dev Fast Logins */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '20px' }}>
+          <button
+            onClick={() => loginAsDev('kishorjsk2006@gmail.com')}
+            disabled={loading}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '10px',
+              padding: '10px',
+              borderRadius: '8px',
+              backgroundColor: '#1e2842',
+              color: '#ffffff',
+              fontSize: '13px',
+              fontWeight: 700,
+              boxShadow: '0 2px 4px rgba(30, 40, 66, 0.2)'
+            }}
+          >
+            <Shield size={16} /> Sign in as Admin (kishorjsk2006@gmail.com)
+          </button>
+
+          <button
+            onClick={() => loginAsDev('kishor14112006@gmail.com')}
+            disabled={loading}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '10px',
+              padding: '10px',
+              borderRadius: '8px',
+              backgroundColor: '#2563eb',
+              color: '#ffffff',
+              fontSize: '13px',
+              fontWeight: 700,
+              boxShadow: '0 2px 4px rgba(37, 99, 235, 0.2)'
+            }}
+          >
+            <UserIcon size={16} /> Sign in as Staff 1 (kishor14112006@gmail.com)
+          </button>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+            <button
+              onClick={() => loginAsDev('staff2@kct.ac.in')}
+              disabled={loading}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                padding: '8px',
+                borderRadius: '6px',
+                backgroundColor: '#059669',
+                color: '#ffffff',
+                fontSize: '12px',
+                fontWeight: 600
+              }}
+            >
+              <UserIcon size={14} /> Staff 2 (staff2@kct.ac.in)
+            </button>
+            <button
+              onClick={() => loginAsDev('staff3@kct.ac.in')}
+              disabled={loading}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                padding: '8px',
+                borderRadius: '6px',
+                backgroundColor: '#7c3aed',
+                color: '#ffffff',
+                fontSize: '12px',
+                fontWeight: 600
+              }}
+            >
+              <UserIcon size={14} /> Staff 3 (staff3@kct.ac.in)
+            </button>
+          </div>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
+
+        <div style={{ position: 'relative', margin: '20px 0', borderTop: '1px solid #e2e8f0' }}>
+          <span style={{ position: 'absolute', top: '-10px', left: '50%', transform: 'translateX(-50%)', backgroundColor: '#ffffff', padding: '0 8px', fontSize: '11px', color: '#94a3b8' }}>
+            or custom staff email
+          </span>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
+
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (customEmail) loginAsDev(customEmail);
+          }}
+          style={{ display: 'flex', gap: '8px' }}
         >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+          <input
+            type="email"
+            placeholder="staff@kct.ac.in"
+            value={customEmail}
+            onChange={(e) => setCustomEmail(e.target.value)}
+            style={{
+              flex: 1,
+              padding: '8px 12px',
+              borderRadius: '6px',
+              border: '1px solid #cbd5e1',
+              fontSize: '13px',
+              outline: 'none'
+            }}
+          />
+          <button
+            type="submit"
+            disabled={loading || !customEmail}
+            style={{
+              padding: '8px 14px',
+              borderRadius: '6px',
+              backgroundColor: '#1e2842',
+              color: '#ffffff',
+              fontWeight: 700
+            }}
+          >
+            <ArrowRight size={16} />
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 }
 
-export default App
+export default function App() {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', color: '#64748b', fontSize: '13px' }}>
+        Loading portal session...
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <LoginScreen />;
+  }
+
+  return (
+    <ReportProvider>
+      <Dashboard />
+    </ReportProvider>
+  );
+}
