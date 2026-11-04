@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../../services/apiClient';
 import { useAuth } from '../../context/AuthContext';
 import { User } from '../../types';
-import { X, Search, Shield, Clock, Trash2, Check, UserPlus, Users, Eye } from 'lucide-react';
+import { X, Search, Shield, Clock, Trash2, Check, UserPlus, Users, Eye, ArrowRight } from 'lucide-react';
 
 interface ManageAccessModalProps {
   isOpen: boolean;
@@ -390,15 +390,22 @@ export default function ManageAccessModal({
 
           {/* Currently Active Shares List */}
           <div>
-            <div style={{ fontSize: '12px', fontWeight: 700, color: '#475569', marginBottom: '8px' }}>
-              Active Delegations ({activeShares.length})
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+              <div style={{ fontSize: '12px', fontWeight: 700, color: '#475569' }}>
+                {isAdmin ? 'Active Staff Delegation Relationships' : 'Active Delegations'} ({activeShares.length})
+              </div>
+              {isAdmin && activeShares.length > 0 && (
+                <span style={{ fontSize: '11px', color: '#6366f1', fontWeight: 600 }}>
+                  {activeShares.length} {activeShares.length === 1 ? 'Rule' : 'Rules'} Active
+                </span>
+              )}
             </div>
             {activeShares.length === 0 ? (
-              <div style={{ fontSize: '12px', color: '#94a3b8', fontStyle: 'italic' }}>
-                No active delegates for this sheet.
+              <div style={{ padding: '24px 12px', textAlign: 'center', backgroundColor: '#f8fafc', borderRadius: '6px', border: '1px dashed #cbd5e1', fontSize: '12px', color: '#94a3b8' }}>
+                {isAdmin ? 'No active delegations established by staff for this sheet in this month.' : 'No active delegates for this sheet.'}
               </div>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 {activeShares.map((s) => (
                   <div
                     key={s._id}
@@ -406,31 +413,74 @@ export default function ManageAccessModal({
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      padding: '8px 12px',
-                      borderRadius: '6px',
-                      backgroundColor: '#f8fafc',
-                      border: '1px solid #e2e8f0',
+                      padding: '10px 14px',
+                      borderRadius: '8px',
+                      backgroundColor: isAdmin ? '#ffffff' : '#f8fafc',
+                      border: `1px solid ${isAdmin ? '#e0e7ff' : '#e2e8f0'}`,
+                      boxShadow: isAdmin ? '0 1px 3px rgba(99, 102, 241, 0.08)' : 'none',
                       fontSize: '12px'
                     }}
                   >
-                    <div>
-                      {isAdmin && s.ownerId && (
-                        <div style={{ fontSize: '11px', color: '#6366f1', fontWeight: 600 }}>
-                          Owner: {s.ownerId.displayName} ({s.ownerId.email})
+                    <div style={{ flex: 1, minWidth: 0, paddingRight: '12px' }}>
+                      {isAdmin ? (
+                        /* Admin View: explicit Who to Whom delegation card */
+                        <div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '4px' }}>
+                            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', backgroundColor: '#eef2ff', padding: '3px 8px', borderRadius: '4px', border: '1px solid #c7d2fe' }}>
+                              <span style={{ fontSize: '11px', color: '#4338ca', fontWeight: 700 }}>Owner:</span>
+                              <span style={{ fontSize: '12px', color: '#1e1b4b', fontWeight: 600 }}>{s.ownerId?.displayName || 'Unknown Staff'}</span>
+                            </div>
+
+                            <ArrowRight size={14} color="#6366f1" />
+
+                            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', backgroundColor: '#f0fdf4', padding: '3px 8px', borderRadius: '4px', border: '1px solid #bbf7d0' }}>
+                              <span style={{ fontSize: '11px', color: '#15803d', fontWeight: 700 }}>Delegated to:</span>
+                              <span style={{ fontSize: '12px', color: '#14532d', fontWeight: 600 }}>{s.sharedWithId?.displayName}</span>
+                            </div>
+                          </div>
+
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '11px', color: '#64748b', marginTop: '4px' }}>
+                            <span>Mode: <strong style={{ color: s.accessType === 'READ_WRITE' ? '#2563eb' : '#475569' }}>{s.accessType}</strong></span>
+                            <span>•</span>
+                            <span>View Existing: <strong>{s.canViewExisting ? 'Yes' : 'No (Blind)'}</strong></span>
+                            <span>•</span>
+                            <span>Edit Existing: <strong>{s.canEditExisting ? 'Yes' : 'No'}</strong></span>
+                            <span>•</span>
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                              <Clock size={11} /> Exp: {new Date(s.expiresAt).toLocaleDateString()}
+                            </span>
+                          </div>
+                        </div>
+                      ) : (
+                        /* Staff Personal View */
+                        <div>
+                          <span style={{ fontWeight: 600, color: '#1e2842' }}>{s.sharedWithId?.displayName}</span>
+                          <span style={{ color: '#64748b', marginLeft: '6px' }}>({s.sharedWithId?.email})</span>
+                          <div style={{ fontSize: '11px', color: '#059669', marginTop: '2px' }}>
+                            {s.accessType} • Exp: {new Date(s.expiresAt).toLocaleDateString()}
+                          </div>
                         </div>
                       )}
-                      <span style={{ fontWeight: 600, color: '#1e2842' }}>{s.sharedWithId?.displayName}</span>
-                      <span style={{ color: '#64748b', marginLeft: '6px' }}>({s.sharedWithId?.email})</span>
-                      <div style={{ fontSize: '11px', color: '#059669', marginTop: '2px' }}>
-                        {s.accessType} • Exp: {new Date(s.expiresAt).toLocaleDateString()}
-                      </div>
                     </div>
+
                     <button
                       onClick={() => handleRevoke(s._id)}
-                      style={{ color: '#dc2626', padding: '4px', cursor: 'pointer' }}
+                      style={{
+                        color: '#dc2626',
+                        padding: '6px 8px',
+                        cursor: 'pointer',
+                        borderRadius: '4px',
+                        border: '1px solid #fecaca',
+                        backgroundColor: '#fef2f2',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        fontSize: '11px',
+                        fontWeight: 600
+                      }}
                       title={isAdmin ? 'Admin Override: Revoke Delegation' : 'Revoke Access'}
                     >
-                      <Trash2 size={15} />
+                      <Trash2 size={13} /> {isAdmin ? 'Revoke' : ''}
                     </button>
                   </div>
                 ))}

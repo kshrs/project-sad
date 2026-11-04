@@ -55,13 +55,14 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
 
   // 24-hr Unlock state
   const [unlockInfo, setUnlockInfo] = useState<{ isUnlocked: boolean; remainingUnlocks: number } | null>(null);
+  const [delegationCount, setDelegationCount] = useState<number>(0);
 
   // 1. Fetch Sheet Schema & Data
   const loadSheetData = async () => {
     if (!selectedMonth) return;
     try {
       setLoading(true);
-      const [colsRes, entriesRes, unlockRes] = await Promise.all([
+      const calls: Promise<any>[] = [
         api.get(`/sheets/${sheetKey}/columns`),
         api.get(`/sheets/${sheetKey}/entries`, {
           params: { monthId: selectedMonth._id, staffId: sharedOwnerId }
@@ -69,7 +70,17 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
         api.get(`/unlock/${sheetKey}/status`, {
           params: { monthId: selectedMonth._id, staffId: sharedOwnerId }
         })
-      ]);
+      ];
+
+      if (user?.role === 'ADMIN' || user?.role === 'COORDINATOR') {
+        calls.push(
+          api.get(`/share/${sheetKey}`, {
+            params: { monthId: selectedMonth._id, staffId: sharedOwnerId }
+          })
+        );
+      }
+
+      const [colsRes, entriesRes, unlockRes, sharesRes] = await Promise.all(calls);
 
       if (colsRes.data?.success) setColumns(colsRes.data.columns || []);
       if (entriesRes.data?.success) {
@@ -88,6 +99,9 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
         }
       }
       if (unlockRes.data?.success) setUnlockInfo(unlockRes.data);
+      if (sharesRes?.data?.success) {
+        setDelegationCount(sharesRes.data.shares?.length || 0);
+      }
     } catch (err: any) {
       console.error('Failed to load sheet data', err);
     } finally {
@@ -428,15 +442,28 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
                 gap: '6px',
                 padding: '6px 12px',
                 borderRadius: '6px',
-                backgroundColor: '#f8fafc',
-                border: '1px solid #cbd5e1',
-                color: '#475569',
+                backgroundColor: delegationCount > 0 ? '#eff6ff' : '#f8fafc',
+                border: `1px solid ${delegationCount > 0 ? '#93c5fd' : '#cbd5e1'}`,
+                color: delegationCount > 0 ? '#1d4ed8' : '#475569',
                 fontSize: '12px',
                 fontWeight: 600
               }}
               title="Monitor and govern active staff delegation rules"
             >
-              <Users size={14} /> Audit Delegations
+              <Users size={14} color={delegationCount > 0 ? '#2563eb' : '#64748b'} />
+              <span>Audit Delegations</span>
+              <span
+                style={{
+                  fontSize: '10px',
+                  fontWeight: 700,
+                  padding: '1px 6px',
+                  borderRadius: '10px',
+                  backgroundColor: delegationCount > 0 ? '#2563eb' : '#e2e8f0',
+                  color: delegationCount > 0 ? '#ffffff' : '#64748b'
+                }}
+              >
+                {delegationCount}
+              </span>
             </button>
           )}
 
