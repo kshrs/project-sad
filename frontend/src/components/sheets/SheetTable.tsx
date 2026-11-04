@@ -550,16 +550,23 @@ export default function SheetTable({ sheetKey, sharedOwnerId }: SheetTableProps)
               <tr style={{ backgroundColor: '#f8fafc', borderBottom: '2px solid #e2e8f0' }}>
                 <th style={{ padding: '10px 12px', width: '80px', color: '#475569', fontWeight: 700 }}>Actions</th>
                 <th style={{ padding: '10px 12px', width: '50px', color: '#475569', fontWeight: 700 }}>#</th>
-              {columns
-                .filter((col) => {
-                  const key = col.fieldKey.toLowerCase();
-                  return key !== 's_no' && key !== 'sno' && key !== 'sl_no' && key !== 'serial_no';
-                })
-                .map((col) => (
-                  <th key={col.fieldKey} style={{ padding: '10px 12px', color: '#475569', fontWeight: 700, minWidth: '140px' }}>
-                    {col.label}
-                  </th>
-                ))}
+                {columns
+                  .filter((col) => {
+                    const key = col.fieldKey.toLowerCase();
+                    return key !== 's_no' && key !== 'sno' && key !== 'sl_no' && key !== 'serial_no';
+                  })
+                  .map((col) => (
+                    <th key={col.fieldKey} style={{ padding: '10px 12px', color: '#475569', fontWeight: 700, minWidth: '140px' }}>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                        {col.label}
+                        {col.required && (
+                          <span style={{ color: '#dc2626', fontWeight: 800, fontSize: '13px', lineHeight: 1 }} title="Required field">
+                            *
+                          </span>
+                        )}
+                      </span>
+                    </th>
+                  ))}
               </tr>
             </thead>
             <tbody>

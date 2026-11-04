@@ -20,19 +20,19 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "programme_name",
         "label": "Programme Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "roll_no",
@@ -44,7 +44,7 @@
         "fieldKey": "student_name",
         "label": "Student Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "batch",
@@ -99,19 +99,19 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -172,13 +172,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "roll_no",
@@ -245,13 +245,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "employee_code",
@@ -263,7 +263,7 @@
         "fieldKey": "faculty_name",
         "label": "Faculty Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "award_receiving_date",
@@ -336,19 +336,19 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "faculty_name",
         "label": "Faculty Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "employee_code",
@@ -427,19 +427,19 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "faculty_name",
         "label": "Faculty Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "employee_code",
@@ -518,19 +518,19 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -597,13 +597,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "collaboration_month_year",
@@ -615,7 +615,7 @@
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -700,13 +700,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "competition_month_year",
@@ -724,7 +724,7 @@
         "fieldKey": "faculty_name",
         "label": "Faculty Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "programme_type",
@@ -754,7 +754,7 @@
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -839,13 +839,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "employee_code",
@@ -857,7 +857,7 @@
         "fieldKey": "faculty_name",
         "label": "Faculty Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "designation",
@@ -881,13 +881,13 @@
         "fieldKey": "programme_title",
         "label": "Programme Title",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -973,13 +973,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "employee_code",
@@ -991,7 +991,7 @@
         "fieldKey": "faculty_name",
         "label": "Faculty Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "type_of_activity",
@@ -1015,7 +1015,7 @@
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -1058,13 +1058,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "programme",
@@ -1143,13 +1143,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "guest_lecture_topic",
@@ -1191,7 +1191,7 @@
         "fieldKey": "faculty_coordinator",
         "label": "Faculty Coordinator",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "file_name",
@@ -1222,13 +1222,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "programme",
@@ -1246,7 +1246,7 @@
         "fieldKey": "student_name",
         "label": "Student Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "graduating_year",
@@ -1307,13 +1307,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "programme",
@@ -1349,7 +1349,7 @@
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -1361,7 +1361,7 @@
         "fieldKey": "faculty_coordinator",
         "label": "Faculty Coordinator",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "employee_code",
@@ -1398,13 +1398,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "programme",
@@ -1440,7 +1440,7 @@
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -1452,7 +1452,7 @@
         "fieldKey": "faculty_coordinator",
         "label": "Faculty Coordinator",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "employee_code",
@@ -1489,19 +1489,19 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -1562,19 +1562,19 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -1604,7 +1604,7 @@
         "fieldKey": "student_name",
         "label": "Student Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "industry_name_address",
@@ -1622,7 +1622,7 @@
         "fieldKey": "faculty_name",
         "label": "Faculty Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "employee_code",
@@ -1659,13 +1659,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "employee_code",
@@ -1677,7 +1677,7 @@
         "fieldKey": "faculty_name",
         "label": "Faculty Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "publication_month_year",
@@ -1780,13 +1780,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "employee_code",
@@ -1798,7 +1798,7 @@
         "fieldKey": "faculty_name",
         "label": "Faculty Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "publication_month_year",
@@ -1901,19 +1901,19 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -1986,13 +1986,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "mou_signed_organization",
@@ -2077,13 +2077,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "publication_details",
@@ -2126,13 +2126,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "course_code",
@@ -2162,7 +2162,7 @@
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -2198,7 +2198,7 @@
         "fieldKey": "faculty_coordinator",
         "label": "Faculty Coordinator",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "file_name",
@@ -2229,13 +2229,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "employee_code",
@@ -2247,7 +2247,7 @@
         "fieldKey": "faculty_coordinator",
         "label": "Faculty Coordinator",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "designation",
@@ -2283,7 +2283,7 @@
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -2332,13 +2332,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "employee_code",
@@ -2350,13 +2350,13 @@
         "fieldKey": "faculty_name",
         "label": "Faculty Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "paper_title",
         "label": "Paper Title",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "journal_name",
@@ -2405,13 +2405,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "ip_type",
@@ -2441,7 +2441,7 @@
         "fieldKey": "title",
         "label": "Title",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "application_no_patent_filed_date",
@@ -2520,13 +2520,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "employee_code",
@@ -2538,7 +2538,7 @@
         "fieldKey": "faculty_name",
         "label": "Faculty Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "designation",
@@ -2593,19 +2593,19 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "student_name",
         "label": "Student Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "registration_no",
@@ -2672,13 +2672,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "employee_code",
@@ -2690,7 +2690,7 @@
         "fieldKey": "faculty_name",
         "label": "Faculty Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "designation",
@@ -2714,13 +2714,13 @@
         "fieldKey": "programme_title",
         "label": "Programme Title",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -2793,19 +2793,19 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -2866,13 +2866,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "programme_type",
@@ -2884,7 +2884,7 @@
         "fieldKey": "programme_title",
         "label": "Programme Title",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "level",
@@ -2896,7 +2896,7 @@
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -2914,7 +2914,7 @@
         "fieldKey": "faculty_coordinator",
         "label": "Faculty Coordinator",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "employee_code",
@@ -2981,13 +2981,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "programme_type",
@@ -2999,7 +2999,7 @@
         "fieldKey": "programme_title",
         "label": "Programme Title",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "level",
@@ -3011,7 +3011,7 @@
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -3029,7 +3029,7 @@
         "fieldKey": "faculty_coordinator",
         "label": "Faculty Coordinator",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "employee_code",
@@ -3096,13 +3096,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "purchase_order_no",
@@ -3187,13 +3187,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "laboratory_name",
@@ -3248,13 +3248,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "month_year",
@@ -3278,7 +3278,7 @@
         "fieldKey": "project_title",
         "label": "Project Title",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "pi_name",
@@ -3314,7 +3314,7 @@
         "fieldKey": "agency_name",
         "label": "Agency Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "total_grant_lakhs",
@@ -3357,19 +3357,19 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -3381,7 +3381,7 @@
         "fieldKey": "faculty_name",
         "label": "Faculty Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "employee_code",
@@ -3442,19 +3442,19 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -3466,7 +3466,7 @@
         "fieldKey": "faculty_name",
         "label": "Faculty Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "employee_code",
@@ -3527,13 +3527,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "roll_no",
@@ -3545,7 +3545,7 @@
         "fieldKey": "student_name",
         "label": "Student Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "sponsoring_agency",
@@ -3600,13 +3600,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "employee_code",
@@ -3618,7 +3618,7 @@
         "fieldKey": "faculty_name",
         "label": "Faculty Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "seed_money_amount",
@@ -3679,13 +3679,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "roll_no",
@@ -3697,7 +3697,7 @@
         "fieldKey": "student_name",
         "label": "Student Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "exam_details",
@@ -3765,13 +3765,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "roll_no",
@@ -3783,7 +3783,7 @@
         "fieldKey": "student_name",
         "label": "Student Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "programme_type",
@@ -3801,7 +3801,7 @@
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -3874,25 +3874,25 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "programme_name",
         "label": "Programme Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -3910,7 +3910,7 @@
         "fieldKey": "student_name",
         "label": "Student Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "industry_name",
@@ -3922,7 +3922,7 @@
         "fieldKey": "project_title",
         "label": "Project Title",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "internal_guide_name",
@@ -3971,25 +3971,25 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "programme_name",
         "label": "Programme Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -4007,13 +4007,13 @@
         "fieldKey": "student_name",
         "label": "Student Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "project_title",
         "label": "Project Title",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "guide_name",
@@ -4062,13 +4062,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "roll_no",
@@ -4080,7 +4080,7 @@
         "fieldKey": "student_name",
         "label": "Student Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "name_of_the_course",
@@ -4092,7 +4092,7 @@
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date2",
@@ -4135,13 +4135,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "roll_no",
@@ -4153,7 +4153,7 @@
         "fieldKey": "student_name",
         "label": "Student Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "event_name",
@@ -4250,13 +4250,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "roll_no",
@@ -4268,7 +4268,7 @@
         "fieldKey": "student_name",
         "label": "Student Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "faculty_guide_name",
@@ -4353,13 +4353,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "roll_no",
@@ -4371,7 +4371,7 @@
         "fieldKey": "student_name",
         "label": "Student Name",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "programme_type",
@@ -4389,7 +4389,7 @@
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -4444,13 +4444,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "course_code",
@@ -4480,7 +4480,7 @@
         "fieldKey": "from_date",
         "label": "From Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "to_date",
@@ -4528,7 +4528,7 @@
         "fieldKey": "faculty_coordinator",
         "label": "Faculty Coordinator",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "file_name",
@@ -4559,13 +4559,13 @@
         "fieldKey": "date",
         "label": "Date",
         "type": "Date",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "department",
         "label": "Department",
         "type": "String",
-        "required": false
+        "required": true
       },
       {
         "fieldKey": "updated_details",
