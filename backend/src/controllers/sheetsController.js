@@ -10,18 +10,24 @@ const sheetsController = {
 
       const sheets = await SheetDefinition.find({ isArchived: false }).sort({ category: 1, orderIndex: 1 });
 
-      const targetOwnerId = staffId || user.id;
+      const isAdminOrCoordinator = user.role === 'ADMIN' || user.role === 'COORDINATOR';
+      // If admin and no staffId specified, aggregate across the whole department (no ownerId filter)
+      const isAggregateAdmin = isAdminOrCoordinator && !staffId;
+      const targetOwnerId = staffId || (!isAdminOrCoordinator ? user.id : null);
 
       const results = await Promise.all(
         sheets.map(async (sheet) => {
           let count = 0;
           if (monthId) {
-            count = await SheetEntry.countDocuments({
+            const countFilter = {
               sheetId: sheet._id,
               monthId: monthId,
-              ownerId: targetOwnerId,
               deletedAt: null
-            });
+            };
+            if (!isAggregateAdmin && targetOwnerId) {
+              countFilter.ownerId = targetOwnerId;
+            }
+            count = await SheetEntry.countDocuments(countFilter);
           }
 
           return {
