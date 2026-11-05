@@ -1,6 +1,7 @@
 const PDFDocument = require('pdfkit');
 const { DateTime } = require('luxon');
 const { SheetDefinition, SheetEntry, MonthlyReport, AcademicYear, User } = require('../models');
+const { generateAcademicAuditAnalysis } = require('../services/geminiService');
 const logger = require('../config/logger');
 
 const TIMEZONE = process.env.TIMEZONE || 'Asia/Kolkata';
@@ -131,6 +132,56 @@ const pdfReportController = {
         doc.fontSize(8).fillColor('#64748b').text(`${pct.toFixed(0)}%`, 480, catY + 2);
         catY += 22;
       });
+
+      // --- Page 2: AI-Powered Academic Audit & Collaboration Analysis (Gemini Flash) ---
+      let aiAnalysis = null;
+      try {
+        aiAnalysis = await generateAcademicAuditAnalysis({
+          staffUser,
+          month,
+          totalEntries: totalAchievementEntries,
+          categoryCounts,
+          studentRoster: Array.from(studentRosterSet),
+          reportSections
+        });
+      } catch (err) {
+        logger.error({ err }, 'Gemini analysis generation error:');
+      }
+
+      if (aiAnalysis) {
+        doc.addPage();
+        // Title & Model Badge
+        doc.font('Helvetica-Bold').fontSize(15).fillColor('#1e2842').text('AI Academic Audit & Collaboration Report', 50, 75);
+        doc.rect(50, 96, 495, 24).fillAndStroke('#eff6ff', '#bfdbfe');
+        doc.font('Helvetica-Bold').fontSize(8.5).fillColor('#1d4ed8')
+          .text(`Model: ${aiAnalysis.modelUsed} | Mode: ${aiAnalysis.aiGenerated ? 'Active Generative AI Inference' : 'Deterministic Academic Rule Engine'}`, 60, 103);
+
+        const sectionsToRender = [
+          { title: '1. Executive Academic Evaluation', text: aiAnalysis.executiveSummary, color: '#1e40af', bg: '#f8fafc' },
+          { title: '2. Student & Faculty Collaboration', text: aiAnalysis.studentFacultyCollaboration, color: '#047857', bg: '#f0fdf4' },
+          { title: '3. Research, Industry Linkages & Outreach', text: aiAnalysis.researchAndOutreach, color: '#b45309', bg: '#fffbeb' },
+          { title: '4. Strategic Recommendations & Accreditation Impact', text: aiAnalysis.recommendations, color: '#4338ca', bg: '#f5f3ff' }
+        ];
+
+        let cursorY = 130;
+        sectionsToRender.forEach((sec) => {
+          if (cursorY > 650) {
+            doc.addPage();
+            cursorY = 75;
+          }
+
+          // Section Header
+          doc.rect(50, cursorY, 495, 20).fill(sec.bg);
+          doc.font('Helvetica-Bold').fontSize(10).fillColor(sec.color).text(sec.title, 58, cursorY + 5);
+          cursorY += 26;
+
+          // Section Content
+          doc.font('Helvetica').fontSize(8.5).fillColor('#334155');
+          const textHeight = doc.heightOfString(sec.text || 'No observations recorded.', { width: 495, lineGap: 2 });
+          doc.text(sec.text || 'No observations recorded.', 50, cursorY, { width: 495, lineGap: 2 });
+          cursorY += textHeight + 14;
+        });
+      }
 
       // --- Non-Empty Sheets Data Sections ---
       reportSections.forEach((section) => {
