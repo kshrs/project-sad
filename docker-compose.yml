@@ -44,9 +44,6 @@ services:
     ports:
       - "80:5100"
       - "5100:5100"
-    environment:
-      - VITE_API_BASE_URL=http://localhost:5000/api/v1
-      - VITE_SOCKET_URL=http://localhost:5000
     volumes:
       - ./frontend:/app
       - /app/node_modules

@@ -1,7 +1,23 @@
 import axios from 'axios';
 
+// Dynamically determine the backend API URL:
+// 1. If VITE_API_BASE_URL is explicitly set, use it.
+// 2. If running in a browser, use the current hostname (e.g. EC2 public IP or domain) with port 5000.
+// 3. Fallback to http://localhost:5000/api/v1.
+const getBaseUrl = (): string => {
+  if (import.meta.env.VITE_API_BASE_URL) {
+    return import.meta.env.VITE_API_BASE_URL;
+  }
+  if (typeof window !== 'undefined' && window.location) {
+    const protocol = window.location.protocol;
+    const hostname = window.location.hostname;
+    return `${protocol}//${hostname}:5000/api/v1`;
+  }
+  return 'http://localhost:5000/api/v1';
+};
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1',
+  baseURL: getBaseUrl(),
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json'
