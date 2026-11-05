@@ -6,6 +6,17 @@ export default defineConfig({
   server: {
     port: 5100,
     host: '0.0.0.0',
-    strictPort: true
+    strictPort: true,
+    proxy: {
+      '/api': {
+        target: 'http://backend:5000',
+        changeOrigin: true
+      },
+      '/socket.io': {
+        target: 'http://backend:5000',
+        ws: true,
+        changeOrigin: true
+      }
+    }
   }
 });
