@@ -1,17 +1,20 @@
 import axios from 'axios';
 
 // Dynamically determine the backend API URL:
-// 1. If VITE_API_BASE_URL is explicitly set, use it.
-// 2. If running in a browser, use the current hostname (e.g. EC2 public IP or domain) with port 5000.
+// 1. If running in a browser, use the current page's hostname (e.g. EC2 public IP or domain) with port 5000.
+// 2. Otherwise use VITE_API_BASE_URL if set and not pointing to localhost.
 // 3. Fallback to http://localhost:5000/api/v1.
 const getBaseUrl = (): string => {
-  if (import.meta.env.VITE_API_BASE_URL) {
-    return import.meta.env.VITE_API_BASE_URL;
-  }
-  if (typeof window !== 'undefined' && window.location) {
+  if (typeof window !== 'undefined' && window.location && window.location.hostname) {
     const protocol = window.location.protocol;
     const hostname = window.location.hostname;
-    return `${protocol}//${hostname}:5000/api/v1`;
+    // If accessing via an external IP/domain, always target that host on port 5000
+    if (hostname !== 'localhost' && hostname !== '127.0.0.1') {
+      return `${protocol}//${hostname}:5000/api/v1`;
+    }
+  }
+  if (import.meta.env.VITE_API_BASE_URL) {
+    return import.meta.env.VITE_API_BASE_URL;
   }
   return 'http://localhost:5000/api/v1';
 };
