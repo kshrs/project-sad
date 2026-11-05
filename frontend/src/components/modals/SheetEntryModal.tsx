@@ -78,8 +78,10 @@ export default function SheetEntryModal({
       const data = new FormData();
       data.append('file', file);
 
+      // Do not manually set 'Content-Type': 'multipart/form-data' without the boundary;
+      // letting the browser set it automatically sets multipart/form-data; boundary=...
       const res = await api.post('/files/upload', data, {
-        headers: { 'Content-Type': 'multipart/form-data' }
+        headers: { 'Content-Type': undefined }
       });
 
       if (res.data?.success && res.data?.file) {
@@ -91,7 +93,8 @@ export default function SheetEntryModal({
         }));
       }
     } catch (err: any) {
-      alert(err.response?.data?.message || 'File upload failed');
+      console.error('File upload error:', err);
+      alert(err.response?.data?.message || err.message || 'File upload failed');
     } finally {
       setUploadingField(null);
     }
