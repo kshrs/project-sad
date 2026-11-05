@@ -45,15 +45,25 @@ app.use(
   })
 );
 
-// Health Check Endpoints
-app.get('/healthz', (req, res) => res.json({ status: 'UP', timestamp: new Date() }));
-app.get('/readyz', (req, res) => {
+// Health Check Endpoints (Root & /api/v1 for standard ALB / Load Balancer probes)
+const handleHealth = (req, res) => res.status(200).json({ status: 'UP', timestamp: new Date() });
+const handleReady = (req, res) => {
   const isDbReady = mongoose.connection.readyState === 1;
   if (isDbReady) {
-    return res.json({ status: 'READY', db: 'CONNECTED' });
+    return res.status(200).json({ status: 'READY', db: 'CONNECTED' });
   }
   return res.status(503).json({ status: 'NOT_READY', db: 'DISCONNECTED' });
-});
+};
+
+app.get('/health', handleHealth);
+app.get('/healthz', handleHealth);
+app.get('/ready', handleReady);
+app.get('/readyz', handleReady);
+
+app.get('/api/v1/health', handleHealth);
+app.get('/api/v1/healthz', handleHealth);
+app.get('/api/v1/ready', handleReady);
+app.get('/api/v1/readyz', handleReady);
 
 // API Routes
 app.use('/api/v1', apiRoutes);
